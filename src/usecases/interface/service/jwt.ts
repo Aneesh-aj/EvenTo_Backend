@@ -1,6 +1,6 @@
 import { Iuser } from "../../../entities/user";
 import { Iorganizer } from "../../../entities/organizer";
-import { Req } from "../../../frameWork/types/serverPackageTypes";
+import { Req } from "../../../framework/types/serverPackageTypes";
 
 
 export interface IToken{
@@ -8,9 +8,9 @@ export interface IToken{
     refreshToken:string
 }
 
-export interface Iuserjwt{
-    createVerificationJWT(payload:any): Promise <any>
-    createAccessAndRefreshToken(id:string, role:string): Promise <IToken>
+export interface Ijwt{
+    createVerificationJWT(payload:Iuser): Promise <string>
+    createAccessAndRefreshToken(id:string): Promise <IToken>
     verifyJwt(token:string): Promise <void>
     forgotPasswordToken(userId:string, email:string): Promise <string>
 }

@@ -3,8 +3,8 @@ import { IadminUsecase } from "../interface/usecase/adminUseCase";
 import { Ihashpassword } from "../interface/service/hashPassword";
 import { login } from "./admin/login";
 import { IadminRepository } from "../interface/repositoryInterface/adminRepository";
-import { Iuserjwt } from "../interface/service/jwt";
-import { Next } from "../../frameWork/types/serverPackageTypes";
+import { Ijwt } from "../interface/service/jwt";
+import { Next } from "../../framework/types/serverPackageTypes";
 import { getRequests } from "./admin/getRequests";
 import { IorganizerRepository } from "../interface/repositoryInterface/organizerRepository";
 import { getDetails } from "./admin/getDetails";
@@ -19,10 +19,10 @@ import { blockUser } from "./admin/blockUser";
 export class AdminUsecase implements IadminUsecase{
     private readonly hashpassword : Ihashpassword
     private readonly adminRepository : IadminRepository
-    private readonly jwt : Iuserjwt
+    private readonly jwt : Ijwt
     private readonly organizerRepository : IorganizerRepository
     private readonly userRepoistory : IuserRepository
-     constructor(hashpassword: Ihashpassword , adminRepository:IadminRepository,jwt:Iuserjwt,organizerRepository:IorganizerRepository,userRepository:IuserRepository){
+     constructor(hashpassword: Ihashpassword , adminRepository:IadminRepository,jwt:Ijwt,organizerRepository:IorganizerRepository,userRepository:IuserRepository){
          this.hashpassword = hashpassword
          this.adminRepository = adminRepository
          this.jwt = jwt

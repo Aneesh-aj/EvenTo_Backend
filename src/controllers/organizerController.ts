@@ -1,4 +1,4 @@
-import { Next,Req,Res } from "../frameWork/types/serverPackageTypes";
+import { Next,Req,Res } from "../framework/types/serverPackageTypes";
 import { IorganizerUseCase } from "../usecases/interface/usecase/organizerUseCase";
 
 export class OrganizerController{

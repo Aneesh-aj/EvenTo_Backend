@@ -1,5 +1,5 @@
 import { Iorganizer } from "../../../entities/organizer";
-import { Next } from "../../../frameWork/types/serverPackageTypes";
+import { Next } from "../../../framework/types/serverPackageTypes";
 
 
 export interface IadminUsecase{

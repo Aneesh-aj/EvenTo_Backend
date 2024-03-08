@@ -1,22 +1,30 @@
+import { Next } from "../../../framework/types/serverPackageTypes";
 import { IuserRepository } from "../../interface/repositoryInterface/userRepository";
+import { IcloudSession } from "../../interface/service/cloudSession";
+import { Ihashpassword } from "../../interface/service/hashPassword";
+import ErrorHandler from "../../middleares/errorHandler";
+import { IToken, Ijwt } from "../../interface/service/jwt";
 
-import { Iuserjwt } from "../../interface/service/jwt";
+export const login = async (userRepository: IuserRepository, jwt: Ijwt, cloudSession: IcloudSession, hashPassword: Ihashpassword, email: string, password: string, next: Next): Promise<object | void> => {
+  try {
+    const user = await userRepository.findbyEmail(email)
+    console.log(" the checked", user)
 
-export const login = async (userRepository:IuserRepository,jwt:Iuserjwt,email:string,password:string) : Promise <object | void >=>{
-      const checked  = await userRepository.findbyEmail(email)
-        console.log(" the checked",checked)
-        
-        if(checked){
-        const obj={_id:checked._id,name:checked.name,email:checked.email,password:checked.password}
-        let token = await jwt.createVerificationJWT(obj)
-        console.log(" the token", token)
-        let id = checked?._id
-        console.log(" the id ",id)
-        if(id){
-          let role = "user"
-          let Tokens  = await jwt.createAccessAndRefreshToken(id as string ,role as string)
-          console.log("acessAndRef",Tokens )
-          return Tokens
-        }
-      }
+    if (!user) return next(new ErrorHandler(400, "invalid emial id"))
+    if (user?.blocked) {
+      return next(new ErrorHandler(400, "access has been denied by admin "))
+    }
+
+    const result = await hashPassword.comparePassword(password, user?.password)
+    if (!result) return next(new ErrorHandler(400, "invalid password"))
+
+    const tokens = jwt.createAccessAndRefreshToken(user?._id as string)
+    await cloudSession.createUserSession(user?._id as string, user)
+
+    return { user, tokens }
+  } catch (error) {
+    throw error
+  }
+
+
 }

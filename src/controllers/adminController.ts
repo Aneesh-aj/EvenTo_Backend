@@ -1,4 +1,4 @@
-import { Next,Req,Res } from "../frameWork/types/serverPackageTypes";
+import { Next,Req,Res } from "../framework/types/serverPackageTypes";
 import { IadminUsecase } from "../usecases/interface/usecase/adminUseCase";
 import { accessTokenOptions, refreshTokenOptions } from "./middleware/Tokens";
 export class AdminController{

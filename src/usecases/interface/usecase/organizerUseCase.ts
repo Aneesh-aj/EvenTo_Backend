@@ -1,4 +1,4 @@
-import { Next , Res, Req } from "../../../frameWork/types/serverPackageTypes";
+import { Next , Res, Req } from "../../../framework/types/serverPackageTypes";
 
 
 export  interface IorganizerUseCase{

@@ -5,7 +5,7 @@ import { createOrganizers, signup } from './organizer/index'
 import { IotpGenerate } from "../interface/service/otpGenerate";
 import { IsentEmail } from "../interface/service/sentEmail";
 import { IotpRepository } from "../interface/repositoryInterface/otpRepository";
-import { Next } from "../../frameWork/types/serverPackageTypes";
+import { Next } from "../../framework/types/serverPackageTypes";
 // import { Ijwt } from "../interface/service/jwt";
 
 export class OrganizerUseCase implements IorganizerUseCase {
