@@ -46,7 +46,7 @@ export class UserUseCase implements IuserUseCase {
      async userSignup(user: Iuser, next: Next): Promise<string | void> {
           try {
                console.log("coming here")
-               return await userSignup(
+               let toke = await userSignup(
                     this.jwt,
                     this.otpRepository,
                     this.userRepository,
@@ -55,7 +55,10 @@ export class UserUseCase implements IuserUseCase {
                     user,
                     this.sentEmail,
                     next)
+               console.log(" the token", toke)
+               return toke
           } catch (error: unknown) {
+               console.log(" in here")
                catchError(error, next)
           }
      }
@@ -74,12 +77,20 @@ export class UserUseCase implements IuserUseCase {
           }
      }
 
-     async createUser(newUser: Iuser, otp: string, next: NextFunction): Promise<string | void> {
+     async createUser(token: string, otp: string, next: NextFunction): Promise<Iuser | void> {
           try {
-               const user = await createUser(newUser, otp, this.otpRepository, this.userRepository, this.hashPassword, this.jwt)
+               const user = await createUser(
+                    token,
+                    otp,
+                    this.otpRepository,
+                    this.userRepository,
+                    this.hashPassword,
+                    this.jwt,
+                    next)
+                    console.log("in the usecase" ,user)
                return user
           } catch (error) {
-               throw error
+               catchError(error,next)
           }
      }
 

@@ -14,6 +14,7 @@ export class JWTtoken implements Ijwt{
           const verifyToken = await jwt.sign(payload, this.JWT_VERIFICATION_KEY,{
              expiresIn:'15m',
           })
+          console.log("in side the servie",verifyToken )
           return verifyToken
       }
 

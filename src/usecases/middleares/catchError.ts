@@ -2,6 +2,7 @@ import { Next } from "../../framework/types/serverPackageTypes";
 import ErrorHandler from "./errorHandler";
 
 export const catchError = (error: unknown,next:Next)=>{
+    console.log("catch Error")
     let message : string
     if(error instanceof Error){
         message = error.message

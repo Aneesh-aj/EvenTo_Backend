@@ -8,5 +8,5 @@ export interface IuserUseCase{
     login(email:string,password:string,next:Next) : Promise < {
         accessToken: any;Tokens:IToken
 } | void> 
-    createUser(newUser:Iuser,otp:string, next: Next) : Promise <string | void>
+    createUser(token:string , otp:string, next: Next) : Promise <Iuser| void>
 }

@@ -1,5 +1,5 @@
 import mongoose, { Schema, Model } from "mongoose";
-import { Iotp } from "../../../entities/otp";
+import { Iotp } from "../../../../entities/otp";
 
 const OtpSchema: Schema<Iotp> = new mongoose.Schema({
   email: { type: String, required: true },

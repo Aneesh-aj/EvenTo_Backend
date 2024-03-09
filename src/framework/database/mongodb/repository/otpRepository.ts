@@ -27,7 +27,31 @@ export class OtpRepository implements IotpRepository{
           console.log("result")
           return result
       }
+    
+      async  findAndDeleteUser(email: string, otp: string): Promise< boolean> {
+          try{
+            console.log(" in the repos",email,otp)
+            
+            const checking = await otpModel.findOne({email})
+            console.log(" chekkicng",checking)
+              const result = await otpModel.findOneAndDelete({email})
+              console.log("result of the otp repository",result)
+              if(result){
+                console.log("reuslt and the veri", result.otp,otp,typeof result.otp , typeof otp)
+                console.log(result.otp  == otp)
+                if(result.otp ==otp){
 
+                  return true
+                }else{
+                  return false
+                }
+              }else{
+                return false
+              }
+          }catch(error){
+             throw error
+          }
+      }
       
       
       

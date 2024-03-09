@@ -9,6 +9,8 @@ export function UserRoute(router: Route){
     })
 
     router.post('/createUser', (req: Req, res : Res , next : Next)=>{
+        console.log("coming to the router",req.body)
+        // return 
            userController.createUser(req,res,next)
     })
 

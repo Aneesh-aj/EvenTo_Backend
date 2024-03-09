@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser'
 import { UserRoute } from '../routes/userRoute'
 import { OrganizerRoute } from '../routes/organizerRoute'
 import { AdminRoute } from '../routes/adminRoute'
+import { errorMiddleware } from '../../../usecases/middleares/errorMiddleware'
 
 export const app = express()
 
@@ -30,3 +31,6 @@ app.all("*", (req: Request, res : Response, next: NextFunction)=>{
     const error = new Error(` route ${req.originalUrl} isn't found ` as any)
     next (error)
 })
+
+
+app.use(errorMiddleware)
