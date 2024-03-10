@@ -16,7 +16,7 @@ export function UserRoute(router: Route){
 
     router.post('/login',(req:Req, res: Res ,next:Next)=>{
         console.log("entering to the  router")
-         userController.organizerLogin(req, res, next)
+         userController.userLogin(req, res, next)
     })
 
    

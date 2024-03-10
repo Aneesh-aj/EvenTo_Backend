@@ -1,5 +1,6 @@
 export interface Iorganizer {
     _id?:string,
+    role?:string,
     name: string,
     email: string,
     phoneNumber: string,

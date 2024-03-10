@@ -10,7 +10,7 @@ export class JWTtoken implements Ijwt{
   JWT_REFRESH_KEY = process.env.JWT_REFRESH_KEY || ""
      
 
-      async createVerificationJWT(payload: any): Promise<any> {
+      async createVerificationJWT(payload: any): Promise<string> {
           const verifyToken = await jwt.sign(payload, this.JWT_VERIFICATION_KEY,{
              expiresIn:'15m',
           })
@@ -31,8 +31,8 @@ export class JWTtoken implements Ijwt{
            return {accessToken,refreshToken}
       }
 
-      async  verifyJwt(token: string): Promise<any> {
-        const data = await jwt.verify(token, this.JWT_VERIFICATION_KEY)
+      async  verifyJwt(token: string): Promise<Iuser> {
+        const data = await (jwt.verify(token, this.JWT_VERIFICATION_KEY)) as Iuser
         return data
       }
 

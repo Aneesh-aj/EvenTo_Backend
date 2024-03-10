@@ -7,7 +7,8 @@ const userSchema : Schema<Iuser>  = new mongoose.Schema({
     name:{type:String, required:true},
     email:{type:String, requried:true},
     password:{type:String,required:true},
-    blocked:{type:Boolean,default:false}
+    blocked:{type:Boolean,default:false},
+    role:{type:String,default:'user'}
 })
 
 const userModel:Model<Iuser> =  mongoose.model('user',userSchema)

@@ -1,11 +1,12 @@
 import { Schema, Model } from "mongoose";
 import mongoose from "mongoose";
-import { Iorganizer } from "../../../entities/organizer";
+import { Iorganizer } from "../../../../entities/organizer";
 import { ObjectId } from "mongodb";
 
 
 const OrganizerSchema : Schema <Iorganizer> = new mongoose.Schema({
     name: {type:String, required:true},
+    role:{type:String,default:'organizer'},
     email:{type:String, required:true},
     password:{type:String, required:true},
     ownerId:{type:String, required:true},

@@ -10,15 +10,16 @@ export const login = async (userRepository: IuserRepository, jwt: Ijwt, cloudSes
     const user = await userRepository.findbyEmail(email)
     console.log(" the checked", user)
 
-    if (!user) return next(new ErrorHandler(400, "invalid emial id"))
+    if (!user) return next(new ErrorHandler(400, "invalid email id"))
     if (user?.blocked) {
       return next(new ErrorHandler(400, "access has been denied by admin "))
     }
-
+   console.log("after",password)
     const result = await hashPassword.comparePassword(password, user?.password)
     if (!result) return next(new ErrorHandler(400, "invalid password"))
+    console.log("after comparing")
 
-    const tokens = jwt.createAccessAndRefreshToken(user?._id as string)
+    const tokens = await jwt.createAccessAndRefreshToken(user?._id as string)
     await cloudSession.createUserSession(user?._id as string, user)
 
     return { user, tokens }

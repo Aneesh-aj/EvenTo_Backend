@@ -53,19 +53,28 @@ export class UserController {
         }
     }
 
-    async organizerLogin(req: Req, res: Res, next: Next) {
+    async userLogin(req: Req, res: Res, next: Next) {
+       try{
         console.log("org login controller",req.body)
-        const user = await this.userUseCase.login(req.body.email, req.body.passsword, next)
+        console.log(" passwod",req.body.password)
+        const result = await this.userUseCase.login(req.body.email, req.body.password, next)
         console.log(" at the end")
         console.log(
-            "hte user", user
+            "hte user", result
         )
-        res.cookie("accesToken", user?.accessToken, accessTokenOptions)
-        //  res.cookie("refreshToken",user?.refreshToken,refreshTokenOptions)
-        res.cookie("role", 'user')
-        if (user) {
-            console.log(" usersss", user.accessToken)
+        console.log("the access toekn",result?.tokens?.accessToken)
+        console.log("the refresh token",result?.tokens?.refreshToken)
+
+
+
+        if(result){
+            res.cookie("accessToken",result?.tokens?.accessToken,accessTokenOptions)
+            res.cookie('refreshToken',result?.tokens?.refreshToken,refreshTokenOptions)
+            res.status(200).json({user:result?.user,message:"user logged In successfully"})
         }
-        res.status(200).json({ token: user?.accessToken, role: 'user' })
+       }catch(error:any){
+        console.log(" comminng to the eroror")
+         return next(new ErrorHandler(error,next))
+       }
     }
 }

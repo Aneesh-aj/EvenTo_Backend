@@ -64,7 +64,8 @@ export class UserUseCase implements IuserUseCase {
      }
      async login(email: string, password: string, next: NextFunction): Promise<any | void> {
           try {
-               return login(this.userRepository,
+               console.log(" in the use case",password)
+               return await login(this.userRepository,
                     this.jwt,
                     this.cloudSession,
                     this.hashPassword,

@@ -4,6 +4,7 @@ import { defaultMaxListeners } from "events";
 
 
 const AdminSchema :Schema <Iadmin> = new  mongoose.Schema({
+     role:{type:String,default:'admin'},
      email:{type:String},
      password:{type:String}
 })
