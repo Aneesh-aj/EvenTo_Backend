@@ -14,6 +14,6 @@ export const getAllorganizer = async (organizerModels: typeof organizerModel) : 
             return
          }
     }catch(error){
-        console.log("error in findemail ",error)
+        throw error
     }
 }

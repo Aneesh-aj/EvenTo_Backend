@@ -8,19 +8,19 @@ export const reject = async (id:string,organizerModels: typeof organizerModel) :
         console.log("inside the repo")
          
          const org  = await organizerModel.findByIdAndDelete(id)
-         let userId = id
-         const addres = await addressModel.findOneAndDelete({userId})
-         console.log(addres)
+         const userId = id
+         const address = await addressModel.findOneAndDelete({userId})
+         console.log(address)
          console.log(" org", org)
         
-         if(addres){
-            return addres
+         if(address){
+            return address
          }
          else{
             return 
          }
 
     }catch(error){
-        console.log("error in findemail ",error)
+        throw error
     }
 }

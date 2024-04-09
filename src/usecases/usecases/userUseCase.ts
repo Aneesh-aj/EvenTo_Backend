@@ -2,9 +2,7 @@ import { Req, Res, Next } from "../../framework/types/serverPackageTypes";
 
 import { IuserUseCase } from "../interface/usecase/userUseCase";
 import { Iuser } from "../../entities/user";
-import { login } from "./user/login";
-import { createUser } from "./user/createUser";
-import { userSignup } from "./user/signup";
+import {userSignup,login,createUser} from "./user/index"
 import { IuserRepository } from "../interface/repositoryInterface/userRepository";
 import { Ijwt } from "../interface/service/jwt";
 import { NextFunction } from "express";
@@ -18,31 +16,15 @@ import { catchError } from "../middleares/catchError";
 
 export class UserUseCase implements IuserUseCase {
 
-     private readonly userRepository: IuserRepository
-     private readonly jwt: Ijwt
-     private readonly otpGenerate: IotpGenerate
-     private readonly otpRepository: IotpRepository
-     private readonly sentEmail: IsentEmail
-     private readonly hashPassword: Ihashpassword
-     private readonly cloudSession: IcloudSession
-
-     constructor(
-          userRepository: IuserRepository,
-          jwt: Ijwt,
-          otpGenerate: IotpGenerate,
-          otpRepository: IotpRepository,
-          sentEmail: IsentEmail,
-          hashPassword: Ihashpassword,
-          cloudSession: IcloudSession
-     ) {
-          this.userRepository = userRepository
-          this.jwt = jwt
-          this.otpGenerate = otpGenerate
-          this.otpRepository = otpRepository
-          this.sentEmail = sentEmail
-          this.hashPassword = hashPassword
-          this.cloudSession = cloudSession
-     }
+     constructor( 
+        private  userRepository: IuserRepository,
+        private  jwt: Ijwt,
+        private  otpGenerate: IotpGenerate,
+        private  otpRepository: IotpRepository,
+        private  sentEmail: IsentEmail,
+        private  hashPassword: Ihashpassword,
+        private  cloudSession: IcloudSession
+     ) { }
      async userSignup(user: Iuser, next: Next): Promise<string | void> {
           try {
                console.log("coming here")
@@ -94,9 +76,4 @@ export class UserUseCase implements IuserUseCase {
                catchError(error,next)
           }
      }
-
-
-
-
-
 }

@@ -8,15 +8,12 @@ export const getDetails = async (id:string,organizerModels: typeof organizerMode
         console.log("inside the repo")
          
          const org  = await organizerModel.findById(id)
-         let userId = id
+         const userId = id
          const addres = await addressModel.findOne({userId})
-         console.log(addres)
-         console.log(" org", org)
-        
          const orgWithAddress = org ? { ...org.toObject(), address: addres } : null;
          return orgWithAddress
 
     }catch(error){
-        console.log("error in findemail ",error)
+        throw error
     }
 }

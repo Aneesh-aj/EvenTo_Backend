@@ -25,6 +25,6 @@ export const block = async (id:string,organizerModels: typeof organizerModel) : 
             return;
         }
     }catch(error){
-        console.log("error in findemail ",error)
+        throw error
     }
 }

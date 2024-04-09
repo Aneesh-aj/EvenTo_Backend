@@ -15,60 +15,91 @@ import { getAllusers } from "./admin/getAllUsers";
 import { getAllorganizers } from "./admin/getAllOrganizers";
 import { blockOrganizer } from "./admin/blockOrganizer";
 import { blockUser } from "./admin/blockUser";
+import { catchError } from "../middleares/catchError";
 
-export class AdminUsecase implements IadminUsecase{
-    private readonly hashpassword : Ihashpassword
-    private readonly adminRepository : IadminRepository
-    private readonly jwt : Ijwt
-    private readonly organizerRepository : IorganizerRepository
-    private readonly userRepoistory : IuserRepository
-     constructor(hashpassword: Ihashpassword , adminRepository:IadminRepository,jwt:Ijwt,organizerRepository:IorganizerRepository,userRepository:IuserRepository){
-         this.hashpassword = hashpassword
-         this.adminRepository = adminRepository
-         this.jwt = jwt
-         this.organizerRepository =organizerRepository
-         this.userRepoistory = userRepository
-     }
+export class AdminUsecase implements IadminUsecase {
 
-   async  login({ email, password }: { email: string; password: string; }, next: NextFunction): Promise<any> {
-       console.log(" in the usecase")
-      let result = await  login(email,password,this.hashpassword,this.adminRepository,this.jwt)
-       return result
+    constructor(
+        private hashpassword: Ihashpassword,
+        private adminRepository: IadminRepository,
+        private jwt: Ijwt,
+        private organizerRepository: IorganizerRepository,
+        private userRepository: IuserRepository) { }
+
+    async login({ email, password }: { email: string; password: string; }, next: NextFunction): Promise<any> {
+        try {
+            const result = await login(email, password, this.hashpassword, this.adminRepository, this.jwt)
+            return result
+        } catch (error) {
+            catchError(error, next)
+        }
     }
 
-    async getRequests(next:Next):Promise <any | void>{
-        let result = await getRequests(this.organizerRepository)
-        return result
+    async getRequests(next: Next): Promise<any | void> {
+        try {
+            const result = await getRequests(this.organizerRepository)
+            return result
+        } catch (error) {
+            catchError(error, next)
+        }
     }
 
-    async getDetails(id:string,next:Next): Promise < any | void>{
-        let result = await getDetails(this.organizerRepository,id)
-      
-        return result
+    async getDetails(id: string, next: Next): Promise<any | void> {
+        try {
+            const result = await getDetails(this.organizerRepository, id)
+            return result
+        } catch (error) {
+            catchError(error, next)
+        }
     }
 
-     async approve(id: string, next: NextFunction): Promise<any> {
-        let result = await approve(this.organizerRepository,id)
-        return result
+    async approve(id: string, next: Next): Promise<any> {
+        try {
+            const result = await approve(this.organizerRepository, id)
+            return result
+
+        } catch (error) {
+            catchError(error, next)
+        }
     }
 
-     async reject(id: string, next: NextFunction): Promise<any> {
-        let result = await reject(this.organizerRepository,id)
-        return result    
+    async reject(id: string, next: Next): Promise<any> {
+        try {
+            const result = await reject(this.organizerRepository, id)
+            return result
+        } catch (error) {
+            catchError(error, next)
+        }
     }
 
-    async  getAllusers(): Promise<any> {
-        return await getAllusers(this.userRepoistory)
+    async getAllusers(next: Next): Promise<any> {
+        try {
+            return await getAllusers(this.userRepository)
+        } catch (error) {
+            catchError(error, next)
+        }
     }
-    async  getAllorganizers(): Promise<any> {
-        return await getAllorganizers(this.organizerRepository)
+    async getAllorganizers(next: Next): Promise<any> {
+        try {
+            return await getAllorganizers(this.organizerRepository)
+        } catch (error) {
+            catchError(error, next)
+        }
     }
 
-    async  blockUsers(id: string, next: NextFunction): Promise<any> {
-        return await blockUser(this.userRepoistory,id)
+    async blockUsers(id: string, next: NextFunction): Promise<any> {
+        try {
+            return await blockUser(this.userRepository, id)
+        } catch (error) {
+            catchError(error, next)
+        }
     }
 
-    async  blockOrganizer(id: string, next: NextFunction): Promise<any> {
-        return await blockOrganizer(this.organizerRepository,id)
+    async blockOrganizer(id: string, next: NextFunction): Promise<any> {
+        try {
+            return await blockOrganizer(this.organizerRepository, id)
+        } catch (error) {
+            catchError(error, next)
+        }
     }
 }

@@ -4,7 +4,6 @@ export const addAddress = async (newaddress:Iaddress,addressModels:typeof addres
     try{
          const address = await addressModel.create(newaddress)
          await address.save()
-         console.log("after addding the",address)
          return address
     }catch(error){
         throw error

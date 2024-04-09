@@ -5,19 +5,23 @@ import { organizerController } from "./injections/Injection";
 
 export function OrganizerRoute(router: Route){
 
-     router.post('/signup',(req: Req , res : Res , next : Next)=>{
+     router.post('/sentOtp',(req: Req , res : Res , next : Next)=>{
          console.log(" the body",req.body)
          organizerController.singup(req,res,next)
-         res.json().status(200)
      })
 
      router.post('/register',(req : Req, res : Res , next : Next)=>{
         console.log("routerdkkkkkkkkkkkkk")
         organizerController.createOrganizer(req,res ,next)
-        res.json().status(200)
      })
 
-
-
+     router.post('/verifyotp',(req:Req,res:Res,next : Next)=>{
+        console.log("coming to verifyotp router",req.body)
+        organizerController.verifyOtp(req,res,next)
+     })
+    
+     router.post("/logout",(req:Req,res:Res,next:Next)=>{
+      organizerController.logout(req,res,next)
+     })
      return router
 }

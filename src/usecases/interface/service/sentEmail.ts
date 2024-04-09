@@ -1,3 +1,3 @@
 export interface IsentEmail{
-    sentEmailVerification(name:string,email:string,verification:string) : Promise < any >
+    sentEmailVerification(name:string,email:string,verification:string) : Promise < boolean >
 }

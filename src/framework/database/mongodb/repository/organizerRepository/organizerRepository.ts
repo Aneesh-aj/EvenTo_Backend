@@ -1,58 +1,88 @@
 import organizerModel from "../../model/organizer";
 
 import { Iorganizer } from "../../../../../entities/organizer";
-import {addAddress, createOrganizer, findbyEmail , organizerLogin} from './organizer/index'
-
+import { addAddress, approve, block, createOrganizer, findbyEmail, getAll, getAllorganizer, getDetails, organizerLogin, reject, } from './organizer/index'
 import { IorganizerRepository } from "../../../../../usecases/interface/repositoryInterface/organizerRepository";
 import { Iaddress } from "../../../../../entities/address";
 import addressModel from "../../model/address";
-import { getAll } from "./organizer/getall";
-import { getDetails } from "./organizer/getDetails";
-import { approve } from "./organizer/approvelAccept";
-import { reject } from "./organizer/approvelReject";
-import { getAllorganizer } from "./organizer/getallOrgnaizer";
-import { block } from "./organizer/block";
+import { error } from "console";
 
+export class OrganizerRepository implements IorganizerRepository {
 
-export class OrganizerRepository implements IorganizerRepository{
-    constructor(private organizerModels: typeof organizerModel){
-    
-    }
-   async  createAddress(newaddres: Iaddress): Promise<void | Iaddress> {
-        return await addAddress(newaddres,addressModel)
-    }
-   async  createOrganizer(newUser: Iorganizer): Promise<Iorganizer | void> {
-        return await createOrganizer(newUser, this.organizerModels)
-    }
+    constructor(private organizerModels: typeof organizerModel) { }
 
-    async  findbyEmail(email: string): Promise< string | void> {
-        return await findbyEmail(email,organizerModel)
+    async createAddress(newaddres: Iaddress): Promise<void | Iaddress> {
+        try {
+            return await addAddress(newaddres, addressModel)
+        } catch (error) { throw error }
     }
-    async  organizerLogin(email: string, password: string): Promise<string | void> {
-           return await organizerLogin(email,password,organizerModel)
+    async createOrganizer(newUser: Iorganizer): Promise<Iorganizer | void> {
+        try {
+            return await createOrganizer(newUser, this.organizerModels)
+        } catch (error) {
+            throw error
+        }
     }
-
-   async getAll(): Promise<any | void> {
-        return await getAll(organizerModel)
+    async findbyEmail(email: string): Promise<string | void> {
+        try {
+            return await findbyEmail(email, organizerModel)
+        } catch (error) {
+            throw error
+        }
     }
-    async  getDetails(id: string): Promise<any> {
-        return await getDetails(id,organizerModel)
-    }
-
-   async   approve(id: string): Promise<any> {
-        return await approve(id,organizerModel)
+    async organizerLogin(email: string, password: string): Promise<string | void> {
+        try {
+            return await organizerLogin(email, password, organizerModel)
+        } catch (error) {
+            throw error
+        }
     }
 
-    async  reject(id: string): Promise<any> {
-        return await reject(id,organizerModel)
+    async getAll(): Promise<any | void> {
+        try {
+            return await getAll(organizerModel)
+        } catch (error) {
+            throw error
+        }
     }
-     async getAllorganizer(): Promise<any> {
-         return await getAllorganizer(organizerModel)
-     }
-    
-     async  blockOrganizer(id: string): Promise<any> {
-        console.log("Inside the repsssso=========================================================================================================================================================");
 
-         return await  block(id,organizerModel)
-     }
+    async getDetails(id: string): Promise<any> {
+        try {
+            return await getDetails(id, organizerModel)
+        } catch (error) {
+            throw error
+        }
+    }
+
+    async approve(id: string): Promise<any> {
+        try {
+            return await approve(id, organizerModel)
+        } catch (error) {
+            throw error
+        }
+    }
+
+    async reject(id: string): Promise<any> {
+        try{
+            return await reject(id, organizerModel)
+        }catch(error){
+            throw error
+        }
+    }
+
+    async getAllorganizer(): Promise<any> {
+        try{
+            return await getAllorganizer(organizerModel)
+        }catch(error){
+            throw error
+        }
+    }
+
+    async blockOrganizer(id: string): Promise<any> {
+        try{
+            return await block(id, organizerModel)
+        }catch(error){
+            throw error
+        }
+    }
 }

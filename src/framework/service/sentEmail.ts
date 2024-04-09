@@ -6,21 +6,20 @@ export class SentEmail implements IsentEmail {
 
   async sentEmailVerification(name:string, email: string, verification: string): Promise<any> {
     const transporter = nodemailer.createTransport({
-      service: 'gmail', // e.g., 'gmail', 'yahoo', etc.
+      service: 'gmail', 
       auth: {
-        user: 'tuser2287@gmail.com',
-        pass: 'nbocstrrriufybdk',
+        user:process.env.MAILER_EMAIL,
+        pass:process.env.MAILER_PASSWORD,
 
       },
     });
 
-    // Function to send verification email
     const sendVerificationEmail = async (name:string,toEmail: string, verificationCode: string) => {
       // Define email options
       const mailOptions = {
-        from: 'tuser2287@gmail.com',        to: toEmail,
+        from: process.env.MAILER_EMAIL,        to: toEmail,
         subject: 'Email Verification',
-        text: `Hello${name} ,\n\nYour verification code is: ${verificationCode}\n\nThanks, \nYour App Name`,
+        text: `Hello${name} ,\n\nYour verification code is: ${verificationCode}\n\nThanks, \nEvenTo`,
       };
 
       try {
@@ -29,10 +28,10 @@ export class SentEmail implements IsentEmail {
         console.log('Email sent: ' + info.response);
       } catch (error) {
         console.error('Error sending email:', error);
+         return error
       }
     };
 
-    // Example usage
     await sendVerificationEmail(name,email, verification);
   }
 }

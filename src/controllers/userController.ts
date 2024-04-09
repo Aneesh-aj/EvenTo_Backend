@@ -70,11 +70,21 @@ export class UserController {
         if(result){
             res.cookie("accessToken",result?.tokens?.accessToken,accessTokenOptions)
             res.cookie('refreshToken',result?.tokens?.refreshToken,refreshTokenOptions)
-            res.status(200).json({user:result?.user,message:"user logged In successfully"})
+            res.status(200).json({user:result?.user,message:"user logged In successfully",role:'user'})
         }
        }catch(error:any){
         console.log(" comminng to the eroror")
          return next(new ErrorHandler(error,next))
        }
+    }
+
+    async logout(req:Req, res: Res,next : Next){
+        try{
+            res.clearCookie('accessToken',accessTokenOptions)
+            res.clearCookie('refreshToken',refreshTokenOptions)
+            res.status(200).json({sucess:true ,message:"logout successful"})
+        }catch(error:any){
+            return next(new ErrorHandler(error.status,error.message))
+        }
     }
 }

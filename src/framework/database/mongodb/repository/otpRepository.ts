@@ -22,10 +22,14 @@ export class OtpRepository implements IotpRepository{
       }
 
      async findOtp(email: string): Promise<Iotp | null> {
-         console.log("finding the otp ",email)
+         try{
+          console.log("finding the otp ",email)
           const result = await otpModel.findOne({email})
           console.log("result")
           return result
+         }catch(error){
+           throw error
+         }
       }
     
       async  findAndDeleteUser(email: string, otp: string): Promise< boolean> {

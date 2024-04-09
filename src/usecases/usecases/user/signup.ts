@@ -17,20 +17,14 @@ export const userSignup = async (jwt:Ijwt ,otpRepository:IotpRepository,userRepo
         if(isUserExist){
            return next(new ErrorHandler(400,"user already exist"))
         }
-
-        console.log("after current user")
        
         const isUserOnOtp = await otpRepository.findOtp(user.email)
         if(isUserOnOtp){
           
-           await sentEmail.sentEmailVerification(user.name,user.email,isUserOnOtp.otp as string)
-   
+           await sentEmail.sentEmailVerification(user.name,user.email,isUserOnOtp.otp as string)  
            const hashPasswords = await hashPassword.createHash(user.password as string)
-           
            user.password = hashPasswords
-   
            const jwtToken = await jwt.createVerificationJWT({name: user.name,email:user.email,password:user.password})
-           console.log(" JwtRokekeks", jwtToken)
            return jwtToken
         }else{
            const otp = await otpGenerate.createOtp()
@@ -44,29 +38,7 @@ export const userSignup = async (jwt:Ijwt ,otpRepository:IotpRepository,userRepo
 
         }
      }catch(error){
-      console.log("its here")
          catchError(error,next)
      }
-    //  console.log("before")
-    //  const otp = await otpGenerate.createOtp()
-    //  console.log("coming here")
-    //  console.log("otp fist", otp)
-
-    //  const repoOtp = await otpRepository.createOtp(email,otp)
-     
-    //  const sentTomail = await sentEmail.sentEmailVerification(email,otp)
-     
-
-      
-    //  return
-
-    // const creating = await userRepository.createUser({name,email,password})
-      
-    // console.log("in the creatuser ",creating)
-    
-    // const token = await jwt.createVerificationJWT({name,email,password})
-    // console.log("hte token", token)
-
-
      
 }

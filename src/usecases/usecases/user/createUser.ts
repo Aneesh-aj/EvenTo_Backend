@@ -13,19 +13,18 @@ export const createUser= async (token:string,otp:string,otpRepository:IotpReposi
      
     // console.log("inside the creater",newUser)
     try{
-        console.log("next is otp",otp)
-    
-        let decode = (await jwt.verifyJwt(token)) as Iuser
-        console.log(" the userssss", decode.email, decode.name,decode.password)
+        const decode = (await jwt.verifyJwt(token)) as Iuser
         if(!decode){
             return next(new ErrorHandler(400,"token has expired,register again"))
         }
          
-    
-        const result = await otpRepository.findAndDeleteUser(decode.email,otp)
+        const result = await otpRepository.findOtp(decode.email)
           console.log("the result of the otp",result)
         if(!result){
-            return next(new ErrorHandler(400,"verification code mismatched"))
+            return next(new ErrorHandler(400,"otp expired"))
+        }
+        if(result.otp !== otp){
+           return next(new ErrorHandler(400,"invalid otpf"))
         }
          
         const newUser = await userRepository.createUser(decode)
@@ -36,26 +35,5 @@ export const createUser= async (token:string,otp:string,otpRepository:IotpReposi
     }catch(error){
         throw error
     }
-
-
-    // const isTrue = await otpRepository.findOtp(newUser.email)
-
-    // if(isTrue){
-    //     console.log("inside if")
-    //     if(isTrue.otp === otp){
-    //         console.log("inside another if")
-    //         let password = await hashPassword.createHash(newUser.password)
- 
-    //         let user = await userRepository.createUser({name:newUser.name,email:newUser.email,password})
-    //         console.log(user)
-    //         console.log("okkkkkkkkkkkkk")
-    //         return user?._id
-    //     }
-    // }else{
-    //     return "invalid otp"
-    // }
-
-
-
       
 }

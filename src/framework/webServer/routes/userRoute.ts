@@ -19,6 +19,10 @@ export function UserRoute(router: Route){
          userController.userLogin(req, res, next)
     })
 
+    router.post('/logout',(req:Req,res:Res,next:Next)=>{
+         userController.logout(req,res,next)
+    })
+
    
     return router
 

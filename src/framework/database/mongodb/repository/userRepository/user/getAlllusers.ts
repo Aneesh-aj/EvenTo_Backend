@@ -12,6 +12,6 @@ export const getAllusers = async (usersModel: typeof userModel) : Promise < any 
             return
          }
     }catch(error){
-        console.log("error in findemail ",error)
+       throw error
     }
 }
