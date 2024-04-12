@@ -1,7 +1,7 @@
 import { IorganizerRepository } from "../interface/repositoryInterface/organizerRepository";
 import { IorganizerUseCase } from "../interface/usecase/organizerUseCase";
 import { Ihashpassword } from "../interface/service/hashPassword";
-import { createOrganizers, signup } from './organizer/index'
+import { approvalChecking, createOrganizers, login, signup } from './organizer/index'
 import { IotpGenerate } from "../interface/service/otpGenerate";
 import { IsentEmail } from "../interface/service/sentEmail";
 import { IotpRepository } from "../interface/repositoryInterface/otpRepository";
@@ -9,34 +9,24 @@ import { Next } from "../../framework/types/serverPackageTypes";
 import { catchError } from "../middleares/catchError";
 import { verifyOtp } from "./organizer/verifyOtp";
 import { Iorganizer } from "../../entities/organizer";
-// import { Ijwt } from "../interface/service/jwt";
+import { Ijwt } from "../interface/service/jwt";
 
 export class OrganizerUseCase implements IorganizerUseCase {
-    private readonly organizerRepository: IorganizerRepository
-    private readonly hashpassword: Ihashpassword
-    // private readonly jwt : Ijwt
-    private readonly otpGenerate: IotpGenerate
-    private readonly otpRepository: IotpRepository
-    private readonly sentEmail: IsentEmail
+  
 
-    constructor(organizerRepository: IorganizerRepository,
-        hashpassword: Ihashpassword,
-        // jwt : Ijwt,
-        otpGenerate: IotpGenerate,
-        otpRepository: IotpRepository,
-        sentEmail: IsentEmail
+    constructor(
+       private organizerRepository: IorganizerRepository,
+       private hashpassword: Ihashpassword,
+       private jwt : Ijwt,
+       private otpGenerate: IotpGenerate,
+       private otpRepository: IotpRepository,
+       private sentEmail: IsentEmail
     ) {
-        this.organizerRepository = organizerRepository
-        this.hashpassword = hashpassword
-        // this.jwt = jwt
-        this.otpGenerate = otpGenerate
-        this.otpRepository = otpRepository
-        this.sentEmail = sentEmail
     }
 
     async signupOrganzier(email: string,name:string,next:Next): Promise<boolean | void> {
         try {
-          let result = await signup(this.otpGenerate, this.otpRepository, name,email, this.sentEmail,next)
+          const  result = await signup(this.otpGenerate, this.otpRepository, name,email, this.sentEmail,next)
           console.log(" the result",result)
           return result
         } catch (error) {
@@ -90,8 +80,22 @@ export class OrganizerUseCase implements IorganizerUseCase {
         }
     }
 
+    async isApproved(id: string, next: Next): Promise<boolean> {
+        const  result = await approvalChecking(id,this.organizerRepository)
+        return result
+    }
 
 
+    async  login(email: string, password: string, next: Next): Promise<object | void> {
+        try{
+            const result = await login(email,password,this.organizerRepository,this.hashpassword,this.jwt,next)
+        return result
+        }catch(error:any){
+            console.log(error)
+            console.log("inside the usecase",error)
+            console.error(error)
+        }
+    }
 
 
 }

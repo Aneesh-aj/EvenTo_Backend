@@ -7,16 +7,18 @@ import { approve } from "./approvelAccept"
 import { getDetails } from "./getDetails"
 import { block } from "./block"
 import { getAllorganizer } from "./getallOrgnaizer"
-import { organizerLogin } from "./organizerLogin"
+// import { organizerLogin } from "./organizerLogin"
+import { approveChecking } from "./approveChecking"
 export {
     createOrganizer,
     addAddress,
     findbyEmail,
-    organizerLogin,
+    // organizerLogin,
     getAll,
     getDetails,
     approve,
     reject,
     getAllorganizer,
-    block
+    block,
+    approveChecking
 }

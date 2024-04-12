@@ -20,6 +20,7 @@ export class JWTtoken implements Ijwt{
 
       async createAccessAndRefreshToken(id: string ): Promise<IToken> {
           const payload = {id}
+          console.log("jwt in side ",payload)
            const accessToken = await jwt.sign(payload , this.JWT_ACCESS_KEY,{
               expiresIn:'5h'
            })
@@ -27,7 +28,7 @@ export class JWTtoken implements Ijwt{
            const refreshToken = await jwt.sign(payload,this.JWT_REFRESH_KEY,{
              expiresIn:'3d',
            })
-
+             console.log("returnsing")
            return {accessToken,refreshToken}
       }
 

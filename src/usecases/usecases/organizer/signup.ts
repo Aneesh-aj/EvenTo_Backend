@@ -11,12 +11,14 @@ export const signup = async (otpGenerator: IotpGenerate, otpRepository: IotpRepo
 
     try {
         const isOnOtp = await otpRepository.findOtp(email)
+         console.log("isOnOtp:otp alreadyexist",isOnOtp)
         if(isOnOtp){
             await sentEmail.sentEmailVerification(name,email,isOnOtp.otp as string)
             return true
         }else{
 
             const  otp = await otpGenerator.createOtp()
+             console.log("-==========>generated otp",otp)
             await otpRepository.createOtp(email, otp)
             await sentEmail.sentEmailVerification(name, email, otp)
             return true

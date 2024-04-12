@@ -3,7 +3,7 @@ import { Next } from "../../../framework/types/serverPackageTypes";
 
 
 export interface IadminUsecase{
-     login({email,password}:{email:string,password:string},next:Next) : Promise < any>
+     login({email,password}:{email:string,password:string},next:Next) : Promise < any | null>
      getRequests(next:Next): Promise <any | void>
      getDetails(id:string,next:Next): Promise < any | void>
      approve(id:string,next:Next):Promise <any | void>

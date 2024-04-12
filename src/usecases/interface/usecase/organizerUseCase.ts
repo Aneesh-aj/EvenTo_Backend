@@ -8,4 +8,6 @@ export  interface IorganizerUseCase{
 
     signupOrganzier(email:string,name:string,next:Next):Promise <boolean | void>  
     verifyOtp(email:string,otp:string,next:Next):Promise<boolean | void> 
+    isApproved(id : string,next:Next):Promise<boolean>
+    login(email:string,password:string,next:Next):Promise<object | void>
 }

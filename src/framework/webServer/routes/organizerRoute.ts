@@ -23,5 +23,14 @@ export function OrganizerRoute(router: Route){
      router.post("/logout",(req:Req,res:Res,next:Next)=>{
       organizerController.logout(req,res,next)
      })
+
+     router.post("/approvel/:id",(req:Req,res:Res,next:Next)=>{
+        organizerController.isApproved(req,res,next)
+     })
+
+     router.post("/login",(req:Req,res:Res,next:Next)=>{
+        organizerController.login(req,res,next)
+     })
+
      return router
 }

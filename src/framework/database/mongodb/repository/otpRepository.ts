@@ -8,7 +8,7 @@ export class OtpRepository implements IotpRepository{
       async createOtp(email:string,otp:string): Promise<Iotp> {
          try{
           console.log("before calling the otp crating")
-          let  result = await otpModel.create({email,otp})
+          const  result = await otpModel.create({email,otp})
           setTimeout(async () => {
             if (result?._id) {
               await otpModel.findByIdAndDelete(result._id);
@@ -21,12 +21,15 @@ export class OtpRepository implements IotpRepository{
          }
       }
 
-     async findOtp(email: string): Promise<Iotp | null> {
+     async findOtp(email: string): Promise<any | null> {
          try{
           console.log("finding the otp ",email)
-          const result = await otpModel.findOne({email})
-          console.log("result")
-          return result
+          const result = await otpModel.find({email:email})
+          console.log("result",result)
+           if(result.length === 0){
+             return null
+           }
+          return result[0]
          }catch(error){
            throw error
          }

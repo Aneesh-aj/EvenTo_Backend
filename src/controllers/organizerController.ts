@@ -64,5 +64,41 @@ export class OrganizerController{
           return next(new ErrorHandler(error.status,error.message))
       }
   }
+   
+  async isApproved(req:Req,res:Res,next:Next){
+      try{
+        const {id} = req.params
+          const isApproved = await this.organizerUsecase.isApproved(id,next)
+          res.json({approval:isApproved})
+      }catch(error:any){
+         return next(new ErrorHandler(error.status,error.message))
+      }
+  }
+
+  async login(req:Req,res:Res,next:Next){
+    try{
+        const {email,password} = req.body
+        console.log(email,password," form the formdata")
+        const result = await this.organizerUsecase.login(email,password,next)
+        console.log(result)
+         if(result){
+          // const accessToken = result?.tokens?.accessToken;
+          // const refreshToken = result?.tokens?.refreshToken;
+        
+          // if (accessToken && refreshToken) {
+          //   res.cookie("accessToken", accessToken, accessTokenOptions);
+          //   res.cookie("refreshToken", refreshToken, refreshTokenOptions);
+          //   res.cookie("role", "orgnaizer");
+          
+          // } else {
+          //   console.error("Access token or refresh token is missing");
+          // }
+         }
+        //  res.status(200).json({ organizer:result?.organizer, role:"organizer",message:"logined successfully" })
+
+    }catch(error:any){
+       return next(new ErrorHandler(error.status,error.message))
+    }
+  }
 
 }

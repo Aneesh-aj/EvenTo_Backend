@@ -26,10 +26,10 @@ export class AdminUsecase implements IadminUsecase {
         private organizerRepository: IorganizerRepository,
         private userRepository: IuserRepository) { }
 
-    async login({ email, password }: { email: string; password: string; }, next: NextFunction): Promise<any> {
+    async login({ email, password }: { email: string; password: string; }, next: Next): Promise<any | null> {
         try {
             const result = await login(email, password, this.hashpassword, this.adminRepository, this.jwt)
-            return result
+             return result
         } catch (error) {
             catchError(error, next)
         }

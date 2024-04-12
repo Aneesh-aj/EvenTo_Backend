@@ -1,7 +1,7 @@
 import organizerModel from "../../model/organizer";
 
 import { Iorganizer } from "../../../../../entities/organizer";
-import { addAddress, approve, block, createOrganizer, findbyEmail, getAll, getAllorganizer, getDetails, organizerLogin, reject, } from './organizer/index'
+import { addAddress, approve, block, createOrganizer, findbyEmail, getAll, getAllorganizer, getDetails, reject,approveChecking } from './organizer/index'
 import { IorganizerRepository } from "../../../../../usecases/interface/repositoryInterface/organizerRepository";
 import { Iaddress } from "../../../../../entities/address";
 import addressModel from "../../model/address";
@@ -23,20 +23,20 @@ export class OrganizerRepository implements IorganizerRepository {
             throw error
         }
     }
-    async findbyEmail(email: string): Promise<string | void> {
+    async findbyEmail(email: string): Promise<Iorganizer | null> {
         try {
             return await findbyEmail(email, organizerModel)
         } catch (error) {
             throw error
         }
     }
-    async organizerLogin(email: string, password: string): Promise<string | void> {
-        try {
-            return await organizerLogin(email, password, organizerModel)
-        } catch (error) {
-            throw error
-        }
-    }
+    // async organizerLogin(email: string, password: string): Promise<string | void> {
+    //     try {
+    //         return await organizerLogin(email, password, organizerModel)
+    //     } catch (error) {
+    //         throw error
+    //     }
+    // }
 
     async getAll(): Promise<any | void> {
         try {
@@ -81,6 +81,20 @@ export class OrganizerRepository implements IorganizerRepository {
     async blockOrganizer(id: string): Promise<any> {
         try{
             return await block(id, organizerModel)
+        }catch(error){
+            throw error
+        }
+    }
+
+    async  approveChecking(id: string): Promise<boolean> {
+        try{
+            const result =  await approveChecking(id)
+            console.log("the result",result)
+            if(result){
+                return true
+            }else{
+                return false
+            }
         }catch(error){
             throw error
         }
