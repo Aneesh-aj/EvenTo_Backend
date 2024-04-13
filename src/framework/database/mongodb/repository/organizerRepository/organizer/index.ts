@@ -7,8 +7,12 @@ import { approve } from "./approvelAccept"
 import { getDetails } from "./getDetails"
 import { block } from "./block"
 import { getAllorganizer } from "./getallOrgnaizer"
+import { changeStatus } from "./changeStatus"
 // import { organizerLogin } from "./organizerLogin"
 import { approveChecking } from "./approveChecking"
+import { findbyId } from "./findbyId"
+import { uploadBackground } from "./uploadBackground"
+import { uploadProfile } from "./uploadProfile"
 export {
     createOrganizer,
     addAddress,
@@ -20,5 +24,9 @@ export {
     reject,
     getAllorganizer,
     block,
-    approveChecking
+    approveChecking,
+    changeStatus,
+    uploadBackground,
+    findbyId,
+    uploadProfile
 }

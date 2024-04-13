@@ -1,7 +1,7 @@
 import organizerModel from "../../model/organizer";
 
 import { Iorganizer } from "../../../../../entities/organizer";
-import { addAddress, approve, block, createOrganizer, findbyEmail, getAll, getAllorganizer, getDetails, reject,approveChecking } from './organizer/index'
+import { addAddress, approve, block, createOrganizer, findbyEmail, getAll, getAllorganizer, getDetails, reject,approveChecking, changeStatus, uploadBackground, findbyId, uploadProfile } from './organizer/index'
 import { IorganizerRepository } from "../../../../../usecases/interface/repositoryInterface/organizerRepository";
 import { Iaddress } from "../../../../../entities/address";
 import addressModel from "../../model/address";
@@ -99,4 +99,23 @@ export class OrganizerRepository implements IorganizerRepository {
             throw error
         }
     }
+    async  changeStatus(id: string): Promise<Iorganizer | null> {
+        return await changeStatus(id)
+    }
+
+    async  uploadBackground(id: string, image: string): Promise<string | null> {
+        console.log("on the resp",id , image)
+        return await uploadBackground(id,image)
+    }
+    
+    async  findbyId(id: string): Promise<Iorganizer | null> {
+         return await findbyId(id)
+    }
+    
+    async  uploadProfile(id: string, image: string): Promise<string | null> {
+        return await uploadProfile(id,image)
+
+    }
+
+
 }

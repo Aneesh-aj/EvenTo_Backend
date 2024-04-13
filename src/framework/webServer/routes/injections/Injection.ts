@@ -35,7 +35,7 @@ const adminrepository = new AdminRepository()
 
 const organizerrepository = new OrganizerRepository(organizerModel)
 const adminusecase = new AdminUsecase(bycryptsurvice,adminrepository,jwttoken,organizerrepository,userrepository)
-const organizerusecase = new  OrganizerUseCase(organizerrepository,bycryptsurvice,otpGenerate,otprepository,sentemail)
+const organizerusecase = new  OrganizerUseCase(organizerrepository,bycryptsurvice,otpGenerate,otprepository,sentemail,jwttoken)
 const organizerController = new  OrganizerController(organizerusecase)
 const adminController = new AdminController(adminusecase)
 

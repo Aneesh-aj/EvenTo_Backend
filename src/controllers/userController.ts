@@ -87,4 +87,16 @@ export class UserController {
             return next(new ErrorHandler(error.status,error.message))
         }
     }
+
+    async userDetails(req:Req,res:Res,next:Next){
+        try{
+           const {id} = req.params
+
+           const user = await this.userUseCase.getUser(id as string,next)
+           res.json({user:user,message:"got users successfully"})
+
+        }catch(error:any){
+            return next(new ErrorHandler(error.status,error.message))
+        }
+    }
 }

@@ -12,4 +12,10 @@ export interface IorganizerRepository{
     getAllorganizer():Promise <any | void>
     blockOrganizer(id:string) : Promise <any | void>
     approveChecking(id:string):Promise<boolean>
+    changeStatus(id:string):Promise<Iorganizer | null>
+    uploadBackground(id:string,image:string):Promise<string | null>
+    findbyId(id:string):Promise<Iorganizer | null>
+    uploadProfile(id:string,image:string):Promise<string | null>
+
+
 }

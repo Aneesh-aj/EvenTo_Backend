@@ -11,5 +11,7 @@ export interface Iorganizer {
     bankPassbook: any,
     approved?:boolean,
     blocked?:boolean,
+    backgroundImage?:string,
+    profielImage?:string
 
 }

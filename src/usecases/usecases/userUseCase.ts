@@ -2,7 +2,7 @@ import { Req, Res, Next } from "../../framework/types/serverPackageTypes";
 
 import { IuserUseCase } from "../interface/usecase/userUseCase";
 import { Iuser } from "../../entities/user";
-import {userSignup,login,createUser} from "./user/index"
+import { userSignup, login, createUser, getUser } from "./user/index"
 import { IuserRepository } from "../interface/repositoryInterface/userRepository";
 import { Ijwt } from "../interface/service/jwt";
 import { NextFunction } from "express";
@@ -16,14 +16,14 @@ import { catchError } from "../middleares/catchError";
 
 export class UserUseCase implements IuserUseCase {
 
-     constructor( 
-        private  userRepository: IuserRepository,
-        private  jwt: Ijwt,
-        private  otpGenerate: IotpGenerate,
-        private  otpRepository: IotpRepository,
-        private  sentEmail: IsentEmail,
-        private  hashPassword: Ihashpassword,
-        private  cloudSession: IcloudSession
+     constructor(
+          private userRepository: IuserRepository,
+          private jwt: Ijwt,
+          private otpGenerate: IotpGenerate,
+          private otpRepository: IotpRepository,
+          private sentEmail: IsentEmail,
+          private hashPassword: Ihashpassword,
+          private cloudSession: IcloudSession
      ) { }
      async userSignup(user: Iuser, next: Next): Promise<string | void> {
           try {
@@ -46,7 +46,7 @@ export class UserUseCase implements IuserUseCase {
      }
      async login(email: string, password: string, next: NextFunction): Promise<any | void> {
           try {
-               console.log(" in the use case",password)
+               console.log(" in the use case", password)
                return await login(this.userRepository,
                     this.jwt,
                     this.cloudSession,
@@ -70,10 +70,19 @@ export class UserUseCase implements IuserUseCase {
                     this.hashPassword,
                     this.jwt,
                     next)
-                    console.log("in the usecase" ,user)
+               console.log("in the usecase", user)
                return user
           } catch (error) {
-               catchError(error,next)
+               catchError(error, next)
+          }
+     }
+
+     async getUser(id:string, next:Next):Promise<Iuser| undefined>{
+          try {
+               const user = await getUser(id,this.userRepository)
+               return user? user as Iuser : undefined
+         } catch (error) {
+               catchError(error, next)
           }
      }
 }

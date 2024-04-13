@@ -1,7 +1,7 @@
 import { IorganizerRepository } from "../interface/repositoryInterface/organizerRepository";
 import { IorganizerUseCase } from "../interface/usecase/organizerUseCase";
 import { Ihashpassword } from "../interface/service/hashPassword";
-import { approvalChecking, createOrganizers, login, signup } from './organizer/index'
+import { approvalChecking, createOrganizers, findbyId, login, signup, uploadBackground, uploadProfile } from './organizer/index'
 import { IotpGenerate } from "../interface/service/otpGenerate";
 import { IsentEmail } from "../interface/service/sentEmail";
 import { IotpRepository } from "../interface/repositoryInterface/otpRepository";
@@ -9,7 +9,7 @@ import { Next } from "../../framework/types/serverPackageTypes";
 import { catchError } from "../middleares/catchError";
 import { verifyOtp } from "./organizer/verifyOtp";
 import { Iorganizer } from "../../entities/organizer";
-import { Ijwt } from "../interface/service/jwt";
+import { IToken, Ijwt } from "../interface/service/jwt";
 
 export class OrganizerUseCase implements IorganizerUseCase {
   
@@ -17,10 +17,10 @@ export class OrganizerUseCase implements IorganizerUseCase {
     constructor(
        private organizerRepository: IorganizerRepository,
        private hashpassword: Ihashpassword,
-       private jwt : Ijwt,
        private otpGenerate: IotpGenerate,
        private otpRepository: IotpRepository,
-       private sentEmail: IsentEmail
+       private sentEmail: IsentEmail,
+       private jwt : Ijwt,
     ) {
     }
 
@@ -86,7 +86,7 @@ export class OrganizerUseCase implements IorganizerUseCase {
     }
 
 
-    async  login(email: string, password: string, next: Next): Promise<object | void> {
+    async  login(email: string, password: string, next: Next): Promise<{organizer:Iorganizer,tokens:IToken} | void> {
         try{
             const result = await login(email,password,this.organizerRepository,this.hashpassword,this.jwt,next)
         return result
@@ -97,5 +97,25 @@ export class OrganizerUseCase implements IorganizerUseCase {
         }
     }
 
+    async  uploedImage(id:string ,url: string, next: Next): Promise<string | null> {
+            console.log("in the usecase")
+            return await uploadBackground(id,url,this.organizerRepository)
+    }
+
+    async  findbyId(id: string, next: Next): Promise<Iorganizer | null> {
+        //  try{
+            console.log("entering")
+            const result =  await findbyId(id,this.organizerRepository)
+            console.log("usecase result")
+            return result ? result: null
+        //  }catch(error){
+        //     catchError(error,next)
+        //  }
+    }
+    
+    async  uploadProfile(id: string, url: string, next: Next): Promise<string | null> {
+        return await uploadProfile(id,url,this.organizerRepository)
+
+    }
 
 }

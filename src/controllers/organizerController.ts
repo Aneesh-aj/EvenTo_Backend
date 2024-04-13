@@ -82,23 +82,62 @@ export class OrganizerController{
         const result = await this.organizerUsecase.login(email,password,next)
         console.log(result)
          if(result){
-          // const accessToken = result?.tokens?.accessToken;
-          // const refreshToken = result?.tokens?.refreshToken;
+          const accessToken = result?.tokens?.accessToken;
+          const refreshToken = result?.tokens?.refreshToken;
         
-          // if (accessToken && refreshToken) {
-          //   res.cookie("accessToken", accessToken, accessTokenOptions);
-          //   res.cookie("refreshToken", refreshToken, refreshTokenOptions);
-          //   res.cookie("role", "orgnaizer");
+          if (accessToken && refreshToken) {
+            res.cookie("accessToken", accessToken, accessTokenOptions);
+            res.cookie("refreshToken", refreshToken, refreshTokenOptions);
+            res.cookie("role", "orgnaizer");
           
-          // } else {
-          //   console.error("Access token or refresh token is missing");
-          // }
+          } else {
+            console.error("Access token or refresh token is missing");
+          }
          }
-        //  res.status(200).json({ organizer:result?.organizer, role:"organizer",message:"logined successfully" })
+         res.status(200).json({ organizer:result?.organizer, role:"organizer",message:"logined successfully" })
 
     }catch(error:any){
        return next(new ErrorHandler(error.status,error.message))
     }
+  }
+
+  async uploadBackground(req:Req,res:Res,next:Next){
+     try{
+       const {id,image} = req.body
+       console.log(" the body",req.body)
+       console.log("id and url",id,image)
+       const result = await this.organizerUsecase.uploedImage(id as string,image,next)
+          console.log(result)
+          res.json({image:result,message:"successfully uploaded"})
+     }catch(error:any){
+        return next(new ErrorHandler(error.status,error.message))
+     }
+  }
+
+  async uploadProfilePicture(req:Req,res:Res,next:Next){
+    try{
+      const {id,image} = req.body
+      console.log(" the body",req.body)
+      console.log("id and url",id,image)
+      const result = await this.organizerUsecase.uploadProfile(id as string,image,next)
+         console.log(result)
+         res.json({image:result,message:"successfully uploaded"})
+    }catch(error:any){
+       return next(new ErrorHandler(error.status,error.message))
+    }
+ }
+
+
+  async findbyId(req:Req,res:Res,next:Next){
+      try{
+          const {id} = req.params
+          console.log("id",id)
+          const organizer = await this.organizerUsecase.findbyId(id,next)
+           res.json({organizer:organizer})
+      }catch(error:any){
+        return next(new ErrorHandler(error.status,error.message))
+
+      }
   }
 
 }

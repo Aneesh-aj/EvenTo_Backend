@@ -1,5 +1,6 @@
 import { Iorganizer } from "../../../entities/organizer";
 import { Next , Res, Req } from "../../../framework/types/serverPackageTypes";
+import { IToken } from "../service/jwt";
 
 
 export  interface IorganizerUseCase{
@@ -9,5 +10,10 @@ export  interface IorganizerUseCase{
     signupOrganzier(email:string,name:string,next:Next):Promise <boolean | void>  
     verifyOtp(email:string,otp:string,next:Next):Promise<boolean | void> 
     isApproved(id : string,next:Next):Promise<boolean>
-    login(email:string,password:string,next:Next):Promise<object | void>
+    login(email:string,password:string,next:Next):Promise<{organizer:Iorganizer , tokens:IToken} | void>
+    uploedImage(id:string,url:string,next:Next):Promise<string | null>
+    findbyId(id:string,next:Next):Promise<Iorganizer | null>
+    uploadProfile(id:string,url:string,next:Next):Promise<string | null>
+
+
 }

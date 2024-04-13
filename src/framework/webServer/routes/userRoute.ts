@@ -23,6 +23,11 @@ export function UserRoute(router: Route){
          userController.logout(req,res,next)
     })
 
+    router.get('/profile/:id',(req:Req, res: Res ,next:Next)=>{
+        console.log("entering to the  router")
+         userController.userDetails(req, res, next)
+    })
+
    
     return router
 

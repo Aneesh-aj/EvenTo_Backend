@@ -3,7 +3,7 @@ import { Iuser } from "../../../../../entities/user";
 
 import { IuserRepository } from "../../../../../usecases/interface/repositoryInterface/userRepository";
 
-import {createUser,findbyEmail} from './user/ index'
+import {createUser,findbyEmail, getUser} from './user/ index'
 import { login } from "../../../../../usecases/usecases/user/login";
 import { getAllusers } from "./user/getAlllusers";
 import { blockuser } from "./user/block";
@@ -27,5 +27,9 @@ export class userRepository implements IuserRepository{
     async  blockUser(id: string): Promise<any> {
         console.log("josjdfs hhhhheheheh")
         return await blockuser(id,userModel)
+    }
+    async  getUser(id: string): Promise<Iuser | undefined> {
+        const user =  await getUser(id)
+        return user ? user : undefined
     }
 }

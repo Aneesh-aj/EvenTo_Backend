@@ -15,7 +15,9 @@ const OrganizerSchema : Schema <Iorganizer> = new mongoose.Schema({
     bankPassbook:{type:String, required:true},
     phoneNumber: {String},
     approved:{type:Boolean,default:false},
-    blocked:{type:Boolean,default:false}
+    blocked:{type:Boolean,default:false},
+    backgroundImage:{type:String},
+    profielImage:{type:String}
 })
 
 const organizerModel : Model<Iorganizer> = mongoose.model('organizer',OrganizerSchema)

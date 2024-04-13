@@ -6,4 +6,5 @@ export interface IuserRepository{
     singup(email:string) :Promise <string>
     getAllusers():Promise<string>
     blockUser(id:string):Promise<any>
+    getUser(id:string):Promise<Iuser | undefined>
 }
