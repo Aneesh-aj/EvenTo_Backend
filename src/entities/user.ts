@@ -4,5 +4,7 @@ export interface Iuser{
     name:string,
     email:string,
     password:string,
-    blocked?:boolean
+    blocked?:boolean,
+    phoneNumber?:string,
+    profileImage?:string
 }

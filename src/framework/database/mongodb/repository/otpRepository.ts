@@ -59,6 +59,17 @@ export class OtpRepository implements IotpRepository{
              throw error
           }
       }
+
+      async resendOtp(email:string,otp:string):Promise< any>{
+            try{
+              
+              const checking = await otpModel.updateOne({email:email},{otp:otp},{upsert:true})
+              return
+
+            }catch(error){
+               throw error
+            }
+      }
       
       
       

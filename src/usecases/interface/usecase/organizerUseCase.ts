@@ -14,6 +14,8 @@ export  interface IorganizerUseCase{
     uploedImage(id:string,url:string,next:Next):Promise<string | null>
     findbyId(id:string,next:Next):Promise<Iorganizer | null>
     uploadProfile(id:string,url:string,next:Next):Promise<string | null>
+    resentOtp(email:string,next:Next):Promise<void>
+
 
 
 }

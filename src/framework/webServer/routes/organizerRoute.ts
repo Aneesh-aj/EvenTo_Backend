@@ -46,6 +46,10 @@ export function OrganizerRoute(router: Route) {
       console.log("profile route ======================================e>")
       organizerController.uploadProfilePicture(req, res, next)
    })
+  
+   router.post("/resendOtp",(req:Req,res:Res,next:Next)=>{
+      organizerController.resendOtp(req,res,next)
+ })
 
    return router 
 }

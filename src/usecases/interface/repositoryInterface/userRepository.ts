@@ -1,3 +1,4 @@
+import { Iaddress } from "../../../entities/address";
 import { Iuser } from "../../../entities/user";
 
 export interface IuserRepository{
@@ -7,4 +8,8 @@ export interface IuserRepository{
     getAllusers():Promise<string>
     blockUser(id:string):Promise<any>
     getUser(id:string):Promise<Iuser | undefined>
+    getAddress(id:string):Promise<Iaddress | undefined>
+    editUserData(id:string,phoneNumber:string,name:string):Promise < Iuser | undefined>
+    editAddress(id:string,country:string,state:string,city:string,pinCode:string):Promise<Iaddress | undefined>
+    uploadProfilePicture(id:string,image:string):Promise<boolean>
 }

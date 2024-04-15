@@ -1,5 +1,5 @@
 import { defaultMaxListeners } from "events";
-import { Iaddress } from "../../../entities/address";
+import { Iaddress } from "../../../../entities/address";
 import { Model,Schema } from "mongoose";
 import mongoose from "mongoose";
 
@@ -9,7 +9,7 @@ const AddressSchema : Schema <Iaddress> = new mongoose.Schema({
      state:{type:String},
      city:{type:String},
      pincode:{type:Number},
-     userId: String,
+     userId:{type:String},
 
 })
 

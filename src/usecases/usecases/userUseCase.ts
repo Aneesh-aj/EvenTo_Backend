@@ -1,8 +1,7 @@
 import { Req, Res, Next } from "../../framework/types/serverPackageTypes";
-
 import { IuserUseCase } from "../interface/usecase/userUseCase";
 import { Iuser } from "../../entities/user";
-import { userSignup, login, createUser, getUser } from "./user/index"
+import { userSignup, login, createUser, getUser, editProfile, uploadProfile } from "./user/index"
 import { IuserRepository } from "../interface/repositoryInterface/userRepository";
 import { Ijwt } from "../interface/service/jwt";
 import { NextFunction } from "express";
@@ -12,6 +11,8 @@ import { IotpRepository } from "../interface/repositoryInterface/otpRepository";
 import { IsentEmail } from "../interface/service/sentEmail";
 import { IcloudSession } from "../interface/service/cloudSession";
 import { catchError } from "../middleares/catchError";
+import { Iaddress } from "../../entities/address";
+import { resentOpt } from "./otp/otp";
 
 
 export class UserUseCase implements IuserUseCase {
@@ -77,12 +78,42 @@ export class UserUseCase implements IuserUseCase {
           }
      }
 
-     async getUser(id:string, next:Next):Promise<Iuser| undefined>{
+     async getUser(id:string, next:Next):Promise<{user:Iuser,address:Iaddress}| {user:Iuser} | undefined>{
           try {
                const user = await getUser(id,this.userRepository)
-               return user? user as Iuser : undefined
+               console.log(" usecase user",user)
+               return user? user  : undefined
          } catch (error) {
                catchError(error, next)
           }
      }
+     
+     async  editProfile(id: string, formData: any,next:Next): Promise<{ user: Iuser; address: Iaddress; } | Iuser | undefined> {
+         try{
+            console.log(" in the usecase formda",formData,formData.name)
+            const user = await editProfile(id, formData,this.userRepository)
+
+            return user
+         }catch(error){
+             catchError(error,next)
+         }
+     }
+     async  addProfilePicture(id: string, image: string, next: Next): Promise<boolean | undefined> {
+         try{
+             const uploaded = await uploadProfile(id,image,this.userRepository)
+             return uploaded?true:false
+         }catch(error){
+            catchError(error,next)
+         }
+     }
+
+     async  resentOtp(email: string,next:Next): Promise<void> {
+          try{
+                 const otp = await resentOpt(this.otpGenerate,this.sentEmail,this.otpRepository,email)
+          }catch(error){
+               catchError(error,next)
+          }
+     } 
+
 }
+

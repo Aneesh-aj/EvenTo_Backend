@@ -91,12 +91,53 @@ export class UserController {
     async userDetails(req:Req,res:Res,next:Next){
         try{
            const {id} = req.params
-
+  console.log("our id",id)
            const user = await this.userUseCase.getUser(id as string,next)
+           console.log("contorller ",user)
            res.json({user:user,message:"got users successfully"})
 
         }catch(error:any){
             return next(new ErrorHandler(error.status,error.message))
         }
+    }
+
+    async editProfile(req:Req,res:Res,next:Next){
+        const {id} = req.params
+        const {formData} = req.body
+        console.log(" id",id)
+        console.log("body",formData)
+
+        const user = await this.userUseCase.editProfile(id,formData,next)
+         console.log("controll user",user)
+        if(user){
+            res.json({user:user,message:"successfully edited"})
+        }
+    }
+
+    async addProfilePicture(req:Req,res:Res,next:Next){
+        try{
+            const {id,image} = req.body
+        console.log(" id",id,image)
+      
+
+        const user = await this.userUseCase.addProfilePicture(id,image,next)
+         console.log("controll user",user)
+        if(user){
+            res.json({user:user,message:"successfully edited"})
+        }
+        }catch(error:any){
+            return next(new ErrorHandler(error.status,error.message))
+
+        }
+    }
+
+    async resendOtp(req:Req,res:Res,next:Next){
+         try{
+            const {email} = req.body
+            await this.userUseCase.resentOtp(email,next)
+            res.json({message:"successfulll"})
+         }catch(error:any){
+            return next(new ErrorHandler(error.status,error.message))
+         }
     }
 }

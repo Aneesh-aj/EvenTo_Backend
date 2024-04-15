@@ -140,4 +140,14 @@ export class OrganizerController{
       }
   }
 
+  async resendOtp(req:Req,res:Res,next:Next){
+    try{
+       const {email} = req.body
+       await this.organizerUsecase.resentOtp(email,next)
+       res.json({message:"successfulll",status:200})
+    }catch(error:any){
+       return next(new ErrorHandler(error.status,error.message))
+    }
+}
+
 }

@@ -10,6 +10,8 @@ import { catchError } from "../middleares/catchError";
 import { verifyOtp } from "./organizer/verifyOtp";
 import { Iorganizer } from "../../entities/organizer";
 import { IToken, Ijwt } from "../interface/service/jwt";
+import { NextFunction } from "express";
+import { resentOpt } from "./otp/otp";
 
 export class OrganizerUseCase implements IorganizerUseCase {
   
@@ -116,6 +118,13 @@ export class OrganizerUseCase implements IorganizerUseCase {
     async  uploadProfile(id: string, url: string, next: Next): Promise<string | null> {
         return await uploadProfile(id,url,this.organizerRepository)
 
+    }
+    async resentOtp(email: string, next: NextFunction): Promise<void> {
+        try{
+            const otp = await resentOpt(this.otpGenerate,this.sentEmail,this.otpRepository,email)
+     }catch(error){
+          catchError(error,next)
+     }   
     }
 
 }

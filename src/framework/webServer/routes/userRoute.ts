@@ -24,9 +24,26 @@ export function UserRoute(router: Route){
     })
 
     router.get('/profile/:id',(req:Req, res: Res ,next:Next)=>{
-        console.log("entering to the  router")
+        console.log("entering to ")
          userController.userDetails(req, res, next)
     })
+
+    router.post("/profileEdit/:id",(req:Req, res: Res ,next:Next)=>{
+        console.log("entering to the  router",)
+
+         userController.editProfile(req, res, next)
+    })
+
+    router.post("/profileUpload",(req:Req, res: Res ,next:Next)=>{
+        console.log("entering to the  router",)
+
+         userController.addProfilePicture(req, res, next)
+    })
+
+    router.post("/resendOtp",(req:Req,res:Res,next:Next)=>{
+         userController.resendOtp(req,res,next)
+    })
+    
 
    
     return router

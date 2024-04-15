@@ -8,7 +8,9 @@ const userSchema : Schema<Iuser>  = new mongoose.Schema({
     email:{type:String, requried:true},
     password:{type:String,required:true},
     blocked:{type:Boolean,default:false},
-    role:{type:String,default:'user'}
+    role:{type:String,default:'user'},
+    phoneNumber:{type:String},
+    profileImage:{type:String}
 })
 
 const userModel:Model<Iuser> =  mongoose.model('user',userSchema)
