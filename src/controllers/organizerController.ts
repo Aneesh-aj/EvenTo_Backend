@@ -132,7 +132,7 @@ export class OrganizerController{
       try{
           const {id} = req.params
           console.log("id",id)
-          const organizer = await this.organizerUsecase.findbyId(id,next)
+          const organizer = await this.organizerUsecase.allDetailsById(id,next)
            res.json({organizer:organizer})
       }catch(error:any){
         return next(new ErrorHandler(error.status,error.message))
@@ -149,5 +149,16 @@ export class OrganizerController{
        return next(new ErrorHandler(error.status,error.message))
     }
 }
+
+async getEvents(req:Req,res:Res,next:Next){
+  const {id} = req.params
+  console.log("herereee",id)
+   res.json({name:"aeslsdslfj",other:"hskdfhskfhsfhkshkhf",hii:"sdfkhskdf"})
+}
+
+ async eventCreate(req:Req,res:Res,next:Next){
+     const {data} = req.body
+     console.log(" data form the front end",data)
+ }
 
 }

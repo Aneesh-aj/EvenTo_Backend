@@ -10,6 +10,7 @@ const AddressSchema : Schema <Iaddress> = new mongoose.Schema({
      city:{type:String},
      pincode:{type:Number},
      userId:{type:String},
+     building:{type:String}
 
 })
 

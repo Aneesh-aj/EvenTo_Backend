@@ -140,4 +140,22 @@ export class UserController {
             return next(new ErrorHandler(error.status,error.message))
          }
     }
+
+    async allorganizers(req:Req,res:Res,next:Next){
+         try{
+             const allOne = await this.userUseCase.allOrganizers(next)
+
+             console.log( "in the=================================================================================== controlleress",allOne)
+             if(allOne){
+                res.json({allOrganizer:allOne})
+             }else{
+
+                 res.json({message:"not found"})
+             }
+         }catch(error:any){
+            return next(new ErrorHandler(error.status,error.message))
+         }
+    }
+
+   
 }

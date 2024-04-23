@@ -1,7 +1,7 @@
 import { Req, Res, Next } from "../../framework/types/serverPackageTypes";
 import { IuserUseCase } from "../interface/usecase/userUseCase";
 import { Iuser } from "../../entities/user";
-import { userSignup, login, createUser, getUser, editProfile, uploadProfile } from "./user/index"
+import { userSignup, login, createUser, getUser, editProfile, uploadProfile, getOrganizers } from "./user/index"
 import { IuserRepository } from "../interface/repositoryInterface/userRepository";
 import { Ijwt } from "../interface/service/jwt";
 import { NextFunction } from "express";
@@ -13,6 +13,8 @@ import { IcloudSession } from "../interface/service/cloudSession";
 import { catchError } from "../middleares/catchError";
 import { Iaddress } from "../../entities/address";
 import { resentOpt } from "./otp/otp";
+import { Iorganizer, IorganizerAndAddress } from "../../entities/organizer";
+import { IorganizerRepository } from "../interface/repositoryInterface/organizerRepository";
 
 
 export class UserUseCase implements IuserUseCase {
@@ -24,7 +26,8 @@ export class UserUseCase implements IuserUseCase {
           private otpRepository: IotpRepository,
           private sentEmail: IsentEmail,
           private hashPassword: Ihashpassword,
-          private cloudSession: IcloudSession
+          private cloudSession: IcloudSession,
+          private organizerRepository:IorganizerRepository
      ) { }
      async userSignup(user: Iuser, next: Next): Promise<string | void> {
           try {
@@ -114,6 +117,16 @@ export class UserUseCase implements IuserUseCase {
                catchError(error,next)
           }
      } 
+
+     async  allOrganizers(next: NextFunction): Promise<IorganizerAndAddress[] | undefined> {
+          try{
+              const allorganizers = await getOrganizers(this.organizerRepository)
+              console.log("==========================================>",allorganizers)
+              return allorganizers
+          }catch(error){
+               catchError(error,next)
+          }
+     }
 
 }
 

@@ -18,8 +18,6 @@ const otprepository = new OtpRepository()
 const sentemail = new SentEmail()
 
 const userrepository = new userRepository(userModel)
-const userusecase = new UserUseCase(userrepository,jwttoken,otpGenerate,otprepository,sentemail,bycryptsurvice,cloudsession)
-const  userController = new UserController(userusecase)
 
 import organizerModel from "../../../database/mongodb/model/organizer";
 import addressModel from "../../../database/mongodb/model/address";
@@ -34,6 +32,8 @@ import { AdminRepository } from "../../../database/mongodb/repository/adminRepos
 const adminrepository = new AdminRepository()
 
 const organizerrepository = new OrganizerRepository(organizerModel)
+const userusecase = new UserUseCase(userrepository,jwttoken,otpGenerate,otprepository,sentemail,bycryptsurvice,cloudsession,organizerrepository)
+const  userController = new UserController(userusecase)
 const adminusecase = new AdminUsecase(bycryptsurvice,adminrepository,jwttoken,organizerrepository,userrepository)
 const organizerusecase = new  OrganizerUseCase(organizerrepository,bycryptsurvice,otpGenerate,otprepository,sentemail,jwttoken)
 const organizerController = new  OrganizerController(organizerusecase)

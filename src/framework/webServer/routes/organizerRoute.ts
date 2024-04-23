@@ -51,5 +51,16 @@ export function OrganizerRoute(router: Route) {
       organizerController.resendOtp(req,res,next)
  })
 
+ router.get("/getEvents/:id",(req:Req, res: Res ,next:Next)=>{
+   console.log("entering to the  router",)
+
+    organizerController.getEvents(req, res, next)
+})
+router.post("/eventCreate",(req:Req,res:Res,next:Next)=>{
+   organizerController.eventCreate(req,res,next)
+})
+
+
+
    return router 
 }

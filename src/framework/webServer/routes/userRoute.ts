@@ -43,8 +43,13 @@ export function UserRoute(router: Route){
     router.post("/resendOtp",(req:Req,res:Res,next:Next)=>{
          userController.resendOtp(req,res,next)
     })
-    
 
+    router.get("/allorganizers",(req:Req,res:Res,next:Next)=>{
+         userController.allorganizers(req,res,next)
+    })
+
+  
+    
    
     return router
 

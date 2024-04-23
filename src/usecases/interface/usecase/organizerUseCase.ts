@@ -1,4 +1,4 @@
-import { Iorganizer } from "../../../entities/organizer";
+import { Iorganizer, IorganizerAndAddress } from "../../../entities/organizer";
 import { Next , Res, Req } from "../../../framework/types/serverPackageTypes";
 import { IToken } from "../service/jwt";
 
@@ -12,10 +12,10 @@ export  interface IorganizerUseCase{
     isApproved(id : string,next:Next):Promise<boolean>
     login(email:string,password:string,next:Next):Promise<{organizer:Iorganizer , tokens:IToken} | void>
     uploedImage(id:string,url:string,next:Next):Promise<string | null>
-    findbyId(id:string,next:Next):Promise<Iorganizer | null>
+    // findbyId(id:string,next:Next):Promise<Iorganizer | null>
     uploadProfile(id:string,url:string,next:Next):Promise<string | null>
     resentOtp(email:string,next:Next):Promise<void>
-
+    allDetailsById(id:string,next:Next):Promise<IorganizerAndAddress | undefined>
 
 
 }

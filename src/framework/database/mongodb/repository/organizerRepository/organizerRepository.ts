@@ -1,7 +1,7 @@
 import organizerModel from "../../model/organizer";
 
-import { Iorganizer } from "../../../../../entities/organizer";
-import { addAddress, approve, block, createOrganizer, findbyEmail, getAll, getAllorganizer, getDetails, reject,approveChecking, changeStatus, uploadBackground, findbyId, uploadProfile } from './organizer/index'
+import { Iorganizer, IorganizerAndAddress } from "../../../../../entities/organizer";
+import { addAddress, approve, block, createOrganizer, findbyEmail, getAll, getAllorganizer, getDetails, reject,approveChecking, changeStatus, uploadBackground, findbyId, uploadProfile, getAllorganizerAndaddress, allDetailsById } from './organizer/index'
 import { IorganizerRepository } from "../../../../../usecases/interface/repositoryInterface/organizerRepository";
 import { Iaddress } from "../../../../../entities/address";
 import addressModel from "../../model/address";
@@ -115,6 +115,13 @@ export class OrganizerRepository implements IorganizerRepository {
     async  uploadProfile(id: string, image: string): Promise<string | null> {
         return await uploadProfile(id,image)
 
+    }
+    async getAllorganizerAndaddress(): Promise<IorganizerAndAddress[] | undefined> {
+        return await getAllorganizerAndaddress()
+    }
+
+    async  getDetailsById(id: string): Promise<IorganizerAndAddress | undefined> {
+        return await allDetailsById(id)
     }
 
 

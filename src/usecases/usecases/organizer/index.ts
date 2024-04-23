@@ -3,7 +3,7 @@ import { login } from "./login"
 import { signup } from "./signup"
 import { approvalChecking } from "./isApporved"
 import { uploadBackground } from "./uploadBackground"
-import { findbyId } from "./findbyId"
+import { allDetailsById } from "./findbyId"
 import { uploadProfile } from "./uploadProfile"
 
 export{createOrganizers,
@@ -11,6 +11,6 @@ export{createOrganizers,
        signup,
        approvalChecking,
        uploadBackground,
-       findbyId,
+       allDetailsById,
        uploadProfile
     }

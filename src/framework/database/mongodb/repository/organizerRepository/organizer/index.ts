@@ -13,6 +13,10 @@ import { approveChecking } from "./approveChecking"
 import { findbyId } from "./findbyId"
 import { uploadBackground } from "./uploadBackground"
 import { uploadProfile } from "./uploadProfile"
+import { getAllorganizerAndaddress } from "./getAllorgnaizerAndAddress"
+import { allDetailsById } from "./allDetailsById"
+
+
 export {
     createOrganizer,
     addAddress,
@@ -28,5 +32,7 @@ export {
     changeStatus,
     uploadBackground,
     findbyId,
-    uploadProfile
+    uploadProfile,
+    getAllorganizerAndaddress,
+    allDetailsById
 }

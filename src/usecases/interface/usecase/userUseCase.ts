@@ -1,4 +1,5 @@
 import { Iaddress } from "../../../entities/address";
+import { Iorganizer, IorganizerAndAddress } from "../../../entities/organizer";
 import { Iuser } from "../../../entities/user";
 
 import { Next,Res,Req } from "../../../framework/types/serverPackageTypes";
@@ -12,4 +13,5 @@ export interface IuserUseCase{
     editProfile(id:string,formData:any,next:Next):Promise <{user:Iuser,address:Iaddress} | Iuser | undefined>
     addProfilePicture(id:string,image:string,next:Next):Promise<boolean | undefined>
     resentOtp(email:string,next:Next):Promise<void>
+    allOrganizers(next:Next):Promise<IorganizerAndAddress[] | undefined>
 }

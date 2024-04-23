@@ -1,5 +1,5 @@
 import { Iaddress } from "../../../entities/address";
-import { Iorganizer } from "../../../entities/organizer";
+import { Iorganizer, IorganizerAndAddress } from "../../../entities/organizer";
 
 export interface IorganizerRepository{
     createOrganizer(newUser:Iorganizer): Promise < Iorganizer | void>
@@ -16,6 +16,7 @@ export interface IorganizerRepository{
     uploadBackground(id:string,image:string):Promise<string | null>
     findbyId(id:string):Promise<Iorganizer | null>
     uploadProfile(id:string,image:string):Promise<string | null>
-
+    getAllorganizerAndaddress():Promise<IorganizerAndAddress[] | undefined>
+    getDetailsById(id:string):Promise<IorganizerAndAddress | undefined>
 
 }

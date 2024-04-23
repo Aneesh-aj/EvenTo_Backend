@@ -1,14 +1,14 @@
-import { Iorganizer } from "../../../entities/organizer"
+import { Iorganizer, IorganizerAndAddress } from "../../../entities/organizer"
 import { IorganizerRepository } from "../../interface/repositoryInterface/organizerRepository"
 
 
 
-export const findbyId = async(id:string,organizerRepository:IorganizerRepository):Promise<Iorganizer | null>=>{
+export const allDetailsById = async(id:string,organizerRepository:IorganizerRepository):Promise<IorganizerAndAddress | undefined>=>{
     try{
          console.log("in file usece")
-         const result =  await organizerRepository.findbyId(id)
+         const result =  await organizerRepository.getDetailsById(id)
          console.log("reuslt of file use",result)
-         return result ? result : null
+         return result ? result : undefined
     }catch(error){
         throw error
     }

@@ -6,5 +6,6 @@ export interface Iuser{
     password:string,
     blocked?:boolean,
     phoneNumber?:string,
-    profileImage?:string
+    profileImage?:string,
+    
 }
