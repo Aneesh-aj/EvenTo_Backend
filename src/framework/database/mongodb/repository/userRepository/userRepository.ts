@@ -9,7 +9,7 @@ import { getAllusers } from "./user/getAlllusers";
 import { blockuser } from "./user/block";
 import { Iaddress } from "../../../../../entities/address";
 
-export class userRepository implements IuserRepository{
+export class UserRepository implements IuserRepository{
     constructor(private userModels: typeof userModel){}
     async  createUser(newUser: Iuser): Promise<Iuser> {
         return await  createUser(newUser, this.userModels)

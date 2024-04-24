@@ -27,11 +27,27 @@ export function AdminRoute(router: Route) {
     })
 
     router.post('/user/block/:id', (req: Req, res: Res, next: Next) => {
-         console.log("bloclk router")
+        console.log("bloclk router")
         adminController.blockUser(req, res, next)
     })
     router.post('/organizer/block/:id', (req: Req, res: Res, next: Next) => {
         adminController.blockOrgnaizer(req, res, next)
+    })
+
+    router.post("/addCategory", (req: Req, res: Res, next: Next) => {
+        adminController.addCategory(req, res, next)
+    })
+
+    router.post("/deleteCategory", (req: Req, res: Res, next: Next) => {
+        adminController.deleteCategory(req, res, next)
+    })
+
+    router.post("/allcategory", (req: Req, res: Res, next: Next) => {
+        adminController.getAllCategory(req, res, next)
+    })
+
+    router.post("/activeCategory", (req: Req, res: Res, next: Next) => {
+        adminController.activeCategory(req, res, next)
     })
 
 

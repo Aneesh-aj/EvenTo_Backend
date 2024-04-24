@@ -48,7 +48,6 @@ export function UserRoute(router: Route){
          userController.allorganizers(req,res,next)
     })
 
-  
     
    
     return router

@@ -1,3 +1,4 @@
+import { IeventCategory } from "../../../entities/eventCategory";
 import { Iorganizer } from "../../../entities/organizer";
 import { Next } from "../../../framework/types/serverPackageTypes";
 
@@ -12,5 +13,9 @@ export interface IadminUsecase{
      getAllorganizers(next:Next):Promise<any | void>
      blockUsers(id:string,next:Next):Promise <any>
      blockOrganizer(id:string,next:Next):Promise <any>
-
+     addCategory(category:string,next:Next):Promise<IeventCategory[] | undefined> 
+     deleteCategory(id:string,next:Next):Promise<IeventCategory[] | undefined>
+     getAllCategory(next:Next):Promise<IeventCategory[] | undefined>
+     activeCategory(id:string,next:Next):Promise<IeventCategory[] | undefined>
+     
 }

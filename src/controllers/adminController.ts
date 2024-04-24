@@ -134,4 +134,56 @@ export class AdminController {
          return next(new ErrorHandler(error.status, error.message))
       }
    }
+   async addCategory(req:Req,res:Res,next: Next){
+      try{
+          const {category} = req.body
+          const result = await this.adminUsecase.addCategory(category,next)
+          if(result){
+            res.json({category:result ,message:"New Category Added",success:true}).status(200)
+          }
+           res.json({message:"Category already exist"}).status(200)
+      }catch(error:any){
+          return next(new ErrorHandler(error.status, error.message))
+      }
+   }
+
+   async deleteCategory(req:Req,res:Res,next: Next){ 
+      try{
+          const {id} = req.params
+          const result = await this.adminUsecase.deleteCategory(id,next)
+          if(result){
+            res.json({category:result ,message:"category has been deleted",success:true}).status(200)
+          }
+         //   res.json({message:"Category already exist"}).status(200)
+      }catch(error:any){
+          return next(new ErrorHandler(error.status, error.message))
+      }
+   }
+   async getAllCategory(req:Req,res:Res,next: Next){ 
+      try{
+      
+          const result = await this.adminUsecase.getAllCategory(next)
+          if(result){
+            res.json({category:result ,success:true}).status(200)
+          }
+           res.json({message:"No category has been found"}).status(200)
+      }catch(error:any){
+          return next(new ErrorHandler(error.status, error.message))
+      }
+   }
+   async activeCategory(req:Req,res:Res,next: Next){ 
+      try{
+          const {id} = req.params
+          const result = await this.adminUsecase.activeCategory(id,next)
+          if(result){
+            res.json({category:result ,message:"category status changed",success:true}).status(200)
+          }
+           res.json({message:"INternal error"}).status(200)
+      }catch(error:any){
+          return next(new ErrorHandler(error.status, error.message))
+      }
+   }
+
+   
 }
+

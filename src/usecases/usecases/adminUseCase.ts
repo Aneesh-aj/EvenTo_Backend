@@ -16,6 +16,12 @@ import { getAllorganizers } from "./admin/getAllOrganizers";
 import { blockOrganizer } from "./admin/blockOrganizer";
 import { blockUser } from "./admin/blockUser";
 import { catchError } from "../middleares/catchError";
+import { IeventCategory } from "../../entities/eventCategory";
+import { IcategoryRepository } from "../interface/repositoryInterface/categoryRepository";
+import { addCategory } from "./admin/addCategory";
+import { getAllCategory } from "./admin/getAllcategory";
+import { deleteCategory } from "./admin/deleteCategory";
+import { activeCategory } from "./admin/activeCategory";
 
 export class AdminUsecase implements IadminUsecase {
 
@@ -24,7 +30,9 @@ export class AdminUsecase implements IadminUsecase {
         private adminRepository: IadminRepository,
         private jwt: Ijwt,
         private organizerRepository: IorganizerRepository,
-        private userRepository: IuserRepository) { }
+        private userRepository: IuserRepository,
+        private categoryReopository:IcategoryRepository
+    ) { }
 
     async login({ email, password }: { email: string; password: string; }, next: Next): Promise<any | null> {
         try {
@@ -102,4 +110,39 @@ export class AdminUsecase implements IadminUsecase {
             catchError(error, next)
         }
     }
+
+    async addCategory(category: string, next: NextFunction): Promise<IeventCategory[] | undefined> {
+        try{
+            return await addCategory(category,this.categoryReopository)
+           
+        }catch(error){
+            catchError(error,next)
+        }
+    }
+    async getAllCategory( next: NextFunction): Promise<IeventCategory[] | undefined> {
+        try{
+            return await getAllCategory(this.categoryReopository)
+           
+        }catch(error){
+            catchError(error,next)
+        }
+    }
+    async deleteCategory(id:string, next: Next): Promise<IeventCategory[] | undefined> {
+        try{
+            return await deleteCategory(id,this.categoryReopository)
+           
+        }catch(error){
+            catchError(error,next)
+        }
+    }
+    async activeCategory(id:string, next: Next): Promise<IeventCategory[] | undefined> {
+        try{
+            return await activeCategory(id,this.categoryReopository)
+           
+        }catch(error){
+            catchError(error,next)
+        }
+    }
+
+
 }
