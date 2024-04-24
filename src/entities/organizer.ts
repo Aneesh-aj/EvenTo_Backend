@@ -34,7 +34,12 @@ export interface IorganizerAndAddress{
     backgroundImage?:string,
     profileImage?:string,
     about?:string,
-    eventCategory?:[string],
+    eventCategory?:[{
+        id?:string
+        category:string,
+        delete:string,
+        active:string
+    }],
     address:{
         country:string,
         state:string,
