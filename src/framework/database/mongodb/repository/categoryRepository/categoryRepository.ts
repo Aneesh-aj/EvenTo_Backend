@@ -1,7 +1,7 @@
 import { IeventCategory } from "../../../../../entities/eventCategory";
 import { IcategoryRepository } from "../../../../../usecases/interface/repositoryInterface/categoryRepository";
 
-import {activeCategory, addCategory, deleteCategory, getAllCategory} from "./category/index"
+import {activeCategory, addCategory, deleteCategory, editCategory, getAllCategory} from "./category/index"
 
 export class CategoryRepository implements IcategoryRepository{
       constructor(){}
@@ -20,5 +20,9 @@ export class CategoryRepository implements IcategoryRepository{
 
       async  activeCategory(id: string): Promise<IeventCategory[] | undefined> {
           return await activeCategory(id)
+      }
+
+      async  editCategory(id: string, category: string): Promise<{ success: boolean; message: string; }> {
+          return await editCategory(id,category)
       }
 }

@@ -22,6 +22,7 @@ import { addCategory } from "./admin/addCategory";
 import { getAllCategory } from "./admin/getAllcategory";
 import { deleteCategory } from "./admin/deleteCategory";
 import { activeCategory } from "./admin/activeCategory";
+import { editCategory } from "./admin/editCategory";
 
 export class AdminUsecase implements IadminUsecase {
 
@@ -141,6 +142,14 @@ export class AdminUsecase implements IadminUsecase {
            
         }catch(error){
             catchError(error,next)
+        }
+    }
+
+    async  editCategory(id: string, category: string, next: NextFunction): Promise<IeventCategory[] | {success:boolean,message:string } | undefined> {
+        try{
+            return await editCategory(id,category,this.categoryReopository)
+        }catch(error){
+             catchError(error,next)
         }
     }
 

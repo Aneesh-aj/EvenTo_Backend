@@ -1,7 +1,7 @@
 import { Next, Req, Res } from "../framework/types/serverPackageTypes";
 import { IadminUsecase } from "../usecases/interface/usecase/adminUseCase";
 import ErrorHandler from "../usecases/middleares/errorHandler";
-import { accessTokenOptions, refreshTokenOptions } from "./middleware/Tokens";
+import { accessTokenOptions, refreshTokenOptions } from "../framework/webServer/middlewares/Tokens";
 export class AdminController {
 
    constructor(private adminUsecase: IadminUsecase){ }
@@ -140,8 +140,10 @@ export class AdminController {
           const result = await this.adminUsecase.addCategory(category,next)
           if(result){
             res.json({category:result ,message:"New Category Added",success:true}).status(200)
+          }else{
+
+             res.json({message:"Category already exist"}).status(200)
           }
-           res.json({message:"Category already exist"}).status(200)
       }catch(error:any){
           return next(new ErrorHandler(error.status, error.message))
       }
@@ -165,8 +167,10 @@ export class AdminController {
           const result = await this.adminUsecase.getAllCategory(next)
           if(result){
             res.json({category:result ,success:true}).status(200)
+          }else{
+
+             res.json({message:"No category has been found"}).status(200)
           }
-           res.json({message:"No category has been found"}).status(200)
       }catch(error:any){
           return next(new ErrorHandler(error.status, error.message))
       }
@@ -181,6 +185,23 @@ export class AdminController {
            res.json({message:"INternal error"}).status(200)
       }catch(error:any){
           return next(new ErrorHandler(error.status, error.message))
+      }
+   }
+
+   async editCategory(req:Req,res:Res,next:Next){
+      try{
+
+         const {id,category} = req.body
+         const result = await this.adminUsecase.editCategory(id,category,next)
+         if(!result){
+             res.json({message:"Interanl Issues",success:false})
+         }else{
+            res.json(result)
+         }
+         
+
+      }catch(error:any){
+         return next(new ErrorHandler(error.status,error.message))
       }
    }
 

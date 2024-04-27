@@ -32,9 +32,9 @@ export class JWTtoken implements Ijwt{
            return {accessToken,refreshToken}
       }
 
-      async  verifyJwt(token: string): Promise<Iuser> {
-        const data = await (jwt.verify(token, this.JWT_VERIFICATION_KEY)) as Iuser
-        return data
+      async  verifyJwt(token: string):Promise<void>{
+        const data = await jwt.verify(token, this.JWT_VERIFICATION_KEY)
+        return 
       }
 
       async  forgotPasswordToken(userId: string, email: string): Promise<string> {

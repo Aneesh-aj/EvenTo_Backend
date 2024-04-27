@@ -1,7 +1,7 @@
 import { Next,Req,Res } from "../framework/types/serverPackageTypes";
 import { IorganizerUseCase } from "../usecases/interface/usecase/organizerUseCase";
 import ErrorHandler from "../usecases/middleares/errorHandler";
-import { accessTokenOptions, refreshTokenOptions } from "./middleware/Tokens";
+import { accessTokenOptions, refreshTokenOptions } from "../framework/webServer/middlewares/Tokens";
 
 export class OrganizerController{
      private organizerUsecase : IorganizerUseCase

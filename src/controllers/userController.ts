@@ -1,7 +1,7 @@
 import { Req, Res, Next } from "../framework/types/serverPackageTypes"
 import { IuserUseCase } from "../usecases/interface/usecase/userUseCase"
 import ErrorHandler from "../usecases/middleares/errorHandler"
-import { accessTokenOptions, refreshTokenOptions } from "./middleware/Tokens"
+import { accessTokenOptions, refreshTokenOptions } from "../framework/webServer/middlewares/Tokens"
 
 
 

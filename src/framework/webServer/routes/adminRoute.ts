@@ -1,5 +1,6 @@
 import { Route, Req, Res, Next } from "../../types/serverPackageTypes";
 import { adminController } from "./injections/Injection";
+import { isAutheticate } from "../middlewares/auth";
 
 export function AdminRoute(router: Route) {
 
@@ -7,7 +8,7 @@ export function AdminRoute(router: Route) {
         adminController.login(req, res, next)
     })
 
-    router.get('/Requests', (req: Req, res: Res, next: Next) => {
+    router.get('/Requests',isAutheticate, (req: Req, res: Res, next: Next) => {
         adminController.getRequests(req, res, next)
     })
     router.get('/requestDetails/:id', (req: Req, res: Res, next: Next) => {
@@ -42,14 +43,17 @@ export function AdminRoute(router: Route) {
         adminController.deleteCategory(req, res, next)
     })
 
-    router.post("/allcategory", (req: Req, res: Res, next: Next) => {
+    router.get("/category", (req: Req, res: Res, next: Next) => {
         adminController.getAllCategory(req, res, next)
     })
 
     router.post("/activeCategory", (req: Req, res: Res, next: Next) => {
         adminController.activeCategory(req, res, next)
     })
-
+    
+    router.post("/editCategory",(req:Req,res:Res,next:Next)=>{
+         adminController.editCategory(req,res,next)
+    })
 
 
     return router

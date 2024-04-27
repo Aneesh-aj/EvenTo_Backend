@@ -17,5 +17,6 @@ export interface IadminUsecase{
      deleteCategory(id:string,next:Next):Promise<IeventCategory[] | undefined>
      getAllCategory(next:Next):Promise<IeventCategory[] | undefined>
      activeCategory(id:string,next:Next):Promise<IeventCategory[] | undefined>
+     editCategory(id:string,category:string,next:Next):Promise<IeventCategory[] | {success:boolean,message:string } | undefined>
      
 }
