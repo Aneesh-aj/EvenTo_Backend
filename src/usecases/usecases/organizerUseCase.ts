@@ -1,17 +1,22 @@
 import { IorganizerRepository } from "../interface/repositoryInterface/organizerRepository";
 import { IorganizerUseCase } from "../interface/usecase/organizerUseCase";
 import { Ihashpassword } from "../interface/service/hashPassword";
-import { allDetailsById, approvalChecking, createOrganizers, login, signup, uploadBackground, uploadProfile } from './organizer/index'
+import { allDetailsById, approvalChecking, createEvents, createOrganizers, getAllCategory, getCategory, login, profileEdit, signup, uploadBackground, uploadProfile } from './organizer/index'
 import { IotpGenerate } from "../interface/service/otpGenerate";
 import { IsentEmail } from "../interface/service/sentEmail";
 import { IotpRepository } from "../interface/repositoryInterface/otpRepository";
 import { Next } from "../../framework/types/serverPackageTypes";
 import { catchError } from "../middleares/catchError";
 import { verifyOtp } from "./organizer/verifyOtp";
-import { Iorganizer, IorganizerAndAddress } from "../../entities/organizer";
+import { Iorganizer, IorganizerAndAddress, IprofileFormData } from "../../entities/organizer";
 import { IToken, Ijwt } from "../interface/service/jwt";
-import { NextFunction } from "express";
+import { NextFunction, response } from "express";
 import { resentOpt } from "./otp/otp";
+import { IcategoryRepository } from "../interface/repositoryInterface/categoryRepository";
+import { IeventCategory } from "../../entities/eventCategory";
+import { IeventRepository } from "../interface/repositoryInterface/eventRepository";
+import { IeventFormData, Ievents } from "../../entities/event";
+import { getAllEvents } from "./organizer/getAllEvents";
 
 export class OrganizerUseCase implements IorganizerUseCase {
   
@@ -23,6 +28,8 @@ export class OrganizerUseCase implements IorganizerUseCase {
        private otpRepository: IotpRepository,
        private sentEmail: IsentEmail,
        private jwt : Ijwt,
+       private categoryRepository: IcategoryRepository,
+       private eventRepository :IeventRepository
     ) {
     }
 
@@ -125,6 +132,50 @@ export class OrganizerUseCase implements IorganizerUseCase {
      }catch(error){
           catchError(error,next)
      }   
+    }
+
+    async getAllCategory( next: NextFunction): Promise<IeventCategory[] | undefined> {
+        try{
+            return await getAllCategory(this.categoryRepository)
+           
+        }catch(error){
+            catchError(error,next)
+        }
+    }
+    async  editProfile(id: string, formData: IprofileFormData, next: NextFunction): Promise<void> {
+        try{
+            // console.log(formData,"in the usecase pllll")
+            return  await profileEdit(id,formData,this.organizerRepository)
+        }catch(error){
+             catchError(error,next)
+        }
+    }
+
+    async  getCategory(id: string, next: NextFunction): Promise<[] | undefined> {
+        try{
+            console.log("herer in use")
+            return await getCategory(id,this.organizerRepository)
+        }catch(error){
+            catchError(error,next)
+        }
+    }
+
+    async  createEvent(data: IeventFormData, next: NextFunction): Promise<{success:boolean, message:string} | undefined> {
+        try{
+              const result =  await createEvents(data,this.eventRepository)
+            return  result ?  {success:true,message:"successfully event Created"} : undefined
+        }catch(error){
+            catchError(error,next)
+        }
+    }
+
+    async  getAllevents(id: string, next: NextFunction): Promise<Ievents[] | undefined> {
+        try{
+             const reponse =  await getAllEvents(id,this.eventRepository)
+             return response ? reponse : undefined
+        }catch(error){
+            catchError(error,next)
+        }
     }
 
 }

@@ -1,0 +1,44 @@
+import mongoose, { Model, Schema } from "mongoose";
+import { Ievents } from "../../../../entities/event";
+import { IeventCategory } from "../../../../entities/eventCategory";
+import { ObjectId } from "mongodb";
+
+const eventSchema :Schema <Ievents> = new  mongoose.Schema({
+    name:{type:String},
+    organizerId:{type:String},
+    eventCategory:{
+         id:{type:ObjectId},
+         category:{type:String},
+         delete:{type:Boolean},
+         active:{type:Boolean}
+     },
+    eventCountry:{type:String},
+    eventState:{type:String},
+    eventCity:{type:String},
+    location:{type:String},
+    eventType:{type:String},
+    paymentMethod:{type:String},
+    paymentAmount:{type:String},
+    email:{type:String},
+     country:{type:String},
+    state:{type:String},
+    city:{type:String},
+    phoneNumber:{type:String},
+    startingTime:{type:Object},
+      endingTime:{type:Object},
+    date:{type:Object},
+    seatArrangement: { type: Array },
+    seatNumber:{type:Number},
+    status: {
+      type: String,
+      enum: ["upcoming", "goingon", "done","cancelled"], 
+      default: "upcoming" 
+    },
+    totalAmount:{type:Number},
+    paymentStatus:{type:Boolean,default:false},
+    
+})
+
+const eventModal : Model<Ievents> = mongoose.model('event',eventSchema)
+
+export default eventModal

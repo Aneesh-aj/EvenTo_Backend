@@ -14,7 +14,7 @@ export interface Iorganizer {
     backgroundImage?:string,
     profileImage?:string,
     about?:string,
-    eventCategory?:[string],
+    eventCategory?:[],
 }
 
 
@@ -47,5 +47,20 @@ export interface IorganizerAndAddress{
         pincode?:number,
         building?:string,
         userId: string,
-    }
+    },
+   
+}
+
+export interface IprofileFormData{
+    name:string,
+    phoneNumber:string,
+    country:string,
+    state:string,
+    city:string,
+    pinCode:number,
+    about:string,
+    eventCategory: [],
+    email:string,
+    building:string,
+
 }

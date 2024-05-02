@@ -18,5 +18,6 @@ export interface IorganizerRepository{
     uploadProfile(id:string,image:string):Promise<string | null>
     getAllorganizerAndaddress():Promise<IorganizerAndAddress[] | undefined>
     getDetailsById(id:string):Promise<IorganizerAndAddress | undefined>
-
+    editOrganizer(id:string,user:object):Promise<void>
+    editAddress(id:string,address:object):Promise<void>
 }

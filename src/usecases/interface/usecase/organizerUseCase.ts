@@ -1,3 +1,5 @@
+import { IeventFormData, Ievents } from "../../../entities/event";
+import { IeventCategory } from "../../../entities/eventCategory";
 import { Iorganizer, IorganizerAndAddress } from "../../../entities/organizer";
 import { Next , Res, Req } from "../../../framework/types/serverPackageTypes";
 import { IToken } from "../service/jwt";
@@ -16,6 +18,9 @@ export  interface IorganizerUseCase{
     uploadProfile(id:string,url:string,next:Next):Promise<string | null>
     resentOtp(email:string,next:Next):Promise<void>
     allDetailsById(id:string,next:Next):Promise<IorganizerAndAddress | undefined>
-
-
+    getAllCategory(next:Next):Promise<IeventCategory[] | undefined>
+    editProfile(id:string,formData:any,next:Next):Promise < void>
+    getCategory(id:string,next:Next):Promise< [] | undefined>
+    createEvent(data:IeventFormData,next:Next):Promise < {success:boolean, message:string} | undefined >
+     getAllevents(id:string,next:Next):Promise < Ievents [] | undefined>
 }

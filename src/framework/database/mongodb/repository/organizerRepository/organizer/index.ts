@@ -15,7 +15,8 @@ import { uploadBackground } from "./uploadBackground"
 import { uploadProfile } from "./uploadProfile"
 import { getAllorganizerAndaddress } from "./getAllorgnaizerAndAddress"
 import { allDetailsById } from "./allDetailsById"
-
+import { editOrganizer } from "./editOrganizer"
+import { editAddress } from "./editAddress"
 
 export {
     createOrganizer,
@@ -34,5 +35,7 @@ export {
     findbyId,
     uploadProfile,
     getAllorganizerAndaddress,
-    allDetailsById
+    allDetailsById,
+    editOrganizer,
+    editAddress
 }

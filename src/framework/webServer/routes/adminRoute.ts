@@ -54,6 +54,8 @@ export function AdminRoute(router: Route) {
     router.post("/editCategory",(req:Req,res:Res,next:Next)=>{
          adminController.editCategory(req,res,next)
     })
+   
+
 
 
     return router

@@ -46,21 +46,41 @@ export function OrganizerRoute(router: Route) {
       console.log("profile route ======================================e>")
       organizerController.uploadProfilePicture(req, res, next)
    })
-  
-   router.post("/resendOtp",(req:Req,res:Res,next:Next)=>{
-      organizerController.resendOtp(req,res,next)
- })
 
- router.get("/getEvents/:id",(req:Req, res: Res ,next:Next)=>{
-   console.log("entering to the  router",)
+   router.post("/resendOtp", (req: Req, res: Res, next: Next) => {
+      organizerController.resendOtp(req, res, next)
+   })
 
-    organizerController.getEvents(req, res, next)
-})
-router.post("/eventCreate",(req:Req,res:Res,next:Next)=>{
-   organizerController.eventCreate(req,res,next)
-})
+   router.get("/getEvents/:id", (req: Req, res: Res, next: Next) => {
+      console.log("entering to the  router",)
+
+      organizerController.getEvents(req, res, next)
+   })
+   router.post("/eventCreate", (req: Req, res: Res, next: Next) => {
+      organizerController.eventCreate(req, res, next)
+   })
+   
+   router.get("/allcategory",(req:Req, res:Res,next:Next)=>{
+      organizerController.getAllCategory(req,res,next)
+  })
+
+  router.post("/profileEdit",(req:Req,res:Res,next:Next)=>{
+      organizerController.editProfile(req, res, next)
+
+  })
+
+  router.get("/categorys/:id",(req:Req,res:Res,next)=>{
+     organizerController.avalibleCategory(req,res,next)
+  })
+
+  router.post('/eventCreation',(req:Req,res:Res,next:Next)=>{
+        organizerController.createEvent(req,res,next)  
+  })
+
+  router.get("/getAllEvents/:id",(req:Req,res:Res,next:Next)=>{
+   organizerController.getAllevents(req,res,next)  
+  })
 
 
-
-   return router 
+   return router
 }

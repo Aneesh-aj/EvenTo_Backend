@@ -165,6 +165,7 @@ export class AdminController {
       try{
       
           const result = await this.adminUsecase.getAllCategory(next)
+          console.log(" the result ",result)
           if(result){
             res.json({category:result ,success:true}).status(200)
           }else{
@@ -192,11 +193,13 @@ export class AdminController {
       try{
 
          const {id,category} = req.body
+         console.log(" the id and the category",id,category)
          const result = await this.adminUsecase.editCategory(id,category,next)
+         console.log(' the reusult',result)
          if(!result){
              res.json({message:"Interanl Issues",success:false})
          }else{
-            res.json(result)
+            res.json({category:result,message:"Successfully Edited",success:true},)
          }
          
 
@@ -204,7 +207,8 @@ export class AdminController {
          return next(new ErrorHandler(error.status,error.message))
       }
    }
-
+   
+   
    
 }
 

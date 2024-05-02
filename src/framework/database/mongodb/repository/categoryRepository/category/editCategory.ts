@@ -8,12 +8,17 @@ export const editCategory = async(id:string,category:string):Promise<{success:bo
                  return {success:false,message:"Invalid category Id"}
               }
               const allCategory = await categoryModel.find({category:category})
-              if(allCategory){
+
+              console.log(" the similar one",allCategory)
+              if(allCategory.length >0){
                   return {success:false,message:"Name already exists"}
               }
               
-             exist.category = category
-             exist.save()
+              const updated = await categoryModel.updateOne({_id:id},{category:category },{upsert:true})
+
+            //  exist.category = category
+            //  exist.save()
+             console.log(" after exitest",updated)
              return {success:true,message:"value updated"}
               
      }catch(error){

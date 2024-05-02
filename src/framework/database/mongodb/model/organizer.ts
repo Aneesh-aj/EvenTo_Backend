@@ -17,7 +17,9 @@ const OrganizerSchema : Schema <Iorganizer> = new mongoose.Schema({
     approved:{type:Boolean,default:false},
     blocked:{type:Boolean,default:false},
     backgroundImage:{type:String},
-    profileImage:{type:String}
+    profileImage:{type:String},
+    eventCategory:{type:Array},
+    about:{type:String}
 })
 
 const organizerModel : Model<Iorganizer> = mongoose.model('organizer',OrganizerSchema)

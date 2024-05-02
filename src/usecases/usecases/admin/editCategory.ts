@@ -9,6 +9,7 @@ export const editCategory = async(id:string,category:string,categoryReopository:
             return editedCategory
         }
         const allCategory = await categoryReopository.getAllCategory()
+        console.log(" the all categorys",allCategory)
         return allCategory ? allCategory : undefined
 
     }catch(error){

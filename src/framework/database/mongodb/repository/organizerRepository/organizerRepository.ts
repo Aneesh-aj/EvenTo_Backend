@@ -1,7 +1,7 @@
 import organizerModel from "../../model/organizer";
 
-import { Iorganizer, IorganizerAndAddress } from "../../../../../entities/organizer";
-import { addAddress, approve, block, createOrganizer, findbyEmail, getAll, getAllorganizer, getDetails, reject,approveChecking, changeStatus, uploadBackground, findbyId, uploadProfile, getAllorganizerAndaddress, allDetailsById } from './organizer/index'
+import { Iorganizer, IorganizerAndAddress, IprofileFormData } from "../../../../../entities/organizer";
+import { addAddress, approve, block, createOrganizer, findbyEmail, getAll, getAllorganizer, getDetails, reject,approveChecking, changeStatus, uploadBackground, findbyId, uploadProfile, getAllorganizerAndaddress, allDetailsById, editOrganizer, editAddress } from './organizer/index'
 import { IorganizerRepository } from "../../../../../usecases/interface/repositoryInterface/organizerRepository";
 import { Iaddress } from "../../../../../entities/address";
 import addressModel from "../../model/address";
@@ -122,6 +122,15 @@ export class OrganizerRepository implements IorganizerRepository {
 
     async  getDetailsById(id: string): Promise<IorganizerAndAddress | undefined> {
         return await allDetailsById(id)
+    }
+
+    async   editOrganizer(id: string, user: IprofileFormData): Promise<void> {
+         return await editOrganizer(id,user)
+    }
+
+    async  editAddress(id: string, address: IprofileFormData): Promise<void> {
+        return await editAddress(id,address)
+        
     }
 
 
