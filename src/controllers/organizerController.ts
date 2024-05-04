@@ -208,7 +208,7 @@ export class OrganizerController {
   async createEvent(req:Req,res:Res,next:Next){
     try{  
          const {data} = req.body
-         console.log(" data from body",data)
+         console.log(" data from body---------------------------------------------------------------",data)
          const event = await this.organizerUsecase.createEvent(data,next)
           if(event){
             console.log(" commigngn here",event)
