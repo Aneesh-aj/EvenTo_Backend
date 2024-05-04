@@ -27,11 +27,11 @@ const eventSchema :Schema <Ievents> = new  mongoose.Schema({
     startingTime:{type:Object},
       endingTime:{type:Object},
     date:{type:Object},
-    seatArrangement: { type: Array },
+    seatArrangement: { type:Array },
     seatNumber:{type:Number},
     status: {
       type: String,
-      enum: ["upcoming", "goingon", "done","cancelled"], 
+      enum: ["upcoming", "ongoing", "completed","cancelled"], 
       default: "upcoming" 
     },
     totalAmount:{type:Number},

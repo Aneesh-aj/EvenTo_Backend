@@ -27,7 +27,8 @@ export interface IeventFormData{
       endingTime:object,
     date:object,
     seatArrangement?:[],
-    seatNumber?:number
+    seatNumber?:number,
+    totalAmount:number
      
 }
 
