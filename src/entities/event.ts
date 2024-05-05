@@ -28,7 +28,8 @@ export interface IeventFormData{
     date:Date,
     seatArrangement?:[],
     seatNumber?:number,
-    totalAmount:number
+    totalAmount:number,
+    eventBooking:string
      
 }
 
@@ -58,6 +59,8 @@ export interface Ievents{
     status:string,
     totalAmount:number,
     paymentStatus:boolean,
+    eventBooking:string
+
      
 }
 

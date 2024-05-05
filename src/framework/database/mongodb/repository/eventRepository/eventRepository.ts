@@ -9,11 +9,6 @@ export class EventRepository implements IeventRepository {
     async createEvent(data: IeventFormData): Promise<{ success: boolean, message: string } | undefined> {
         try {
             console.log(" comming here")
-          
-       
-
-
-
             console.log("--------------------------seart--------------------------------------", data)
             const event = await eventModal.create({
                 name: data.name,
@@ -41,7 +36,8 @@ export class EventRepository implements IeventRepository {
                 seatNumber: data.seatNumber,
                 paymentAmount: data.paymentAmount,
                 paymentMethod: data.paymentMethod,
-                totalAmount: data.totalAmount
+                totalAmount: data.totalAmount,
+                eventBooking:data.eventBooking
             })
             console.log(" the event si createdssss ------------------------------------", event)
             if (event) {
@@ -63,6 +59,15 @@ export class EventRepository implements IeventRepository {
             console.log(" all the events", events)
             return events
         } catch (error) {
+            throw error
+        }
+    }
+
+    async getEventDetails(id:string):Promise <Ievents | undefined>{
+        try{
+            const event = await eventModal.findById(id)
+            return event ? event : undefined
+        }catch(error){
             throw error
         }
     }

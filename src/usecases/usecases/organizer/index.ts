@@ -9,6 +9,7 @@ import { getAllCategory } from "./getAllCategory"
 import { profileEdit } from "./editProfile"
 import { getCategory } from "./getCategory"
 import { createEvents } from "./createEvent"
+import { getEventDetails } from "./getEventDetails"
 export{createOrganizers,
        login,
        signup,
@@ -19,5 +20,6 @@ export{createOrganizers,
        getAllCategory,
        profileEdit,
        getCategory,
-       createEvents
+       createEvents,
+       getEventDetails
     }

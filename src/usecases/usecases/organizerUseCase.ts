@@ -1,7 +1,7 @@
 import { IorganizerRepository } from "../interface/repositoryInterface/organizerRepository";
 import { IorganizerUseCase } from "../interface/usecase/organizerUseCase";
 import { Ihashpassword } from "../interface/service/hashPassword";
-import { allDetailsById, approvalChecking, createEvents, createOrganizers, getAllCategory, getCategory, login, profileEdit, signup, uploadBackground, uploadProfile } from './organizer/index'
+import { allDetailsById, approvalChecking, createEvents, createOrganizers, getAllCategory, getCategory, getEventDetails, login, profileEdit, signup, uploadBackground, uploadProfile } from './organizer/index'
 import { IotpGenerate } from "../interface/service/otpGenerate";
 import { IsentEmail } from "../interface/service/sentEmail";
 import { IotpRepository } from "../interface/repositoryInterface/otpRepository";
@@ -175,6 +175,16 @@ export class OrganizerUseCase implements IorganizerUseCase {
              return response ? reponse : undefined
         }catch(error){
             catchError(error,next)
+        }
+    }
+
+    async  getEventDetails(id: string, next: NextFunction): Promise<Ievents | undefined> {
+        try{
+            console.log(" coming here in usecase",id)
+            const response = await getEventDetails(id,this.eventRepository)
+            return response ? response : undefined
+        }catch(error){
+             catchError(error,next)
         }
     }
 

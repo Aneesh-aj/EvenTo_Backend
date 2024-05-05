@@ -81,6 +81,10 @@ export function OrganizerRoute(router: Route) {
    organizerController.getAllevents(req,res,next)  
   })
 
+  router.get("/eventDetails/:id",(req:Req,res:Res,next:Next)=>{
+      organizerController.getEventDetails(req,res,next)
+  })
+
 
    return router
 }

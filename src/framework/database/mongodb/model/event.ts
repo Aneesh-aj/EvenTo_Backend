@@ -35,6 +35,7 @@ const eventSchema :Schema <Ievents> = new  mongoose.Schema({
       default: "upcoming" 
     },
     totalAmount:{type:Number},
+    eventBooking:{type:String},
     paymentStatus:{type:Boolean,default:false},
     
 })

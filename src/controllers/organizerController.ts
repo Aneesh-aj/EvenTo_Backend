@@ -237,4 +237,14 @@ export class OrganizerController {
 
      }
    }
+
+   async getEventDetails(req:Req,res:Res,next:Next){
+      try{
+         const {id} = req.params
+        const result = await this.organizerUsecase.getEventDetails(id,next)
+
+      }catch(error:any){
+        return next(new ErrorHandler(error.status, error.message))
+      }
+   }
 }
