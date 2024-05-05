@@ -10,6 +10,10 @@ export class EventRepository implements IeventRepository {
         try {
             console.log(" comming here")
             console.log("--------------------------seart--------------------------------------", data)
+           if(!data.seatNumber){
+               data.seatNumber = data.seatArrangement?.length
+           }
+            
             const event = await eventModal.create({
                 name: data.name,
                 organizerId: data.organizerId,
@@ -66,6 +70,8 @@ export class EventRepository implements IeventRepository {
     async getEventDetails(id:string):Promise <Ievents | undefined>{
         try{
             const event = await eventModal.findById(id)
+
+            console.log(" the response for the event Finding----",event)
             return event ? event : undefined
         }catch(error){
             throw error

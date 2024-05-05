@@ -178,10 +178,10 @@ export class OrganizerUseCase implements IorganizerUseCase {
         }
     }
 
-    async  getEventDetails(id: string, next: NextFunction): Promise<Ievents | undefined> {
+    async  getEventDetails(id: string, next: NextFunction): Promise<Ievents |{event:Ievents , organizer:Iorganizer} | undefined> {
         try{
             console.log(" coming here in usecase",id)
-            const response = await getEventDetails(id,this.eventRepository)
+            const response = await getEventDetails(id,this.eventRepository,this.organizerRepository)
             return response ? response : undefined
         }catch(error){
              catchError(error,next)

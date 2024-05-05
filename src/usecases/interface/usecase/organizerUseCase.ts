@@ -23,5 +23,5 @@ export  interface IorganizerUseCase{
     getCategory(id:string,next:Next):Promise< [] | undefined>
     createEvent(data:IeventFormData,next:Next):Promise < {success:boolean, message:string} | undefined >
      getAllevents(id:string,next:Next):Promise < Ievents [] | undefined>
-     getEventDetails(id:string,next:Next):Promise<Ievents | undefined>
+     getEventDetails(id:string,next:Next):Promise<Ievents | {event:Ievents , organizer:Iorganizer} | undefined>
 }

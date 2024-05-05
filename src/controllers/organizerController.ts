@@ -241,10 +241,15 @@ export class OrganizerController {
    async getEventDetails(req:Req,res:Res,next:Next){
       try{
          const {id} = req.params
-        const result = await this.organizerUsecase.getEventDetails(id,next)
+        const details = await this.organizerUsecase.getEventDetails(id,next)
+        if(details){
+             res.json({details,message:"successfull",success:true})
+        }else{
+           res.json({success:false,message:"not matching event Found"})
+        }
 
       }catch(error:any){
         return next(new ErrorHandler(error.status, error.message))
       }
    }
-}
+}  
