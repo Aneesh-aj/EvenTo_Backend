@@ -50,9 +50,9 @@ export interface Ievents{
     state:string,
     city:string,
     phoneNumber:string,
-    startingTime:Date,
-      endingTime:Date,
-    date:Date,
+    startingTime:string,
+      endingTime:string,
+    date:string,
     seatArrangement?:[],
     seatNumber?:number
     status:string,

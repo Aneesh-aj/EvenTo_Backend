@@ -24,9 +24,9 @@ const eventSchema :Schema <Ievents> = new  mongoose.Schema({
     state:{type:String},
     city:{type:String},
     phoneNumber:{type:String},
-    startingTime:{type:Date},
-      endingTime:{type:Date},
-    date:{type:Date},
+    startingTime:{type:String},
+      endingTime:{type:String},
+    date:{type:String},
     seatArrangement: { type:Array },
     seatNumber:{type:Number},
     status: {

@@ -6,6 +6,7 @@ export const createEvents = async(data:IeventFormData,eventRepository:IeventRepo
     try{
            console.log("------------------- the function ssssdaa------------------------------------",data)
          const events = await eventRepository.createEvent(data)
+           console.log(" the return is ",events)
        return events
     }catch(error){
         throw error

@@ -210,6 +210,7 @@ export class OrganizerController {
          const {data} = req.body
          console.log(" data from body---------------------------------------------------------------",data)
          const event = await this.organizerUsecase.createEvent(data,next)
+         console.log(" the event commining from the backend is heress-------------",event)
           if(event){
             console.log(" commigngn here",event)
             res.json({event})
