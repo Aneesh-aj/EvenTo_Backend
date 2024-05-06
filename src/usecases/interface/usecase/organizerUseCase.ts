@@ -1,5 +1,6 @@
 import { IeventFormData, Ievents } from "../../../entities/event";
 import { IeventCategory } from "../../../entities/eventCategory";
+import { IeventPost } from "../../../entities/eventPost";
 import { Iorganizer, IorganizerAndAddress } from "../../../entities/organizer";
 import { Next , Res, Req } from "../../../framework/types/serverPackageTypes";
 import { IToken } from "../service/jwt";
@@ -24,4 +25,5 @@ export  interface IorganizerUseCase{
     createEvent(data:IeventFormData,next:Next):Promise < {success:boolean, message:string} | undefined >
      getAllevents(id:string,next:Next):Promise < Ievents [] | undefined>
      getEventDetails(id:string,next:Next):Promise<Ievents | {event:Ievents , organizer:Iorganizer} | undefined>
+     eventPost(data:IeventPost,next:Next):Promise<IeventPost | undefined>
 }

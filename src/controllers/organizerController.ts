@@ -3,6 +3,7 @@ import { IorganizerUseCase } from "../usecases/interface/usecase/organizerUseCas
 import ErrorHandler from "../usecases/middleares/errorHandler";
 import { accessTokenOptions, refreshTokenOptions } from "../framework/webServer/middlewares/Tokens";
 import { error } from "console";
+import { IeventPost } from "../entities/eventPost";
 
 export class OrganizerController {
   private organizerUsecase: IorganizerUseCase
@@ -186,70 +187,83 @@ export class OrganizerController {
       console.log("--------------------------------------body---------------------------", formData)
 
       const user = await this.organizerUsecase.editProfile(id, formData, next)
-      res.json({success:true,message:"profile Edited"})
-    } catch (error:any) {
-        return next(new ErrorHandler(error.state,error.message))
+      res.json({ success: true, message: "profile Edited" })
+    } catch (error: any) {
+      return next(new ErrorHandler(error.state, error.message))
     }
   }
 
-  async  avalibleCategory (req: Req, res: Res, next: Next) {
-      try{
-        const {id} = req.params
-        console.log("the paramsa",id)
-        console.log(" heree")
-        const category = await this.organizerUsecase.getCategory(id,next)
-        console.log(" the categorysss ==================================>",category)
-        res.json({category})
-      }catch(error:any){
-         return next(new ErrorHandler(error.state,error.message))
-      }
-  }
-
-  async createEvent(req:Req,res:Res,next:Next){
-    try{  
-         const {data} = req.body
-         console.log(" data from body---------------------------------------------------------------",data)
-         const event = await this.organizerUsecase.createEvent(data,next)
-         console.log(" the event commining from the backend is heress-------------",event)
-          if(event){
-            console.log(" commigngn here",event)
-            res.json({event})
-          }else{
-            res.json({success:false,message:"unable to create"})
-          }
-
-    }catch(error:any){
-       return next(new ErrorHandler(error.status,error.message))
+  async avalibleCategory(req: Req, res: Res, next: Next) {
+    try {
+      const { id } = req.params
+      console.log("the paramsa", id)
+      console.log(" heree")
+      const category = await this.organizerUsecase.getCategory(id, next)
+      console.log(" the categorysss ==================================>", category)
+      res.json({ category })
+    } catch (error: any) {
+      return next(new ErrorHandler(error.state, error.message))
     }
   }
-  
-   async getAllevents(req:Req,res:Res,next:Next){
-     try{
-         const  {id} = req.params
-         console.log(" id ")
-         const events = await this.organizerUsecase.getAllevents(id,next)
-         console.log("eventsss-----------------------------------------",events)
-         if(events && events.length >0){
-            res.json({events,success:true})
-         }
-     }catch(error:any){
-      return next(new ErrorHandler(error.status,error.message))
 
-     }
-   }
-
-   async getEventDetails(req:Req,res:Res,next:Next){
-      try{
-         const {id} = req.params
-        const details = await this.organizerUsecase.getEventDetails(id,next)
-        if(details){
-             res.json({details,message:"successfull",success:true})
-        }else{
-           res.json({success:false,message:"not matching event Found"})
-        }
-
-      }catch(error:any){
-        return next(new ErrorHandler(error.status, error.message))
+  async createEvent(req: Req, res: Res, next: Next) {
+    try {
+      const { data } = req.body
+      console.log(" data from body---------------------------------------------------------------", data)
+      const event = await this.organizerUsecase.createEvent(data, next)
+      console.log(" the event commining from the backend is heress-------------", event)
+      if (event) {
+        console.log(" commigngn here", event)
+        res.json({ event })
+      } else {
+        res.json({ success: false, message: "unable to create" })
       }
-   }
+
+    } catch (error: any) {
+      return next(new ErrorHandler(error.status, error.message))
+    }
+  }
+
+  async getAllevents(req: Req, res: Res, next: Next) {
+    try {
+      const { id } = req.params
+      console.log(" id ")
+      const events = await this.organizerUsecase.getAllevents(id, next)
+      console.log("eventsss-----------------------------------------", events)
+      if (events && events.length > 0) {
+        res.json({ events, success: true })
+      }
+    } catch (error: any) {
+      return next(new ErrorHandler(error.status, error.message))
+
+    }
+  }
+
+  async getEventDetails(req: Req, res: Res, next: Next) {
+    try {
+      const { id } = req.params
+      const details = await this.organizerUsecase.getEventDetails(id, next)
+      if (details) {
+        res.json({ details, message: "successfull", success: true })
+      } else {
+        res.json({ success: false, message: "not matching event Found" })
+      }
+
+    } catch (error: any) {
+      return next(new ErrorHandler(error.status, error.message))
+    }
+  }
+
+
+  async eventPost(req: Req, res: Res, next: Next) {
+    try {
+     console.log(" the body",req.body)
+      const { data } = req.body
+      console.log(" the data that passed ",data)
+      const post = await this.organizerUsecase.eventPost(data as unknown as IeventPost, next)
+
+    } catch (error: any) {
+      return next(new ErrorHandler(error.status, error.message))
+    }
+  }
 }  

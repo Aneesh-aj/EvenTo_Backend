@@ -84,6 +84,10 @@ export function OrganizerRoute(router: Route) {
   router.get("/eventDetails/:id",(req:Req,res:Res,next:Next)=>{
       organizerController.getEventDetails(req,res,next)
   })
+  
+  router.post("/eventPost",(req:Req,res:Res,next:Next)=>{
+    organizerController.eventPost(req,res,next)
+  })
 
 
    return router

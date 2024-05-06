@@ -19,6 +19,7 @@ import { AdminUsecase } from "../../../../usecases/usecases/adminUseCase";
 import { AdminRepository } from "../../../database/mongodb/repository/adminRepository/adminRepository";
 import { CategoryRepository } from "../../../database/mongodb/repository/categoryRepository/categoryRepository";
 import { EventRepository } from "../../../database/mongodb/repository/eventRepository/eventRepository";
+import { EventPostRepository } from "../../../database/mongodb/repository/eventPostRepository/eventPostRepository";
 
 const bycryptsurvice =new  Encrypt()
 const cloudsession = new CloudSession()
@@ -30,6 +31,7 @@ const eventRepository = new EventRepository()
 
 const categoryrepository = new CategoryRepository()
 const userrepository = new UserRepository(userModel)
+const eventpostrepo = new EventPostRepository()
 
 
 const adminrepository = new AdminRepository()
@@ -38,7 +40,7 @@ const organizerrepository = new OrganizerRepository(organizerModel)
 const userusecase = new UserUseCase(userrepository,jwttoken,otpGenerate,otprepository,sentemail,bycryptsurvice,cloudsession,organizerrepository)
 const  userController = new UserController(userusecase)
 const adminusecase = new AdminUsecase(bycryptsurvice,adminrepository,jwttoken,organizerrepository,userrepository,categoryrepository)
-const organizerusecase = new  OrganizerUseCase(organizerrepository,bycryptsurvice,otpGenerate,otprepository,sentemail,jwttoken,categoryrepository,eventRepository)
+const organizerusecase = new  OrganizerUseCase(organizerrepository,bycryptsurvice,otpGenerate,otprepository,sentemail,jwttoken,categoryrepository,eventRepository,eventpostrepo)
 const organizerController = new  OrganizerController(organizerusecase)
 const adminController = new AdminController(adminusecase)
 

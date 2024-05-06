@@ -1,7 +1,7 @@
 import { IorganizerRepository } from "../interface/repositoryInterface/organizerRepository";
 import { IorganizerUseCase } from "../interface/usecase/organizerUseCase";
 import { Ihashpassword } from "../interface/service/hashPassword";
-import { allDetailsById, approvalChecking, createEvents, createOrganizers, getAllCategory, getCategory, getEventDetails, login, profileEdit, signup, uploadBackground, uploadProfile } from './organizer/index'
+import { allDetailsById, approvalChecking, createEvents, createOrganizers, eventPostCreation, getAllCategory, getCategory, getEventDetails, login, profileEdit, signup, uploadBackground, uploadProfile } from './organizer/index'
 import { IotpGenerate } from "../interface/service/otpGenerate";
 import { IsentEmail } from "../interface/service/sentEmail";
 import { IotpRepository } from "../interface/repositoryInterface/otpRepository";
@@ -17,6 +17,8 @@ import { IeventCategory } from "../../entities/eventCategory";
 import { IeventRepository } from "../interface/repositoryInterface/eventRepository";
 import { IeventFormData, Ievents } from "../../entities/event";
 import { getAllEvents } from "./organizer/getAllEvents";
+import { IeventPost } from "../../entities/eventPost";
+import { IeventPostRepository } from "../interface/repositoryInterface/eventPostRepository";
 
 export class OrganizerUseCase implements IorganizerUseCase {
   
@@ -29,7 +31,8 @@ export class OrganizerUseCase implements IorganizerUseCase {
        private sentEmail: IsentEmail,
        private jwt : Ijwt,
        private categoryRepository: IcategoryRepository,
-       private eventRepository :IeventRepository
+       private eventRepository :IeventRepository,
+       private eventPostRepository : IeventPostRepository
     ) {
     }
 
@@ -185,6 +188,15 @@ export class OrganizerUseCase implements IorganizerUseCase {
             return response ? response : undefined
         }catch(error){
              catchError(error,next)
+        }
+    }
+
+    async  eventPost(data: IeventPost, next: NextFunction): Promise<IeventPost | undefined> {
+        try{
+             const event = await eventPostCreation(data,this.eventPostRepository)
+             return 
+        }catch(error){
+           catchError(error,next)
         }
     }
 
