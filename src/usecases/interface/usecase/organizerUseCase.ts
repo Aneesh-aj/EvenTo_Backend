@@ -26,4 +26,5 @@ export  interface IorganizerUseCase{
      getAllevents(id:string,next:Next):Promise < Ievents [] | undefined>
      getEventDetails(id:string,next:Next):Promise<Ievents | {event:Ievents , organizer:Iorganizer} | undefined>
      eventPost(data:IeventPost,next:Next):Promise<IeventPost | undefined>
+     getAlleventPost(next:Next):Promise <IeventPost [] | undefined>
 }

@@ -261,9 +261,29 @@ export class OrganizerController {
       const { data } = req.body
       console.log(" the data that passed ",data)
       const post = await this.organizerUsecase.eventPost(data as unknown as IeventPost, next)
+      console.log(" the post return in the controllere ",post)
+      if(post){
+         res.json({post,message:"post created successfully",success:true})
+      }else{
+        res.json({message:"unable to create post",success:false})
+      }
 
     } catch (error: any) {
       return next(new ErrorHandler(error.status, error.message))
     }
   }
+
+
+    async getAlleventPost(req:Req,res:Res,next:Next){
+        try{
+            const posts = await this.organizerUsecase.getAlleventPost(next)
+            if(posts){
+               res.json({posts,success:true})
+            }else{
+               res.json({message:"NO Post Avalible"})
+            }
+        }catch(error:any){
+           return next(new ErrorHandler(error.status,error.message))
+        }
+    }
 }  

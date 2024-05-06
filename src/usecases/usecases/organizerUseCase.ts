@@ -1,7 +1,7 @@
 import { IorganizerRepository } from "../interface/repositoryInterface/organizerRepository";
 import { IorganizerUseCase } from "../interface/usecase/organizerUseCase";
 import { Ihashpassword } from "../interface/service/hashPassword";
-import { allDetailsById, approvalChecking, createEvents, createOrganizers, eventPostCreation, getAllCategory, getCategory, getEventDetails, login, profileEdit, signup, uploadBackground, uploadProfile } from './organizer/index'
+import { allDetailsById, approvalChecking, createEvents, createOrganizers, eventPostCreation, getAllCategory, getAlleventPost, getCategory, getEventDetails, login, profileEdit, signup, uploadBackground, uploadProfile } from './organizer/index'
 import { IotpGenerate } from "../interface/service/otpGenerate";
 import { IsentEmail } from "../interface/service/sentEmail";
 import { IotpRepository } from "../interface/repositoryInterface/otpRepository";
@@ -194,9 +194,19 @@ export class OrganizerUseCase implements IorganizerUseCase {
     async  eventPost(data: IeventPost, next: NextFunction): Promise<IeventPost | undefined> {
         try{
              const event = await eventPostCreation(data,this.eventPostRepository)
-             return 
+              console.log(" in the usease ",event)
+             return event ? event : undefined
         }catch(error){
            catchError(error,next)
+        }
+    }
+
+    async  getAlleventPost(next: Next): Promise<IeventPost [] | undefined> {
+        try{
+           const posts = await getAlleventPost(this.eventPostRepository)
+           return posts ? posts : undefined
+        }catch(error){
+            catchError(error,next)
         }
     }
 
