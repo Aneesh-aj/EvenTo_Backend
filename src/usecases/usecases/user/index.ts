@@ -5,7 +5,9 @@ import { getUser } from "./getUser";
 import { editProfile } from "./editProfile";
 import { uploadProfile } from "./addProfilePicture";
 import { getOrganizers } from "./getAllorganizers";
-
+import { eventPostDetails } from "./eventPostDetails";
+import { getSeats } from "./getSeats";
+import { seatBooking } from "./seatBooking";
 export{
     userSignup,
     login,
@@ -13,5 +15,8 @@ export{
     getUser,
     editProfile,
     uploadProfile,
-    getOrganizers
+    getOrganizers,
+    eventPostDetails,
+    getSeats,
+    seatBooking,
 }

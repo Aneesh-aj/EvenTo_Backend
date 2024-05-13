@@ -33,6 +33,7 @@
     "luxon": "^3.4.4",
     "mongodb": "^6.3.0",
     "mongoose": "^8.1.0",
+    "stripe": "^15.5.0",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.3.3"
   },

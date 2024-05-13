@@ -48,6 +48,22 @@ export function UserRoute(router: Route){
          userController.allorganizers(req,res,next)
     })
 
+    router.get("/eventPostDetails/:id",(req:Req,res:Res,next:Next)=>{
+          userController.eventPostDetails(req,res,next)
+    })
+
+
+    router.get("/seatBooking/:id",(req:Req,res:Res,next:Next)=>{
+        userController.getSeats(req,res,next)
+    })
+
+    router.post("/Booking",(req:Req,res:Res,next:Next)=>{
+        userController.bookSeat(req,res,next)
+    })
+  
+    router.post("/payment",(req:Req,res:Res,next:Next)=>{
+         userController.payment(req,res,next)
+    })
     
     
    

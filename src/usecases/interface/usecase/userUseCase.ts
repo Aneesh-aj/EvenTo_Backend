@@ -1,4 +1,6 @@
 import { Iaddress } from "../../../entities/address";
+import { Ievents } from "../../../entities/event";
+import { IeventPost } from "../../../entities/eventPost";
 import { Iorganizer, IorganizerAndAddress } from "../../../entities/organizer";
 import { Iuser } from "../../../entities/user";
 
@@ -14,4 +16,8 @@ export interface IuserUseCase{
     addProfilePicture(id:string,image:string,next:Next):Promise<boolean | undefined>
     resentOtp(email:string,next:Next):Promise<void>
     allOrganizers(next:Next):Promise<IorganizerAndAddress[] | undefined>
+    eventPostDetails (id:string,next:Next):Promise<{post:IeventPost,event:Ievents,organizer:{id:string,name:string}} | undefined >
+    getSeats(id:string,next:Next):Promise<{seat:[]} | undefined>
+    seatBooking(id:string,selectedSeat:[],next:Next):Promise < any>
+    payment(eventId:string,userId:string,seats:[],amount:string,next:Next):Promise<any>
 }

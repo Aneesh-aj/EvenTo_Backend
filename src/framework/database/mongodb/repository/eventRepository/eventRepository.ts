@@ -77,4 +77,84 @@ export class EventRepository implements IeventRepository {
             throw error
         }
     }
+
+    async  getById(id: string): Promise<Ievents | undefined> {
+        try{
+
+           const events = await eventModal.findById(id)
+           console.log(" the events got by id",events)
+           return events ? events : undefined
+        }catch(error){
+            throw error
+        }   
+    }
+    async  getSeat(id: string): Promise<{seat:[]} | undefined> {
+        try{
+            console.log(" the id ",id)
+            const seats = await eventModal.findById(id)
+             console.log(" the detailsss",seats)
+            if(seats&&seats.seatArrangement){
+                return seats ? {seat:seats?.seatArrangement} : undefined
+            }
+        }catch(error){
+             throw error
+        }
+    }
+
+    async  seatBooking(id: string, selectedSeat: []): Promise<boolean> {
+        try{
+            const events = await eventModal.findById(id)
+            if(events){
+              const result =   selectedSeat.map((elem:any)=>{
+                 console.log("iiii")
+                     events.seatArrangement?.map((ele:any)=>{
+                          if(elem?.row === ele?.row && ele?.column === elem.column){
+                                if(ele?.booked){
+
+                                    return  true
+                                }else{
+                                    return false
+                                }
+                          }
+                     })
+                })
+                console.log(" th result from the backeind",result)
+                return result ? true : false
+            }
+            
+            return false
+            
+
+        }catch(error){
+            throw error
+        }
+    }
+
+    async  confirmSeat(id: string,userId:string, selectedSeat: []): Promise<boolean> {
+        try{
+            const events = await eventModal.findById(id)
+            if(events){
+               const result =   selectedSeat.map((elem:any)=>{
+                     events.seatArrangement?.map((ele:any)=>{
+                          if(elem?.row === ele?.row && ele?.column === elem.column){
+                                if(ele?.booked){
+                                     console.log(" checking ")
+                                    return  true
+                                }
+                          }
+                     })
+                })
+                //   console.log(" th result from the backeind",result)
+                 return result ? true : false
+            }else{
+                return false
+            }
+            
+           
+            
+
+        }catch(error){
+            throw error
+        }
+    }
 }

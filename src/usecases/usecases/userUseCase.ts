@@ -1,7 +1,7 @@
 import { Req, Res, Next } from "../../framework/types/serverPackageTypes";
 import { IuserUseCase } from "../interface/usecase/userUseCase";
 import { Iuser } from "../../entities/user";
-import { userSignup, login, createUser, getUser, editProfile, uploadProfile, getOrganizers } from "./user/index"
+import { userSignup, login, createUser, getUser, editProfile, uploadProfile, getOrganizers, eventPostDetails, getSeats, seatBooking } from "./user/index"
 import { IuserRepository } from "../interface/repositoryInterface/userRepository";
 import { Ijwt } from "../interface/service/jwt";
 import { NextFunction } from "express";
@@ -15,6 +15,12 @@ import { Iaddress } from "../../entities/address";
 import { resentOpt } from "./otp/otp";
 import { Iorganizer, IorganizerAndAddress } from "../../entities/organizer";
 import { IorganizerRepository } from "../interface/repositoryInterface/organizerRepository";
+import { IeventRepository } from "../interface/repositoryInterface/eventRepository";
+import { IeventPostRepository } from "../interface/repositoryInterface/eventPostRepository";
+import { IeventPost } from "../../entities/eventPost";
+import { Ievents } from "../../entities/event";
+import { payment } from "./user/payment";
+import { Istripe } from "../interface/repositoryInterface/stripeRepository";
 
 
 export class UserUseCase implements IuserUseCase {
@@ -27,7 +33,10 @@ export class UserUseCase implements IuserUseCase {
           private sentEmail: IsentEmail,
           private hashPassword: Ihashpassword,
           private cloudSession: IcloudSession,
-          private organizerRepository:IorganizerRepository
+          private organizerRepository:IorganizerRepository,
+          private eventPostRepository:IeventPostRepository,
+          private eventRepository:IeventRepository,
+          private stripeRepository:Istripe
      ) { }
      async userSignup(user: Iuser, next: Next): Promise<string | void> {
           try {
@@ -125,6 +134,42 @@ export class UserUseCase implements IuserUseCase {
               return allorganizers
           }catch(error){
                catchError(error,next)
+          }
+     }
+
+     async  eventPostDetails(id: string, next: NextFunction): Promise<{ post: IeventPost; event: Ievents; organizer:{ id: string; name: string; } } | undefined> {
+         try{
+             const details = await eventPostDetails(id,this.eventPostRepository,this.eventRepository,this.organizerRepository)
+             return details ? details : undefined
+         }catch(error){
+           catchError(error,next)
+         }
+     }
+
+     async  getSeats(id: string,next:Next): Promise<{seat:[]} | undefined> {
+         try{
+           return await getSeats(id,this.eventRepository)
+         }catch(error){
+            catchError(error,next)
+         }
+     }
+
+     async  seatBooking(id: string, selectedSeat: [], next: NextFunction): Promise<any> {
+         try{
+             const response = await  seatBooking(id,selectedSeat,this.eventRepository)
+             return response
+         }catch(error){
+            catchError(error,next)
+         }
+     }
+
+     async payment(eventId:string,userId:string,seats:[],amount:string,next:Next):Promise<any>{
+          try{
+              const response = await payment(userId,eventId,seats,amount,this.stripeRepository)
+              console.log(response,"case")
+              return response
+          }catch(error){
+           catchError(error,next)
           }
      }
 

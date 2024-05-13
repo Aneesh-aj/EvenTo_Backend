@@ -1,6 +1,6 @@
 import { IeventPost } from "../../../../../entities/eventPost";
 import { IeventPostRepository } from "../../../../../usecases/interface/repositoryInterface/eventPostRepository";
-import { eventPostCreation, getAllPosts } from "./eventPost/index";
+import { eventPostCreation, getAllPosts, getById } from "./eventPost/index";
 
 export class EventPostRepository implements IeventPostRepository {
 
@@ -11,5 +11,9 @@ export class EventPostRepository implements IeventPostRepository {
 
     async  getAll(): Promise<IeventPost[]> {
         return await getAllPosts()
+    }
+
+    async  getPostByid(id: string): Promise<IeventPost | undefined> {
+        return await getById(id)
     }
 }

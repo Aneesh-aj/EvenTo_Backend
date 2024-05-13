@@ -9,7 +9,7 @@ import { errorMiddleware } from '../../../usecases/middleares/errorMiddleware'
 export const app = express()
 
 app.use(cors({
-    origin : "http://localhost:5173",
+    origin : "http://10.4.2.82:5173",
     credentials:true,
     methods:['GET',"PATCH","PUT","POST"],
     optionsSuccessStatus:204,

@@ -2,6 +2,7 @@ import { Req, Res, Next } from "../framework/types/serverPackageTypes"
 import { IuserUseCase } from "../usecases/interface/usecase/userUseCase"
 import ErrorHandler from "../usecases/middleares/errorHandler"
 import { accessTokenOptions, refreshTokenOptions } from "../framework/webServer/middlewares/Tokens"
+import { response } from "express"
 
 
 
@@ -157,5 +158,65 @@ export class UserController {
          }
     }
 
+    async eventPostDetails(req:Req,res:Res,next:Next){
+         try{
+            const {id} = req.params
+            console.log(" the id",id)
+           const details = await this.userUseCase.eventPostDetails(id,next)
+           if(details){
+              res.json({details,success:true})
+           }else{
+             res.json({success:false,message:"fetching issue !! please try agian later"})
+           }
+         }catch(error:any){
+            return next(new ErrorHandler(error.status,error.message))
+         }
+    }
+
+    async getSeats (req:Req,res:Res,next:Next){
+        try{
+             const {id} = req.params
+             const eventSeat = await this.userUseCase.getSeats(id,next)
+              console.log("-------------------all seats",eventSeat)
+             if(eventSeat){
+                console.log(" successs")
+                 res.json({eventSeat,success:true})
+             }else{
+                console.log("thelell")
+                 res.json({success:false ,message:"No seats Found"})
+             }
+        }catch(error:any){
+            return next(new ErrorHandler(error.status,error.message))
+        }
+    }
+
+
+    async bookSeat(req:Req,res:Res,next:Next){
+        try{        
+            const {id,selectedSeat} = req.body
+            console.log("  the body data",id ,"______",selectedSeat)
+            const  reponse = await  this.userUseCase.seatBooking(id,selectedSeat,next)
+            if(response){
+                console.log("yes")
+                res.json({success:true})
+            }else{
+                 console.log("no")
+                res.json({success:false})
+            }
+
+        }catch(error:any){
+            return next(new ErrorHandler(error.status,error.message))
+        }
+    }
+    
+    async payment(req:Req,res:Res,next:Next){
+        try{
+            const {eventId,userId,seat,amount} = req.body
+          const response = await this.userUseCase.payment(eventId,userId,seat,amount,next)
+          res.status(200).json(response)
+        }catch(error:any){
+            return next(new ErrorHandler(error.status,error.message))
+        }
+    }
    
 }
