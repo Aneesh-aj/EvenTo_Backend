@@ -1,5 +1,5 @@
 import Stripe from "stripe";
 
-const stripe = new Stripe("sk_test_51PDpmWSAkGUgRqrqontyKf7XxFJJQuRyPyBjZ6pu6Y2I7SvyAxp0WfMHCvZnlXH5NqIF5if47PeCvPkJMi4j7cDL00fvHqnCIP")
+const stripe = new Stripe("sk_test_51PFyqWSEhUTiu13xtYpDj7iMp5aJ4HF5j6werkzmPZvwLz0yUNolTnnbgeR57tRRzEXJc4Ldpon2BwNGulJ2iIMW00WtuINna2")
 
 export default stripe

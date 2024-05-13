@@ -64,6 +64,10 @@ export function UserRoute(router: Route){
     router.post("/payment",(req:Req,res:Res,next:Next)=>{
          userController.payment(req,res,next)
     })
+
+    router.post("/webHookPayment",(req:Req,res:Res,next:Next)=>{
+         userController.webHookPayment(req,res,next)
+    })
     
     
    

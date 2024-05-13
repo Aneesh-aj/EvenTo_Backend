@@ -1,7 +1,7 @@
 import { Req, Res, Next } from "../../framework/types/serverPackageTypes";
 import { IuserUseCase } from "../interface/usecase/userUseCase";
 import { Iuser } from "../../entities/user";
-import { userSignup, login, createUser, getUser, editProfile, uploadProfile, getOrganizers, eventPostDetails, getSeats, seatBooking } from "./user/index"
+import { userSignup, login, createUser, getUser, editProfile, uploadProfile, getOrganizers, eventPostDetails, getSeats, seatBooking, paymentStatus } from "./user/index"
 import { IuserRepository } from "../interface/repositoryInterface/userRepository";
 import { Ijwt } from "../interface/service/jwt";
 import { NextFunction } from "express";
@@ -146,7 +146,7 @@ export class UserUseCase implements IuserUseCase {
          }
      }
 
-     async  getSeats(id: string,next:Next): Promise<{seat:[]} | undefined> {
+     async  getSeats(id: string,next:Next): Promise<Ievents | undefined> {
          try{
            return await getSeats(id,this.eventRepository)
          }catch(error){
@@ -154,7 +154,7 @@ export class UserUseCase implements IuserUseCase {
          }
      }
 
-     async  seatBooking(id: string, selectedSeat: [], next: NextFunction): Promise<any> {
+     async  seatBooking(id: string, selectedSeat:[], next: NextFunction): Promise<any> {
          try{
              const response = await  seatBooking(id,selectedSeat,this.eventRepository)
              return response
@@ -164,13 +164,24 @@ export class UserUseCase implements IuserUseCase {
      }
 
      async payment(eventId:string,userId:string,seats:[],amount:string,next:Next):Promise<any>{
-          try{
+          try{ 
+               console.log(" the amoundwssss----------------------",amount)
               const response = await payment(userId,eventId,seats,amount,this.stripeRepository)
               console.log(response,"case")
               return response
           }catch(error){
            catchError(error,next)
           }
+     }
+
+     async  paymentStatus(req: Req, next: NextFunction): Promise<boolean | undefined> {
+         try{
+           const response = await paymentStatus(req,this.stripeRepository)
+           return response ? true : false 
+
+         }catch(error){
+          catchError(error,next)
+         }
      }
 
 }

@@ -17,7 +17,8 @@ export interface IuserUseCase{
     resentOtp(email:string,next:Next):Promise<void>
     allOrganizers(next:Next):Promise<IorganizerAndAddress[] | undefined>
     eventPostDetails (id:string,next:Next):Promise<{post:IeventPost,event:Ievents,organizer:{id:string,name:string}} | undefined >
-    getSeats(id:string,next:Next):Promise<{seat:[]} | undefined>
+    getSeats(id:string,next:Next):Promise<Ievents | undefined>
     seatBooking(id:string,selectedSeat:[],next:Next):Promise < any>
     payment(eventId:string,userId:string,seats:[],amount:string,next:Next):Promise<any>
+    paymentStatus(req:Req,next:Next):Promise<boolean | undefined>
 }

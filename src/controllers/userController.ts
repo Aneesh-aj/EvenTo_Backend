@@ -212,8 +212,22 @@ export class UserController {
     async payment(req:Req,res:Res,next:Next){
         try{
             const {eventId,userId,seat,amount} = req.body
+             req.app.locals.bookingData = req.body
           const response = await this.userUseCase.payment(eventId,userId,seat,amount,next)
           res.status(200).json(response)
+        }catch(error:any){
+            return next(new ErrorHandler(error.status,error.message))
+        }
+    }
+
+    async webHookPayment(req:Req,res:Res,next:Next){
+        try{
+       
+            console.log(" commin to the controller------",req)
+            const payment = await this.userUseCase.paymentStatus(req,next)
+            console.log(" the paymetn statussssss-------",payment)
+
+
         }catch(error:any){
             return next(new ErrorHandler(error.status,error.message))
         }
