@@ -9,6 +9,7 @@ import { eventPostDetails } from "./eventPostDetails";
 import { getSeats } from "./getSeats";
 import { seatBooking } from "./seatBooking";
 import { paymentStatus } from "./paymentStatus";
+import { bookingCreation } from "./bookingCreation";
 export{
     userSignup,
     login,
@@ -20,5 +21,6 @@ export{
     eventPostDetails,
     getSeats,
     seatBooking,
-    paymentStatus
+    paymentStatus,
+    bookingCreation
 }

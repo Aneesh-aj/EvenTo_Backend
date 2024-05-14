@@ -1,4 +1,5 @@
 import { Iaddress } from "../../../entities/address";
+import { booking } from "../../../entities/booking";
 import { Ievents } from "../../../entities/event";
 import { IeventPost } from "../../../entities/eventPost";
 import { Iorganizer, IorganizerAndAddress } from "../../../entities/organizer";
@@ -21,4 +22,5 @@ export interface IuserUseCase{
     seatBooking(id:string,selectedSeat:[],next:Next):Promise < any>
     payment(eventId:string,userId:string,seats:[],amount:string,next:Next):Promise<any>
     paymentStatus(req:Req,next:Next):Promise<boolean | undefined>
+    booking(bookingData:booking,chargeId:string ,next:Next):Promise<any>
 }

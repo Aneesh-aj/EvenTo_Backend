@@ -226,11 +226,20 @@ export class UserController {
             console.log(" commin to the controller------",req)
             const payment = await this.userUseCase.paymentStatus(req,next)
             console.log(" the paymetn statussssss-------",payment)
+            if(payment){
+                const bookingData = req.app.locals.bookingData
+                bookingData.paidAmound = Number(bookingData.amount)
+                 console.log(" hteejejejejjejej-----------------------------------------------------------------------------",bookingData)
+                const chargeId = req.app.locals.chargeId
+                const booking = await this.userUseCase.booking(bookingData,chargeId ,next)
+            }
 
 
         }catch(error:any){
             return next(new ErrorHandler(error.status,error.message))
         }
     }
+
+    
    
 }

@@ -1,6 +1,5 @@
 import mongoose, { Model, Schema } from "mongoose";
 import { Iadmin } from "../../../../entities/admin";
-import { defaultMaxListeners } from "events";
 
 
 const AdminSchema :Schema <Iadmin> = new  mongoose.Schema({
