@@ -1,6 +1,7 @@
 import { Route, Req, Res, Next } from "../../types/serverPackageTypes";
 import { adminController } from "./injections/Injection";
-import { isAutheticate } from "../middlewares/auth";
+import { isAuthenticate } from "../middlewares/auth";
+import { isAdmin } from "../middlewares/roleAuth";
 
 export function AdminRoute(router: Route) {
 
@@ -8,50 +9,50 @@ export function AdminRoute(router: Route) {
         adminController.login(req, res, next)
     })
 
-    router.get('/Requests',isAutheticate, (req: Req, res: Res, next: Next) => {
+    router.get('/Requests',isAdmin,isAuthenticate, (req: Req, res: Res, next: Next) => {
         adminController.getRequests(req, res, next)
     })
-    router.get('/requestDetails/:id', (req: Req, res: Res, next: Next) => {
+    router.get('/requestDetails/:id',isAdmin,isAuthenticate, (req: Req, res: Res, next: Next) => {
         adminController.getDetails(req, res, next)
     })
-    router.post('/approve/:id', (req: Req, res: Res, next: Next) => {
+    router.post('/approve/:id',isAdmin,isAuthenticate, (req: Req, res: Res, next: Next) => {
         adminController.Approve(req, res, next)
     })
-    router.post('/reject/:id', (req: Req, res: Res, next: Next) => {
+    router.post('/reject/:id',isAuthenticate,isAdmin, (req: Req, res: Res, next: Next) => {
         adminController.Reject(req, res, next)
     })
-    router.get('/users', (req: Req, res: Res, next: Next) => {
+    router.get('/users',isAdmin,isAuthenticate, (req: Req, res: Res, next: Next) => {
         adminController.getAllusers(req, res, next)
     })
-    router.get('/organizers', (req: Req, res: Res, next: Next) => {
+    router.get('/organizers',isAdmin,isAuthenticate, (req: Req, res: Res, next: Next) => {
         adminController.getAllorganizer(req, res, next)
     })
 
-    router.post('/user/block/:id', (req: Req, res: Res, next: Next) => {
+    router.post('/user/block/:id',isAdmin,isAuthenticate, (req: Req, res: Res, next: Next) => {
         console.log("bloclk router")
         adminController.blockUser(req, res, next)
     })
-    router.post('/organizer/block/:id', (req: Req, res: Res, next: Next) => {
+    router.post('/organizer/block/:id', isAdmin,isAuthenticate, (req: Req, res: Res, next: Next) => {
         adminController.blockOrgnaizer(req, res, next)
     })
 
-    router.post("/addCategory", (req: Req, res: Res, next: Next) => {
+    router.post("/addCategory", isAdmin,isAuthenticate,  (req: Req, res: Res, next: Next) => {
         adminController.addCategory(req, res, next)
     })
 
-    router.post("/deleteCategory", (req: Req, res: Res, next: Next) => {
+    router.post("/deleteCategory",isAdmin,isAuthenticate,  (req: Req, res: Res, next: Next) => {
         adminController.deleteCategory(req, res, next)
     })
 
-    router.get("/category", (req: Req, res: Res, next: Next) => {
+    router.get("/category",isAdmin,isAuthenticate,  (req: Req, res: Res, next: Next) => {
         adminController.getAllCategory(req, res, next)
     })
 
-    router.post("/activeCategory", (req: Req, res: Res, next: Next) => {
+    router.post("/activeCategory", isAdmin,isAuthenticate,  (req: Req, res: Res, next: Next) => {
         adminController.activeCategory(req, res, next)
     })
     
-    router.post("/editCategory",(req:Req,res:Res,next:Next)=>{
+    router.post("/editCategory", isAdmin,isAuthenticate, (req:Req,res:Res,next:Next)=>{
          adminController.editCategory(req,res,next)
     })
    

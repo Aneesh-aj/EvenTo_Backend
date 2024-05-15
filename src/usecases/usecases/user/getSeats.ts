@@ -6,7 +6,7 @@ export const getSeats = async(id:string,eventRepository:IeventRepository):Promis
     try{
         const event = await eventRepository.getById(id)
          
-          console.log(" the resssssss-=----------------",event)
+        //   console.log(" the resssssss-=----------------",event)
         return event
 
     }catch(error){

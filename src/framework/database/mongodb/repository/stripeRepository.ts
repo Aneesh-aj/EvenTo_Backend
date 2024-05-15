@@ -27,7 +27,7 @@ export class Stripe implements Istripe{
                   },
                 ],
                 mode: 'payment',
-                success_url: 'http://localhost:5173/success',
+                success_url: 'http://localhost:5173/user/success',
                 cancel_url: 'http://localhost:5173/cancel',
                 billing_address_collection: 'required'
               });
@@ -51,6 +51,7 @@ export class Stripe implements Istripe{
           if (typeof sig !== "string") {
             return false;
           }
+          
           const endpointSecret =
             "whsec_1b4490e8af840f6909efd2ae0e3490178fbbfe095675d93285678c0100590b96";
           const header = stripe.webhooks.generateTestHeaderString({
@@ -65,7 +66,6 @@ export class Stripe implements Istripe{
             header,
             endpointSecret
           );
-      
           if (paymentIntentId) {
             const paymentIntentResponse = await stripe.paymentIntents.retrieve(paymentIntentId);
             const paymentIntent = paymentIntentResponse
@@ -73,10 +73,12 @@ export class Stripe implements Istripe{
               const chargeId = paymentIntentResponse.latest_charge;
               req.app.locals.chargeId = chargeId;
             } else {
+           
               console.log('No latest charge found for this PaymentIntent.');
               return null;
             }
           }
+              console.log(" event type",event.type)
           if (event.type == "checkout.session.completed") {
             return true;
           } else {

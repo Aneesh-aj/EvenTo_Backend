@@ -7,5 +7,6 @@ export interface IeventRepository{
     getEventDetails(id:string):Promise <Ievents | undefined >
     getById(id:string):Promise <Ievents | undefined>
     getSeat(id:string):Promise<{seat:[]} | undefined>
-    seatBooking(id:string,selectedSeat:[]):Promise <boolean>
+    seatBooking(id:string,selectedSeat:[],userId:string):Promise <boolean>
+    confirmSeat(id:string,userId:string,selectedSeat:[]):Promise<boolean>
 }

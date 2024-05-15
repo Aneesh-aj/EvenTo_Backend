@@ -1,6 +1,7 @@
 import { Iaddress } from "../../../entities/address";
 import { booking } from "../../../entities/booking";
 import { Ievents } from "../../../entities/event";
+import { IeventCategory } from "../../../entities/eventCategory";
 import { IeventPost } from "../../../entities/eventPost";
 import { Iorganizer, IorganizerAndAddress } from "../../../entities/organizer";
 import { Iuser } from "../../../entities/user";
@@ -19,8 +20,10 @@ export interface IuserUseCase{
     allOrganizers(next:Next):Promise<IorganizerAndAddress[] | undefined>
     eventPostDetails (id:string,next:Next):Promise<{post:IeventPost,event:Ievents,organizer:{id:string,name:string}} | undefined >
     getSeats(id:string,next:Next):Promise<Ievents | undefined>
-    seatBooking(id:string,selectedSeat:[],next:Next):Promise < any>
+    seatBooking(id:string,selectedSeat:[],userId:string,next:Next):Promise < any>
     payment(eventId:string,userId:string,seats:[],amount:string,next:Next):Promise<any>
     paymentStatus(req:Req,next:Next):Promise<boolean | undefined>
     booking(bookingData:booking,chargeId:string ,next:Next):Promise<any>
+    getAllCategory(next:Next):Promise<IeventCategory[] | undefined>
+    allBookings(id:string,next:Next):Promise<any>
 }

@@ -10,6 +10,7 @@ import { getSeats } from "./getSeats";
 import { seatBooking } from "./seatBooking";
 import { paymentStatus } from "./paymentStatus";
 import { bookingCreation } from "./bookingCreation";
+import { getAllCategory } from "./getAllCategory";
 export{
     userSignup,
     login,
@@ -22,5 +23,7 @@ export{
     getSeats,
     seatBooking,
     paymentStatus,
-    bookingCreation
+    bookingCreation,
+    getAllCategory,
+    
 }

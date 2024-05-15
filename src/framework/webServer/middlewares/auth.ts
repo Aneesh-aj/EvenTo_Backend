@@ -1,32 +1,42 @@
-import exp from "constants";
-import { Request,Response,NextFunction } from "express";
-import  jwt,{ JwtPayload,Secret } from "jsonwebtoken";
-require("dotenv").config()
+import { Request, Response, NextFunction } from "express";
+import jwt, { JwtPayload, Secret } from "jsonwebtoken";
+import { catchError } from "../../../usecases/middleares/catchError";
+require("dotenv").config();
 
+export const isAuthenticate = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const accessToken = req.cookies.accessToken as string;
+        const refreshToken = req.cookies.refreshToken as string;
 
-export const isAutheticate= async(req:Request,res: Response,next : NextFunction)=>{
-     console.log( "commign to auth middlee")
-     console.log("cookie",req.cookies)
-     const accessToken = req.cookies.accessToken as string
-     const refreshToken = req.cookies.refreshToken as string
-     console.log("aceess",accessToken);
-     console.log("refreshToken",refreshToken);
-     if(!accessToken || !refreshToken){
-           console.log(" in he first if")
-       return   res.status(200).json({message:"Access Forbidd!!! pleas login again.",success:false})
+        if (!accessToken || !refreshToken) {
+            return res.status(401).json({ message: "Access Forbidden!!! Please login again.", success: false });
+        }
 
-     }
-      
-     console.log("process .env", process.env.JWT_VERIFICATION_KEY)
+        try {
+            // Verify access token
+            const decode = await jwt.verify(accessToken, process.env.JWT_ACCESS_KEY as Secret);
+            if (decode) {
+                next();
+            } else {
+                return res.status(401).json({ message: "Access Forbidden!!! Please login again.", success: false });
+            }
+        } catch (error) {
+            // If access token is invalid or expired, try refreshing it-------
 
-     const decode = await jwt.verify(accessToken,process.env.JWT_ACCESS_KEY as Secret)
-     if(decode){
-          console.log(" in side the if")
-          next()
-     }
-   else{ 
-     console.log("in the else")
-      res.json({message:"Access Forbidd!!! pleas login again."}).status(400)
-     
-     }
-}
+            
+            const decodedRefreshToken = jwt.verify(refreshToken, process.env.JWT_REFRESH_KEY as Secret) as JwtPayload;
+            if (!decodedRefreshToken) {
+                return res.status(401).json({ message: "Access Forbidden!!! Please login again.", success: false });
+            }
+
+            // Generate new access token
+            const newAccessToken = jwt.sign({ userId: decodedRefreshToken.userId }, process.env.JWT_ACCESS_KEY as Secret, { expiresIn: '15m' });
+            res.cookie('accessToken', newAccessToken, { httpOnly: true });
+
+            // Proceed to the next middleware
+            next();
+        }
+    } catch (error) {
+        catchError(error, next);
+    }
+};

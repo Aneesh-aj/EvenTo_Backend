@@ -193,7 +193,7 @@ export class OrganizerUseCase implements IorganizerUseCase {
 
     async  eventPost(data: IeventPost, next: NextFunction): Promise<IeventPost | undefined> {
         try{
-             const event = await eventPostCreation(data,this.eventPostRepository)
+             const event = await eventPostCreation(data,this.eventRepository,this.eventPostRepository)
               console.log(" in the usease ",event)
              return event ? event : undefined
         }catch(error){

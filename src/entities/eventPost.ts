@@ -7,5 +7,6 @@ export interface IeventPost{
     title:string,
     subTitle:string,
     seatArrangment:[],
-    entryFormId:string
+    entryFormId:string,
+    categoryId?:string
 }

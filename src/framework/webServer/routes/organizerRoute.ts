@@ -1,4 +1,6 @@
 import { Route, Req, Res, Next } from "../../types/serverPackageTypes";
+import { isAuthenticate } from "../middlewares/auth";
+import { isOrganizer } from "../middlewares/roleAuth";
 
 import { organizerController } from "./injections/Injection";
 
@@ -20,76 +22,77 @@ export function OrganizerRoute(router: Route) {
       organizerController.verifyOtp(req, res, next)
    })
 
-   router.post("/logout", (req: Req, res: Res, next: Next) => {
+   router.post("/logout",isOrganizer,isAuthenticate, (req: Req, res: Res, next: Next) => {
       organizerController.logout(req, res, next)
    })
 
-   router.post("/approvel/:id", (req: Req, res: Res, next: Next) => {
+   router.post("/approvel/:id",isOrganizer,isAuthenticate, (req: Req, res: Res, next: Next) => {
       organizerController.isApproved(req, res, next)
    })
 
-   router.post("/login", (req: Req, res: Res, next: Next) => {
+   router.post("/login",(req: Req, res: Res, next: Next) => {
       organizerController.login(req, res, next)
    })
 
-   router.post("/backgroundUpload", (req: Req, res: Res, next: Next) => {
+   router.post("/backgroundUpload",isOrganizer,isAuthenticate, (req: Req, res: Res, next: Next) => {
       console.log("image route")
       organizerController.uploadBackground(req, res, next)
    })
 
-   router.get("/profile/:id", (req: Req, res: Res, next: Next) => {
+   router.get("/profile/:id",isOrganizer,isAuthenticate, (req: Req, res: Res, next: Next) => {
       console.log("the organizer route")
       organizerController.findbyId(req, res, next)
    })
 
-   router.post("/profilePicture", (req: Req, res: Res, next: Next) => {
+   router.post("/profilePicture",isOrganizer,isAuthenticate, (req: Req, res: Res, next: Next) => {
       console.log("profile route ======================================e>")
       organizerController.uploadProfilePicture(req, res, next)
    })
 
-   router.post("/resendOtp", (req: Req, res: Res, next: Next) => {
+   router.post("/resendOtp",isOrganizer,isAuthenticate, (req: Req, res: Res, next: Next) => {
       organizerController.resendOtp(req, res, next)
    })
 
-   router.get("/getEvents/:id", (req: Req, res: Res, next: Next) => {
+   router.get("/getEvents/:id",isAuthenticate, (req: Req, res: Res, next: Next) => {
       console.log("entering to the  router",)
 
       organizerController.getEvents(req, res, next)
    })
-   router.post("/eventCreate", (req: Req, res: Res, next: Next) => {
+   router.post("/eventCreate",isOrganizer,isAuthenticate, (req: Req, res: Res, next: Next) => {
       organizerController.eventCreate(req, res, next)
    })
    
-   router.get("/allcategory",(req:Req, res:Res,next:Next)=>{
+   router.get("/allcategory",isAuthenticate,(req:Req, res:Res,next:Next)=>{
       organizerController.getAllCategory(req,res,next)
   })
 
-  router.post("/profileEdit",(req:Req,res:Res,next:Next)=>{
+  router.post("/profileEdit",isOrganizer,isAuthenticate,(req:Req,res:Res,next:Next)=>{
       organizerController.editProfile(req, res, next)
 
   })
 
-  router.get("/categorys/:id",(req:Req,res:Res,next)=>{
+  router.get("/categorys/:id",isOrganizer, isAuthenticate, (req:Req,res:Res,next)=>{
      organizerController.avalibleCategory(req,res,next)
   })
 
-  router.post('/eventCreation',(req:Req,res:Res,next:Next)=>{
+  router.post('/eventCreation',isOrganizer,isAuthenticate, (req:Req,res:Res,next:Next)=>{
         organizerController.createEvent(req,res,next)  
   })
 
-  router.get("/getAllEvents/:id",(req:Req,res:Res,next:Next)=>{
+  router.get("/getAllEvents/:id",isAuthenticate, (req:Req,res:Res,next:Next)=>{
    organizerController.getAllevents(req,res,next)  
   })
 
-  router.get("/eventDetails/:id",(req:Req,res:Res,next:Next)=>{
+  router.get("/eventDetails/:id" ,isAuthenticate,(req:Req,res:Res,next:Next)=>{
       organizerController.getEventDetails(req,res,next)
   })
   
-  router.post("/eventPost",(req:Req,res:Res,next:Next)=>{
+  router.post("/eventPost",isOrganizer ,isAuthenticate,(req:Req,res:Res,next:Next)=>{
     organizerController.eventPost(req,res,next)
   })
 
-  router.get("/alleventPost",(req:Req,res:Res,next:Next)=>{
+  router.get("/alleventPost" ,isAuthenticate,(req:Req,res:Res,next:Next)=>{
+     console.log(" comming here")
       organizerController.getAlleventPost(req,res,next)
   })
 

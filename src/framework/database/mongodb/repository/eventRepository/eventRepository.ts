@@ -1,5 +1,6 @@
 import { IeventFormData, Ievents } from "../../../../../entities/event";
 import { IeventRepository } from "../../../../../usecases/interface/repositoryInterface/eventRepository";
+import { io } from "../../../../service/socketIo";
 import eventModal from "../../model/event";
 const { DateTime } = require('luxon');
 
@@ -10,10 +11,10 @@ export class EventRepository implements IeventRepository {
         try {
             console.log(" comming here")
             console.log("--------------------------seart--------------------------------------", data)
-           if(!data.seatNumber){
-               data.seatNumber = data.seatArrangement?.length
-           }
-            
+            if (!data.seatNumber) {
+                data.seatNumber = data.seatArrangement?.length
+            }
+
             const event = await eventModal.create({
                 name: data.name,
                 organizerId: data.organizerId,
@@ -41,7 +42,7 @@ export class EventRepository implements IeventRepository {
                 paymentAmount: data.paymentAmount,
                 paymentMethod: data.paymentMethod,
                 totalAmount: data.totalAmount,
-                eventBooking:data.eventBooking
+                eventBooking: data.eventBooking
             })
             console.log(" the event si createdssss ------------------------------------", event)
             if (event) {
@@ -67,94 +68,113 @@ export class EventRepository implements IeventRepository {
         }
     }
 
-    async getEventDetails(id:string):Promise <Ievents | undefined>{
-        try{
+    async getEventDetails(id: string): Promise<Ievents | undefined> {
+        try {
             const event = await eventModal.findById(id)
 
-            console.log(" the response for the event Finding----",event)
+            console.log(" the response for the event Finding----", event)
             return event ? event : undefined
-        }catch(error){
+        } catch (error) {
             throw error
         }
     }
 
-    async  getById(id: string): Promise<Ievents | undefined> {
-        try{
+    async getById(id: string): Promise<Ievents | undefined> {
+        try {
 
-           const events = await eventModal.findById(id)
-           console.log(" the events got by id",events)
-           return events ? events : undefined
-        }catch(error){
+            const events = await eventModal.findById(id)
+            // console.log(" the events got by id", events)
+            return events ? events : undefined
+        } catch (error) {
             throw error
-        }   
+        }
     }
-    async  getSeat(id: string): Promise<{seat:[]} | undefined> {
-        try{
-            console.log(" the id ",id)
+    async getSeat(id: string): Promise<{ seat: [] } | undefined> {
+        try {
+            console.log(" the id ", id)
             const seats = await eventModal.findById(id)
-             console.log(" the detailsss",seats)
-            if(seats&&seats.seatArrangement){
-                return seats ? {seat:seats?.seatArrangement} : undefined
+            // console.log(" the detailsss", seats)
+            if (seats && seats.seatArrangement) {
+                return seats ? { seat: seats?.seatArrangement } : undefined
             }
-        }catch(error){
-             throw error
-        }
-    }
-
-    async  seatBooking(id: string, selectedSeat: []): Promise<boolean> {
-        try{
-            const events = await eventModal.findById(id)
-            if(events){
-              const result =   selectedSeat.map((elem:any)=>{
-                 console.log("iiii")
-                     events.seatArrangement?.map((ele:any)=>{
-                          if(elem?.row === ele?.row && ele?.column === elem.column){
-                                if(ele?.booked){
-
-                                    return  true
-                                }else{
-                                    return false
-                                }
-                          }
-                     })
-                })
-                console.log(" th result from the backeind",result)
-                return result ? true : false
-            }
-            
-            return false
-            
-
-        }catch(error){
+        } catch (error) {
             throw error
         }
     }
 
-    async  confirmSeat(id: string,userId:string, selectedSeat: []): Promise<boolean> {
-        try{
-            const events = await eventModal.findById(id)
-            if(events){
-               const result =   selectedSeat.map((elem:any)=>{
-                     events.seatArrangement?.map((ele:any)=>{
-                          if(elem?.row === ele?.row && ele?.column === elem.column){
-                                if(ele?.booked){
-                                     console.log(" checking ")
-                                    return  true
+    async seatBooking(id: string, selectedSeat: [], userId: string): Promise<boolean> {
+        try {
+            const events = await eventModal.findById(id);
+            if (events) {
+                let result = false;
+                selectedSeat.forEach((elem: any) => {
+                    events.seatArrangement?.forEach((ele: any) => {
+                        if (elem?.row === ele?.row && ele?.column === elem.column) {
+                            if (ele?.booked || ele.isSelected) {
+                                result = true;
+                            } else if (!ele.isSelected) {
+                                ele.userId = userId;
+                                ele.isSelected = true;
+                            }
+                        }
+                    });
+                });
+                events.markModified('seatArrangement');
+                await events.save();
+                setTimeout(async () => {
+                    const updatedEvents: any = await eventModal.findById(id)
+                    selectedSeat.forEach((elem: any) => {
+                        updatedEvents.seatArrangement?.forEach((ele: any) => {
+                            if (elem?.row === ele?.row && ele?.column === elem.column) {
+                                if (!ele?.booked && ele.userId === userId) {
+                                     console.log("---------------- updateing the status of the seat-------------------",ele.row,ele.column)
+                                    ele.isSelected = false
+                                    ele.userId = ""
                                 }
-                          }
-                     })
-                })
-                //   console.log(" th result from the backeind",result)
-                 return result ? true : false
-            }else{
-                return false
-            }
-            
-           
-            
+                            }
+                        });
+                    });
 
-        }catch(error){
-            throw error
+                    updatedEvents.markModified('seatArrangement');
+                    await updatedEvents.save();
+                    io.emit("seatSelected",{data:updatedEvents})
+
+                }, 0.5 * 60 * 1000)
+                return result;
+            }
+            return false;
+        } catch (error) {
+            throw error;
         }
     }
+
+    async confirmSeat(id: string, userId: string, selectedSeat: []): Promise<boolean> {
+        try {
+            const events = await eventModal.findById(id);
+            if (events) {
+                console.log("cominggg to therereeerrererererereerrerrererer------------------------");
+                selectedSeat.forEach((elem: any) => {
+                    events.seatArrangement?.forEach((ele: any) => {
+                        if (elem?.row === ele?.row && ele?.column === elem.column) {
+                            console.log(`The row is ${ele.row} and the column is ${ele.column}`);
+                            ele.userId = userId;
+                            ele.isSelected = true;
+                            ele.booked = true;
+                        }
+                    });
+                });
+
+                // After modifications, update the entire array in the document
+                events.markModified('seatArrangement');
+
+                await events.save();
+                return true;
+            } else {
+                return false;
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
+
 }

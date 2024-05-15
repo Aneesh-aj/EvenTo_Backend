@@ -71,7 +71,8 @@ export class UserController {
         if(result){
             res.cookie("accessToken",result?.tokens?.accessToken,accessTokenOptions)
             res.cookie('refreshToken',result?.tokens?.refreshToken,refreshTokenOptions)
-            res.status(200).json({user:result?.user,message:"user logged In successfully",role:'user'})
+            res.cookie('role','user')
+            res.status(200).json({user:result?.user,message:"user logged In successfully",role:'user',accessToken:result.tokens.accessToken,refreshToken:result.tokens.refreshToken})
         }
        }catch(error:any){
         console.log(" comminng to the eroror")
@@ -177,7 +178,7 @@ export class UserController {
         try{
              const {id} = req.params
              const eventSeat = await this.userUseCase.getSeats(id,next)
-              console.log("-------------------all seats",eventSeat)
+            //   console.log("-------------------all seats",eventSeat)
              if(eventSeat){
                 console.log(" successs")
                  res.json({eventSeat,success:true})
@@ -193,15 +194,15 @@ export class UserController {
 
     async bookSeat(req:Req,res:Res,next:Next){
         try{        
-            const {id,selectedSeat} = req.body
-            console.log("  the body data",id ,"______",selectedSeat)
-            const  reponse = await  this.userUseCase.seatBooking(id,selectedSeat,next)
+            const {id,selectedSeat,userId} = req.body
+            console.log("  the body data-----------------------",id )
+            const  response = await  this.userUseCase.seatBooking(id,selectedSeat,userId,next)
             if(response){
+                console.log("no")
+               res.json({success:false})
+            }else{
                 console.log("yes")
                 res.json({success:true})
-            }else{
-                 console.log("no")
-                res.json({success:false})
             }
 
         }catch(error:any){
@@ -229,17 +230,47 @@ export class UserController {
             if(payment){
                 const bookingData = req.app.locals.bookingData
                 bookingData.paidAmound = Number(bookingData.amount)
+                console.log(" bpplomg detao;ssssss-----------amount",bookingData.paidAmound," and the last full booking data-----------------",bookingData)
                  console.log(" hteejejejejjejej-----------------------------------------------------------------------------",bookingData)
                 const chargeId = req.app.locals.chargeId
+                console.log("  thsssss charge id------------------",chargeId)
                 const booking = await this.userUseCase.booking(bookingData,chargeId ,next)
             }
-
 
         }catch(error:any){
             return next(new ErrorHandler(error.status,error.message))
         }
     }
 
+    async getAllCategory(req: Req, res: Res, next: Next) {
+        try {
     
-   
+          const result = await this.userUseCase.getAllCategory(next)
+          console.log(" the result ", result)
+          if (result) {
+            res.json({ category: result, success: true }).status(200)
+          } else {
+    
+            res.json({ message: "No category has been found" }).status(200)
+          }
+        } catch (error: any) {
+          return next(new ErrorHandler(error.status, error.message))
+        }
+      }
+
+
+      async getAllbookings(req:Req,res:Res,next:Next){
+         try{
+            const {id} = req.params
+            const response = await this.userUseCase.allBookings(id,next)
+            if(response){
+                res.json({bookings:response,success:true})
+            }else{
+                res.json({message:"not found",success:false})
+            }
+         }catch(error:any){
+            return next(new ErrorHandler(error.status, error.message))
+         }
+      }
+ 
 }

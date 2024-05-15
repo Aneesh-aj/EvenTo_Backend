@@ -1,7 +1,7 @@
 import { Req, Res, Next } from "../../framework/types/serverPackageTypes";
 import { IuserUseCase } from "../interface/usecase/userUseCase";
 import { Iuser } from "../../entities/user";
-import { userSignup, login, createUser, getUser, editProfile, uploadProfile, getOrganizers, eventPostDetails, getSeats, seatBooking, paymentStatus, bookingCreation } from "./user/index"
+import { userSignup, login, createUser, getUser, editProfile, uploadProfile, getOrganizers, eventPostDetails, getSeats, seatBooking, paymentStatus, bookingCreation, getAllCategory } from "./user/index"
 import { IuserRepository } from "../interface/repositoryInterface/userRepository";
 import { Ijwt } from "../interface/service/jwt";
 import { NextFunction } from "express";
@@ -23,6 +23,9 @@ import { payment } from "./user/payment";
 import { Istripe } from "../interface/repositoryInterface/stripeRepository";
 import { booking } from "../../entities/booking";
 import { IbookingRepository } from "../interface/repositoryInterface/bookingRepository";
+import { IeventCategory } from "../../entities/eventCategory";
+import { IcategoryRepository } from "../interface/repositoryInterface/categoryRepository";
+import { getAllbookings } from "./user/getAllbookings";
 
 
 export class UserUseCase implements IuserUseCase {
@@ -39,7 +42,8 @@ export class UserUseCase implements IuserUseCase {
           private eventPostRepository: IeventPostRepository,
           private eventRepository: IeventRepository,
           private stripeRepository: Istripe,
-          private bookingRepository: IbookingRepository
+          private bookingRepository: IbookingRepository,
+          private categoryRepository :IcategoryRepository
      ) { }
      async userSignup(user: Iuser, next: Next): Promise<string | void> {
           try {
@@ -157,9 +161,10 @@ export class UserUseCase implements IuserUseCase {
           }
      }
 
-     async seatBooking(id: string, selectedSeat: [], next: NextFunction): Promise<any> {
+     async seatBooking(id: string, selectedSeat: [],userId:string, next: NextFunction): Promise<any> {
           try {
-               const response = await seatBooking(id, selectedSeat, this.eventRepository)
+               const response = await seatBooking(id, selectedSeat,userId, this.eventRepository)
+                 console.log("-----------from the respsoe uses--------------------44--------------------",response)
                return response
           } catch (error) {
                catchError(error, next)
@@ -189,11 +194,29 @@ export class UserUseCase implements IuserUseCase {
 
      async booking(bookingData: booking, chargeId: string, next: NextFunction): Promise<any> {
           try {
-               const response = await bookingCreation(bookingData, chargeId, this.bookingRepository)
+               const response = await bookingCreation(bookingData, chargeId, this.bookingRepository,this.eventRepository)
           } catch (error) {
                catchError(error, next)
           }
      }
+     
+     async  getAllCategory(next: NextFunction): Promise<IeventCategory[] | undefined> {
+          try{
+               return await getAllCategory(this.categoryRepository)
+              
+           }catch(error){
+               catchError(error,next)
+           }
+     }
+     
+     async  allBookings(id: string, next: NextFunction): Promise<any> {
+         try{
+             return await getAllbookings(id,this.bookingRepository)
+         }catch(error){
+             catchError(error,next)
+         }
+     }
+   
 
 }
 

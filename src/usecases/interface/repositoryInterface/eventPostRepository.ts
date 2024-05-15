@@ -2,7 +2,7 @@ import { IeventPost } from "../../../entities/eventPost";
 
 
 export interface IeventPostRepository{
-    eventPostCreation(data:IeventPost):Promise<IeventPost | undefined>
+    eventPostCreation(data:IeventPost,categoryId:string):Promise<IeventPost | undefined>
     getAll():Promise<IeventPost []>,
     getPostByid(id:string):Promise< IeventPost | undefined>
 }

@@ -90,13 +90,13 @@ export class OrganizerController {
         if (accessToken && refreshToken) {
           res.cookie("accessToken", accessToken, accessTokenOptions);
           res.cookie("refreshToken", refreshToken, refreshTokenOptions);
-          res.cookie("role", "orgnaizer");
+          res.cookie("role", "organizer");
 
         } else {
           console.error("Access token or refresh token is missing");
         }
       }
-      res.status(200).json({ organizer: result?.organizer, role: "organizer", message: "logined successfully" })
+      res.status(200).json({ organizer: result?.organizer, role: "organizer", message: "logined successfully",accessToken:result?.tokens.accessToken,refreshToken:result?.tokens.refreshToken })
 
     } catch (error: any) {
       return next(new ErrorHandler(error.status, error.message))

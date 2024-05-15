@@ -33,8 +33,12 @@ export class JWTtoken implements Ijwt{
       }
 
       async  verifyJwt(token: string):Promise<void>{
-        const data = await jwt.verify(token, this.JWT_VERIFICATION_KEY)
+         try{
+          const data = await jwt.verify(token, this.JWT_VERIFICATION_KEY)
         return 
+         }catch(error){
+             throw error
+         }
       }
 
       async  forgotPasswordToken(userId: string, email: string): Promise<string> {

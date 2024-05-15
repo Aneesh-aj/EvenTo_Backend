@@ -14,7 +14,4 @@ export interface Ijwt{
     createAccessAndRefreshToken(id: string): Promise<IToken>
     verifyJwt(token:string): Promise <void>
     forgotPasswordToken(userId:string, email:string): Promise <string>
-
-
-    
 }

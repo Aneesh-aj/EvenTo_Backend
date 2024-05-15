@@ -11,7 +11,8 @@ const eventPostSchema :Schema <IeventPost> = new  mongoose.Schema({
      title:{type:String},
      subTitle:{type:String},
      seatArrangment:{type:[]},
-     entryFormId:{type:String}
+     entryFormId:{type:String},
+     categoryId:{type:String}
 })
 
 const eventPostModel : Model<IeventPost> = mongoose.model('eventPost',eventPostSchema)
