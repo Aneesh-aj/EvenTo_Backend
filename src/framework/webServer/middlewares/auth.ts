@@ -7,8 +7,8 @@ export const isAuthenticate = async (req: Request, res: Response, next: NextFunc
     try {
         const accessToken = req.cookies.accessToken as string;
         const refreshToken = req.cookies.refreshToken as string;
-
-        if (!accessToken || !refreshToken) {
+          console.log(" coming here")
+        if (!accessToken && !refreshToken) {
             return res.status(401).json({ message: "Access Forbidden!!! Please login again.", success: false });
         }
 
@@ -33,7 +33,6 @@ export const isAuthenticate = async (req: Request, res: Response, next: NextFunc
             const newAccessToken = jwt.sign({ userId: decodedRefreshToken.userId }, process.env.JWT_ACCESS_KEY as Secret, { expiresIn: '15m' });
             res.cookie('accessToken', newAccessToken, { httpOnly: true });
 
-            // Proceed to the next middleware
             next();
         }
     } catch (error) {
