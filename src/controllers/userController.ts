@@ -82,6 +82,7 @@ export class UserController {
 
     async logout(req:Req, res: Res,next : Next){
         try{
+            console.log("logingn out")
             res.clearCookie('accessToken',accessTokenOptions)
             res.clearCookie('refreshToken',refreshTokenOptions)
             res.status(200).json({sucess:true ,message:"logout successful"})
@@ -224,9 +225,9 @@ export class UserController {
     async webHookPayment(req:Req,res:Res,next:Next){
         try{
        
-            console.log(" commin to the controller------",req)
+            console.log(" webhoookkkkkkk to the controller------",req)
             const payment = await this.userUseCase.paymentStatus(req,next)
-            console.log(" the paymetn statussssss-------",payment)
+            console.log("----------------------- the paymetn statussssss---------------------",payment)
             if(payment){
                 const bookingData = req.app.locals.bookingData
                 bookingData.paidAmound = Number(bookingData.amount)
@@ -235,6 +236,9 @@ export class UserController {
                 const chargeId = req.app.locals.chargeId
                 console.log("  thsssss charge id------------------",chargeId)
                 const booking = await this.userUseCase.booking(bookingData,chargeId ,next)
+                 console.log(" ---------------------booked the seatssssss-------------",booking)
+            }else{
+                console.log(" in the else case")
             }
 
         }catch(error:any){

@@ -8,7 +8,7 @@ export const isUser = async(req:Req,res:Res,next:Next)=>{
               console.log("----------------------------------------------------------cominggg")
              next()
          }else{
-             console.log(" errorrrrr")
+             console.log("no role errorrrrr")
             res.json({message:"inValid Access !!! Login again",success:false}).status(401)
          }
 

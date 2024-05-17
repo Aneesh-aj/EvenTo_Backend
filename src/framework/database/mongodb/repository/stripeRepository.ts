@@ -44,11 +44,14 @@ export class Stripe implements Istripe{
 
     async  paymentStatus(req: Req): Promise<boolean | null> {
         try{
+            console.log(" -----------status coming----------")
           const payload = req.body;
           const paymentIntentId = payload?.data?.object?.payment_intent
           const payloadString = JSON.stringify(payload, null, 2);
           const sig = req.headers["stripe-signature"];
+             console.log(" part oen")
           if (typeof sig !== "string") {
+               console.log(" part two")
             return false;
           }
           
@@ -67,21 +70,28 @@ export class Stripe implements Istripe{
             endpointSecret
           );
           if (paymentIntentId) {
+             console.log(" part three")
             const paymentIntentResponse = await stripe.paymentIntents.retrieve(paymentIntentId);
             const paymentIntent = paymentIntentResponse
             if (paymentIntentResponse.latest_charge) {
+                console.log(" part four")
               const chargeId = paymentIntentResponse.latest_charge;
               req.app.locals.chargeId = chargeId;
             } else {
-           
+               
               console.log('No latest charge found for this PaymentIntent.');
               return null;
             }
           }
               console.log(" event type",event.type)
+               console.log("   ")
           if (event.type == "checkout.session.completed") {
+            console.log("part five");
+            
             return true;
           } else {
+            console.log("part six");
+
             return false;
           }
         }catch(error){

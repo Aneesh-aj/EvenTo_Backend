@@ -6,7 +6,8 @@ import  Jwt  from "jsonwebtoken";
 
 export interface IToken{
     accessToken:string,
-    refreshToken:string
+    refreshToken:string,
+    role:string
 }
 
 export interface Ijwt{

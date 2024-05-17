@@ -5,5 +5,6 @@ export interface booking{
     seat?:[],
     numberOfentry:number,
     formId?:string,
-    paidAmound?:number
+    paidAmound?:number,
+    bookingId:string,
 }

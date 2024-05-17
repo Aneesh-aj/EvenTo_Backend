@@ -175,7 +175,7 @@ export class UserUseCase implements IuserUseCase {
           try {
                console.log(" the amoundwssss----------------------", amount)
                const response = await payment(userId, eventId, seats, amount, this.stripeRepository)
-               console.log(response, "case")
+               console.log(response, "---------------use payment case------------------------")
                return response
           } catch (error) {
                catchError(error, next)
@@ -185,6 +185,7 @@ export class UserUseCase implements IuserUseCase {
      async paymentStatus(req: Req, next: NextFunction): Promise<boolean | undefined> {
           try {
                const response = await paymentStatus(req, this.stripeRepository)
+                  console.log("------------------ pauemtntSTatus usecase---------------",response)
                return response ? true : false
 
           } catch (error) {
@@ -195,6 +196,8 @@ export class UserUseCase implements IuserUseCase {
      async booking(bookingData: booking, chargeId: string, next: NextFunction): Promise<any> {
           try {
                const response = await bookingCreation(bookingData, chargeId, this.bookingRepository,this.eventRepository)
+                console.log(" ----------bookingssUsecase-----------",response)
+               return response
           } catch (error) {
                catchError(error, next)
           }

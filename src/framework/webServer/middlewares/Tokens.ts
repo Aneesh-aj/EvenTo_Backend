@@ -10,6 +10,7 @@ interface ITokenOptions {
   secure?: boolean;
 }
 
+
 let accessTokenProductionMode = process.env.NODE_ENV === "production" ? true : false;
 
 // options for cookies
@@ -26,4 +27,5 @@ export const refreshTokenOptions: ITokenOptions = {
   httpOnly: true,
   sameSite: "strict",
 };
+
 

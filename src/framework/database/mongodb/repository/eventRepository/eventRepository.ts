@@ -139,7 +139,7 @@ export class EventRepository implements IeventRepository {
                     await updatedEvents.save();
                     io.emit("seatSelected",{data:updatedEvents})
 
-                }, 0.5 * 60 * 1000)
+                }, 2 * 60 * 1000)
                 return result;
             }
             return false;

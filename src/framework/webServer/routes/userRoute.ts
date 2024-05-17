@@ -21,7 +21,7 @@ export function UserRoute(router: Route){
          userController.userLogin(req, res, next)
     })
 
-    router.post('/logout',isAuthenticate,(req:Req,res:Res,next:Next)=>{
+    router.post('/logout',(req:Req,res:Res,next:Next)=>{
          userController.logout(req,res,next)
     })
 
@@ -67,7 +67,7 @@ export function UserRoute(router: Route){
          userController.payment(req,res,next)
     })
 
-    router.post("/webHookPayment",isAuthenticate,(req:Req,res:Res,next:Next)=>{
+    router.post("/webHookPayment",(req:Req,res:Res,next:Next)=>{
          userController.webHookPayment(req,res,next)
     })
 
