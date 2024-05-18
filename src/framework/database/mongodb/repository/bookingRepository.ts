@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { booking } from "../../../../entities/booking";
 import { IbookingRepository } from "../../../../usecases/interface/repositoryInterface/bookingRepository";
 import bookingModel from "../model/booking";
@@ -39,6 +40,7 @@ export class BookingRepository implements IbookingRepository {
                 numberOfentry: bookingData.numberOfentry,
                 paidAmound: bookingData.paidAmound,
                 bookingId: randomId,
+                postId:bookingData.postId
               });
           
               console.log("Booking done ----------", booking);
@@ -51,7 +53,50 @@ export class BookingRepository implements IbookingRepository {
 
     async  getAllBookings(id: string): Promise<any> {
         try{
-            const bookings = await bookingModel.find({userId:id})
+          if (!mongoose.Types.ObjectId.isValid(id)) {
+            throw new Error('Invalid user ID');
+        }
+
+        console.log("Fetching bookings for user ID:", id);
+       
+        const bookings = await bookingModel.aggregate([
+            {
+                $match: { userId: id }
+            },
+            {
+                $addFields: {
+                    eventIdObjectId: { $toObjectId: "$eventId" },
+                    eventPostIdObjectId: { $toObjectId: "$postId" }
+                }
+            },
+            {
+                $lookup: {
+                    from: 'events',
+                    localField: "eventIdObjectId",
+                    foreignField: "_id",
+                    as: "eventDetails"
+                }
+            },
+            {
+                $lookup: {
+                    from: 'eventposts',
+                    localField: "eventPostIdObjectId", // Corrected localField to match added field
+                    foreignField: "_id",
+                    as: "postDetails"
+                }
+            },
+            {
+                $project: {
+                    eventIdObjectId: 0,
+                    eventPostIdObjectId: 0 // Also remove eventPostIdObjectId from the result
+                }
+            }
+        ]);
+
+        console.log("Bookings found:", bookings);
+          console.log("--------------bookinsss----",bookings);
+          
+              console.log("  bookin with look up",bookings)
              return bookings
         }catch(error){
              throw error

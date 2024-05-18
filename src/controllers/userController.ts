@@ -213,9 +213,9 @@ export class UserController {
     
     async payment(req:Req,res:Res,next:Next){
         try{
-            const {eventId,userId,seat,amount} = req.body
+            const {eventId,userId,seat,amount,postId} = req.body
              req.app.locals.bookingData = req.body
-          const response = await this.userUseCase.payment(eventId,userId,seat,amount,next)
+          const response = await this.userUseCase.payment(eventId,userId,seat,amount, postId,next)
           res.status(200).json(response)
         }catch(error:any){
             return next(new ErrorHandler(error.status,error.message))
@@ -266,6 +266,7 @@ export class UserController {
       async getAllbookings(req:Req,res:Res,next:Next){
          try{
             const {id} = req.params
+             console.log(" bbbbbbbbbbbbbb")
             const response = await this.userUseCase.allBookings(id,next)
             if(response){
                 res.json({bookings:response,success:true})
@@ -276,5 +277,7 @@ export class UserController {
             return next(new ErrorHandler(error.status, error.message))
          }
       }
+
+
  
 }

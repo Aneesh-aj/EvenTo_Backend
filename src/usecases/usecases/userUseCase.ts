@@ -1,7 +1,7 @@
 import { Req, Res, Next } from "../../framework/types/serverPackageTypes";
 import { IuserUseCase } from "../interface/usecase/userUseCase";
 import { Iuser } from "../../entities/user";
-import { userSignup, login, createUser, getUser, editProfile, uploadProfile, getOrganizers, eventPostDetails, getSeats, seatBooking, paymentStatus, bookingCreation, getAllCategory } from "./user/index"
+import { userSignup, login, createUser, getUser, editProfile, uploadProfile, getOrganizers, eventPostDetails, getSeats, seatBooking, paymentStatus, bookingCreation, getAllCategory, getAllbookings } from "./user/index"
 import { IuserRepository } from "../interface/repositoryInterface/userRepository";
 import { Ijwt } from "../interface/service/jwt";
 import { NextFunction } from "express";
@@ -25,7 +25,7 @@ import { booking } from "../../entities/booking";
 import { IbookingRepository } from "../interface/repositoryInterface/bookingRepository";
 import { IeventCategory } from "../../entities/eventCategory";
 import { IcategoryRepository } from "../interface/repositoryInterface/categoryRepository";
-import { getAllbookings } from "./user/getAllbookings";
+// import { getAllbookings } from "./user/getAllbookings";
 
 
 export class UserUseCase implements IuserUseCase {
@@ -153,9 +153,10 @@ export class UserUseCase implements IuserUseCase {
           }
      }
 
-     async getSeats(id: string, next: Next): Promise<Ievents | undefined> {
+     async getSeats(id: string, next: Next): Promise<any | undefined> {
           try {
-               return await getSeats(id, this.eventRepository)
+                console.log(" use casee")
+               return await getSeats(id, this.eventPostRepository)
           } catch (error) {
                catchError(error, next)
           }
@@ -171,10 +172,10 @@ export class UserUseCase implements IuserUseCase {
           }
      }
 
-     async payment(eventId: string, userId: string, seats: [], amount: string, next: Next): Promise<any> {
+     async payment(eventId: string, userId: string, seats: [], amount: string,postId:string, next: Next): Promise<any> {
           try {
                console.log(" the amoundwssss----------------------", amount)
-               const response = await payment(userId, eventId, seats, amount, this.stripeRepository)
+               const response = await payment(userId, eventId, seats, amount,postId , this.stripeRepository)
                console.log(response, "---------------use payment case------------------------")
                return response
           } catch (error) {
@@ -214,7 +215,7 @@ export class UserUseCase implements IuserUseCase {
      
      async  allBookings(id: string, next: NextFunction): Promise<any> {
          try{
-             return await getAllbookings(id,this.bookingRepository)
+             return await getAllbookings(id,this.bookingRepository,this.eventRepository)
          }catch(error){
              catchError(error,next)
          }

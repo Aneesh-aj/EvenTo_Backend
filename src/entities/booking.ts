@@ -7,4 +7,5 @@ export interface booking{
     formId?:string,
     paidAmound?:number,
     bookingId:string,
+    postId:string
 }

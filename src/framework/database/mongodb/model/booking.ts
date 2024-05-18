@@ -10,7 +10,8 @@ const bookingSchema :Schema <booking> = new  mongoose.Schema({
       numberOfentry:{type:Number},
       formId:{type:String},
       paidAmound:{type:Number},
-      bookingId:{type:String}
+      bookingId:{type:String},
+      postId:{type:String}
 })
 
 const bookingModel : Model<booking> = mongoose.model('booking',bookingSchema)

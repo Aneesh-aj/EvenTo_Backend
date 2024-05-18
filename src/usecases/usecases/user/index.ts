@@ -11,6 +11,7 @@ import { seatBooking } from "./seatBooking";
 import { paymentStatus } from "./paymentStatus";
 import { bookingCreation } from "./bookingCreation";
 import { getAllCategory } from "./getAllCategory";
+import { getAllbookings } from "./getAllbookings";
 export{
     userSignup,
     login,
@@ -25,5 +26,6 @@ export{
     paymentStatus,
     bookingCreation,
     getAllCategory,
+    getAllbookings
     
 }
