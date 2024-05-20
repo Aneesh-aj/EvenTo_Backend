@@ -1,4 +1,5 @@
 import { IeventFormData, Ievents } from "../../../entities/event";
+import { IeventPost } from "../../../entities/eventPost";
 
 
 export interface IeventRepository{

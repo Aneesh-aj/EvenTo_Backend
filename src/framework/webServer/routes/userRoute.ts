@@ -50,7 +50,7 @@ export function UserRoute(router: Route) {
         userController.allorganizers(req, res, next)
     })
 
-    router.get("/eventPostDetails/:id", isUser, isAuthenticate, (req: Req, res: Res, next: Next) => {
+    router.get("/eventPostDetails/:id", (req: Req, res: Res, next: Next) => {
         userController.eventPostDetails(req, res, next)
     })
 

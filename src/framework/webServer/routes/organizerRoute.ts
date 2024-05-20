@@ -107,7 +107,15 @@ export function OrganizerRoute(router: Route) {
   router.post("/cancel",isOrganizer,isAuthenticate,(req:Req,res:Res,next:Next)=>{
    organizerController.cancelEvent(req,res,next)
  })
+ router.get("/getOrganizerEventPost/:organizerId",isOrganizer,isAuthenticate,(req:Req,res:Res,next:Next)=>{
+   organizerController.getEventPost(req,res,next)
+ })
 
+ router.post("/updatePost",isOrganizer,isAuthenticate,(req:Req,res:Res,next:Next)=>{
+    organizerController.updatePost(req,res,next)
+ })
+
+ 
 
 
    return router

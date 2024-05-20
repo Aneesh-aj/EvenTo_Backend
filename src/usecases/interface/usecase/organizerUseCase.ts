@@ -30,5 +30,6 @@ export  interface IorganizerUseCase{
      getUpcomingEvent(id:string,next:Next):Promise < Ievents [] | undefined>
      changeStatus(eventStatus:string,eventId:string,organizerId:string,next:Next):Promise < Ievents [] | undefined>
      cancelEvent(eventId:string,organizerId:string,next:Next):Promise < Ievents [] | undefined>
-
+     getEventPost(organizerId:string,next:Next):Promise<IeventPost [] | undefined>
+     updatePost(formData:IeventPost,id:string,next:Next):Promise<any>
 }

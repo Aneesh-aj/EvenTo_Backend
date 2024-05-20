@@ -303,9 +303,9 @@ export class OrganizerController {
 
   async changeStatus(req: Req, res: Res, next: Next) {
     try {
-      const { eventStatus, eventId ,organizerId} = req.body
-      console.log(" the status and the id", eventStatus, eventId,organizerId)
-      const events = await this.organizerUsecase.changeStatus(eventStatus,eventId,organizerId,next)
+      const { eventStatus, eventId, organizerId } = req.body
+      console.log(" the status and the id", eventStatus, eventId, organizerId)
+      const events = await this.organizerUsecase.changeStatus(eventStatus, eventId, organizerId, next)
       if (events && events.length > 0) {
         res.json({ events, success: true })
       } else {
@@ -319,9 +319,9 @@ export class OrganizerController {
 
   async cancelEvent(req: Req, res: Res, next: Next) {
     try {
-      const {  eventId ,organizerId} = req.body
-      console.log(" the status and the id", eventId,organizerId)
-      const events = await this.organizerUsecase.cancelEvent(eventId,organizerId,next)
+      const { eventId, organizerId } = req.body
+      console.log(" the status and the id", eventId, organizerId)
+      const events = await this.organizerUsecase.cancelEvent(eventId, organizerId, next)
       if (events && events.length > 0) {
         res.json({ events, success: true })
       } else {
@@ -330,5 +330,33 @@ export class OrganizerController {
     } catch (error: any) {
       return next(new ErrorHandler(error.status, error.message))
     }
+  }
+
+
+  async getEventPost(req: Req, res: Res, next: Next) {
+    try {
+      const { organizerId } = req.params
+      console.log(" the id ", organizerId)
+      const eventPost = await this.organizerUsecase.getEventPost(organizerId, next)
+      res.json({eventPost})
+    } catch (error: any) {
+      return next(new ErrorHandler(error.status, error.message))
+    }
+  }
+
+  async updatePost(req:Req,res:Res,next:Next){
+     try{
+      const {formData,id} = req.body
+      console.log(" the bofyddd",formData)
+      const updatePost = await this.organizerUsecase.updatePost(formData,id,next)
+       if(updatePost){
+          res.json({success:true,message:"updated succeefully"})
+       }else{
+        res.json({success:false,message:"Issue while updating!! try again later"})
+       }
+     }catch(error:any){
+      return next(new ErrorHandler(error.status, error.message))
+
+     }
   }
 }  
