@@ -96,7 +96,7 @@ export class OrganizerController {
           console.error("Access token or refresh token is missing");
         }
       }
-      res.status(200).json({ organizer: result?.organizer, role: "organizer", message: "logined successfully",accessToken:result?.tokens.accessToken,refreshToken:result?.tokens.refreshToken })
+      res.status(200).json({ organizer: result?.organizer, role: "organizer", message: "logined successfully", accessToken: result?.tokens.accessToken, refreshToken: result?.tokens.refreshToken })
 
     } catch (error: any) {
       return next(new ErrorHandler(error.status, error.message))
@@ -119,8 +119,8 @@ export class OrganizerController {
   async uploadProfilePicture(req: Req, res: Res, next: Next) {
     try {
       const { id, image } = req.body
-      console.log(" the body", req.body)
-      console.log("id and url", id, image)
+      console.log(" the body-----------", req.body)
+      console.log("id and url-----------", id, image)
       const result = await this.organizerUsecase.uploadProfile(id as string, image, next)
       console.log(result)
       res.json({ image: result, message: "successfully uploaded" })
@@ -257,15 +257,15 @@ export class OrganizerController {
 
   async eventPost(req: Req, res: Res, next: Next) {
     try {
-     console.log(" the body",req.body)
+      console.log(" the body", req.body)
       const { data } = req.body
-      console.log(" the data that passed ",data)
+      console.log(" the data that passed ", data)
       const post = await this.organizerUsecase.eventPost(data as unknown as IeventPost, next)
-      console.log(" the post return in the controllere ",post)
-      if(post){
-         res.json({post,message:"post created successfully",success:true})
-      }else{
-        res.json({message:"unable to create post",success:false})
+      console.log(" the post return in the controllere ", post)
+      if (post) {
+        res.json({ post, message: "post created successfully", success: true })
+      } else {
+        res.json({ message: "unable to create post", success: false })
       }
 
     } catch (error: any) {
@@ -274,16 +274,61 @@ export class OrganizerController {
   }
 
 
-    async getAlleventPost(req:Req,res:Res,next:Next){
-        try{
-            const posts = await this.organizerUsecase.getAlleventPost(next)
-            if(posts){
-               res.json({posts,success:true})
-            }else{
-               res.json({message:"NO Post Avalible"})
-            }
-        }catch(error:any){
-           return next(new ErrorHandler(error.status,error.message))
-        }
+  async getAlleventPost(req: Req, res: Res, next: Next) {
+    try {
+      const posts = await this.organizerUsecase.getAlleventPost(next)
+      if (posts) {
+        res.json({ posts, success: true })
+      } else {
+        res.json({ message: "NO Post Avalible" })
+      }
+    } catch (error: any) {
+      return next(new ErrorHandler(error.status, error.message))
     }
+  }
+
+  async getUpcomingEvent(req: Req, res: Res, next: Next) {
+    try {
+      const { id } = req.params
+      const events = await this.organizerUsecase.getUpcomingEvent(id, next)
+      if (events && events.length > 0) {
+        res.json({ events, success: true })
+      } else {
+        res.json({ success: false, message: "no events Found" })
+      }
+    } catch (error: any) {
+      return next(new ErrorHandler(error.status, error.message))
+    }
+  }
+
+  async changeStatus(req: Req, res: Res, next: Next) {
+    try {
+      const { eventStatus, eventId ,organizerId} = req.body
+      console.log(" the status and the id", eventStatus, eventId,organizerId)
+      const events = await this.organizerUsecase.changeStatus(eventStatus,eventId,organizerId,next)
+      if (events && events.length > 0) {
+        res.json({ events, success: true })
+      } else {
+        res.json({ success: false, message: "no events Found" })
+      }
+    } catch (error: any) {
+      return next(new ErrorHandler(error.status, error.message))
+    }
+  }
+
+
+  async cancelEvent(req: Req, res: Res, next: Next) {
+    try {
+      const {  eventId ,organizerId} = req.body
+      console.log(" the status and the id", eventId,organizerId)
+      const events = await this.organizerUsecase.cancelEvent(eventId,organizerId,next)
+      if (events && events.length > 0) {
+        res.json({ events, success: true })
+      } else {
+        res.json({ success: false, message: "no events Found" })
+      }
+    } catch (error: any) {
+      return next(new ErrorHandler(error.status, error.message))
+    }
+  }
 }  

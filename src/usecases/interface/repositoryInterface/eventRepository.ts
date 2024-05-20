@@ -9,4 +9,6 @@ export interface IeventRepository{
     getSeat(id:string):Promise<{seat:[]} | undefined>
     seatBooking(id:string,selectedSeat:[],userId:string):Promise <boolean>
     confirmSeat(id:string,userId:string,selectedSeat:[]):Promise<boolean>
+    getUpcomingEvent(id:string):Promise<Ievents [] | undefined>
+    changeStatus(eventId:string,status:string):Promise<any>
 }

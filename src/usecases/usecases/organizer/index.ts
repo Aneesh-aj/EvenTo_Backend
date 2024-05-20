@@ -12,6 +12,8 @@ import { createEvents } from "./createEvent"
 import { getEventDetails } from "./getEventDetails"
 import { eventPostCreation } from "./eventPostCreation"
 import { getAlleventPost } from "./getAlleventPost"
+import { getUpcomingEvent } from "./getUpcomingEvent"
+import { changeStatus } from "./changeStatus"
 export{createOrganizers,
        login,
        signup,
@@ -25,5 +27,7 @@ export{createOrganizers,
        createEvents,
        getEventDetails,
        eventPostCreation,
-       getAlleventPost
+       getAlleventPost,
+       getUpcomingEvent,
+       changeStatus
     }

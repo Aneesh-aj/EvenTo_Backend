@@ -1,7 +1,7 @@
 import { IorganizerRepository } from "../interface/repositoryInterface/organizerRepository";
 import { IorganizerUseCase } from "../interface/usecase/organizerUseCase";
 import { Ihashpassword } from "../interface/service/hashPassword";
-import { allDetailsById, approvalChecking, createEvents, createOrganizers, eventPostCreation, getAllCategory, getAlleventPost, getCategory, getEventDetails, login, profileEdit, signup, uploadBackground, uploadProfile } from './organizer/index'
+import { allDetailsById, approvalChecking, changeStatus, createEvents, createOrganizers, eventPostCreation, getAllCategory, getAlleventPost, getCategory, getEventDetails, getUpcomingEvent, login, profileEdit, signup, uploadBackground, uploadProfile } from './organizer/index'
 import { IotpGenerate } from "../interface/service/otpGenerate";
 import { IsentEmail } from "../interface/service/sentEmail";
 import { IotpRepository } from "../interface/repositoryInterface/otpRepository";
@@ -19,6 +19,7 @@ import { IeventFormData, Ievents } from "../../entities/event";
 import { getAllEvents } from "./organizer/getAllEvents";
 import { IeventPost } from "../../entities/eventPost";
 import { IeventPostRepository } from "../interface/repositoryInterface/eventPostRepository";
+import { cancelEvent } from "./organizer/cancelEvent";
 
 export class OrganizerUseCase implements IorganizerUseCase {
   
@@ -208,6 +209,33 @@ export class OrganizerUseCase implements IorganizerUseCase {
         }catch(error){
             catchError(error,next)
         }
+    }
+
+    async  getUpcomingEvent(id: string, next: Next): Promise<Ievents[] | undefined> {
+        try{
+            const events = await getUpcomingEvent(id,this.eventRepository)
+            return events
+        }catch(error){
+            catchError(error,next)
+        }
+    }
+
+    async  changeStatus(eventStatus: string, eventId: string,organizerId:string,next:Next): Promise<Ievents[] | undefined> {
+        try{
+              const events = await changeStatus(eventStatus,eventId,organizerId,this.eventRepository)
+              return events
+        }catch(error){
+            catchError(error,next)
+        }
+    }
+
+    async  cancelEvent(eventId: string, organizerId: string, next: NextFunction): Promise<Ievents[] | undefined> {
+        try{
+            const events = await cancelEvent(eventId,organizerId,this.eventRepository)
+            return events
+      }catch(error){
+          catchError(error,next)
+      }
     }
 
 }

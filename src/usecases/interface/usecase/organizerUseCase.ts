@@ -27,4 +27,8 @@ export  interface IorganizerUseCase{
      getEventDetails(id:string,next:Next):Promise<Ievents | {event:Ievents , organizer:Iorganizer} | undefined>
      eventPost(data:IeventPost,next:Next):Promise<IeventPost | undefined>
      getAlleventPost(next:Next):Promise <IeventPost [] | undefined>
+     getUpcomingEvent(id:string,next:Next):Promise < Ievents [] | undefined>
+     changeStatus(eventStatus:string,eventId:string,organizerId:string,next:Next):Promise < Ievents [] | undefined>
+     cancelEvent(eventId:string,organizerId:string,next:Next):Promise < Ievents [] | undefined>
+
 }

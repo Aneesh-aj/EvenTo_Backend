@@ -127,7 +127,7 @@ export class EventRepository implements IeventRepository {
                         updatedEvents.seatArrangement?.forEach((ele: any) => {
                             if (elem?.row === ele?.row && ele?.column === elem.column) {
                                 if (!ele?.booked && ele.userId === userId) {
-                                     console.log("---------------- updateing the status of the seat-------------------",ele.row,ele.column)
+                                    console.log("---------------- updateing the status of the seat-------------------", ele.row, ele.column)
                                     ele.isSelected = false
                                     ele.userId = ""
                                 }
@@ -137,7 +137,7 @@ export class EventRepository implements IeventRepository {
 
                     updatedEvents.markModified('seatArrangement');
                     await updatedEvents.save();
-                    io.emit("seatSelected",{data:updatedEvents})
+                    io.emit("seatSelected", { data: updatedEvents })
 
                 }, 2 * 60 * 1000)
                 return result;
@@ -174,6 +174,29 @@ export class EventRepository implements IeventRepository {
             }
         } catch (error) {
             throw error;
+        }
+    }
+
+    async getUpcomingEvent(id: string): Promise<Ievents[] | undefined> {
+        try {
+            const events = await eventModal.find({
+                organizerId: id,
+                $or: [{ status: "upcoming" }, { status: "ongoing" }]
+            });
+            return events
+        } catch (error) {
+            throw error
+        }
+    }
+
+    async  changeStatus(eventId: string, status: string): Promise<any> {
+        try{
+            const changesStatus = await eventModal.findByIdAndUpdate(eventId,{status:status},{upsert:true})
+             console.log("------------------------- changes Status----------",changesStatus)
+             console.log(" afterr-----------------")
+            return changesStatus
+        }catch(error){
+            throw error
         }
     }
 
