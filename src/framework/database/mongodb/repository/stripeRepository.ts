@@ -77,6 +77,7 @@ export class Stripe implements Istripe{
                 console.log(" part four")
               const chargeId = paymentIntentResponse.latest_charge;
               req.app.locals.chargeId = chargeId;
+              
             } else {
                
               console.log('No latest charge found for this PaymentIntent.');

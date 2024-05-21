@@ -1,7 +1,7 @@
 import { IorganizerRepository } from "../interface/repositoryInterface/organizerRepository";
 import { IorganizerUseCase } from "../interface/usecase/organizerUseCase";
 import { Ihashpassword } from "../interface/service/hashPassword";
-import { allDetailsById, approvalChecking, changeStatus, createEvents, createOrganizers, eventPostCreation, getAllCategory, getAlleventPost, getCategory, getEventDetails, getUpcomingEvent, login, profileEdit, signup, updateEventPost, uploadBackground, uploadProfile } from './organizer/index'
+import { allDetailsById, approvalChecking, changeStatus, createEvents, createOrganizers, eventPostCreation, getAllCategory, getAllbookings, getAlleventPost, getCategory, getEventDetails, getUpcomingEvent, login, profileEdit, signup, updateEvent, updateEventPost, uploadBackground, uploadProfile } from './organizer/index'
 import { IotpGenerate } from "../interface/service/otpGenerate";
 import { IsentEmail } from "../interface/service/sentEmail";
 import { IotpRepository } from "../interface/repositoryInterface/otpRepository";
@@ -21,6 +21,7 @@ import { IeventPost } from "../../entities/eventPost";
 import { IeventPostRepository } from "../interface/repositoryInterface/eventPostRepository";
 import { cancelEvent } from "./organizer/cancelEvent";
 import { eventPostsById } from "./organizer/eventPostsById";
+import { IbookingRepository } from "../interface/repositoryInterface/bookingRepository";
 
 export class OrganizerUseCase implements IorganizerUseCase {
   
@@ -34,7 +35,8 @@ export class OrganizerUseCase implements IorganizerUseCase {
        private jwt : Ijwt,
        private categoryRepository: IcategoryRepository,
        private eventRepository :IeventRepository,
-       private eventPostRepository : IeventPostRepository
+       private eventPostRepository : IeventPostRepository,
+       private bookingRepository :IbookingRepository
     ) {
     }
 
@@ -173,6 +175,15 @@ export class OrganizerUseCase implements IorganizerUseCase {
             catchError(error,next)
         }
     }
+    async  eventUpdate(data: IeventFormData,eventId:string, next: NextFunction): Promise<{success:boolean, message:string} | undefined> {
+        try{
+              const result =  await updateEvent(data,eventId,this.eventRepository)
+            return  result ?  {success:true,message:"successfully event Created"} : undefined
+        }catch(error){
+            catchError(error,next)
+        }
+    }
+
 
     async  getAllevents(id: string, next: NextFunction): Promise<Ievents[] | undefined> {
         try{
@@ -195,6 +206,7 @@ export class OrganizerUseCase implements IorganizerUseCase {
 
     async  eventPost(data: IeventPost, next: NextFunction): Promise<IeventPost | undefined> {
         try{
+              console.log(" usecase _____----------------_-",data)
              const event = await eventPostCreation(data,this.eventRepository,this.eventPostRepository)
               console.log(" in the usease ",event)
              return event ? event : undefined
@@ -253,6 +265,16 @@ export class OrganizerUseCase implements IorganizerUseCase {
             console.log(" ------------in the use case------",formData,"and the id",id)
           const eventPost = await updateEventPost(formData,id,this.eventPostRepository)
           return eventPost
+        }catch(error){
+            catchError(error,next)
+        }
+    }
+
+    async  getAllBookings(eventId: string, next: NextFunction): Promise<any> {
+        try{
+            console.log(" enteid ",eventId)
+            const bookings = await getAllbookings(eventId,this.bookingRepository)
+            return bookings
         }catch(error){
             catchError(error,next)
         }

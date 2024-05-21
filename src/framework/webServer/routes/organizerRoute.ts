@@ -78,6 +78,9 @@ export function OrganizerRoute(router: Route) {
   router.post('/eventCreation',isOrganizer,isAuthenticate, (req:Req,res:Res,next:Next)=>{
         organizerController.createEvent(req,res,next)  
   })
+  router.post('/updateEvent',isOrganizer,isAuthenticate, (req:Req,res:Res,next:Next)=>{
+   organizerController.updateEvent(req,res,next)  
+})
 
   router.get("/getAllEvents/:id",isAuthenticate, (req:Req,res:Res,next:Next)=>{
    organizerController.getAllevents(req,res,next)  
@@ -114,6 +117,11 @@ export function OrganizerRoute(router: Route) {
  router.post("/updatePost",isOrganizer,isAuthenticate,(req:Req,res:Res,next:Next)=>{
     organizerController.updatePost(req,res,next)
  })
+
+
+ router.get("/geAllbookings/:id",isOrganizer,isAuthenticate,(req:Req,res:Res,next:Next)=>{
+   organizerController.getAllbooking(req,res,next)
+})
 
  
 

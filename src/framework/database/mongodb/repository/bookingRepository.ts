@@ -9,7 +9,7 @@ export class BookingRepository implements IbookingRepository {
     async  addBooking(bookingData:booking,chargeId:string): Promise<any> {
         try{
 
-           console.log(" -----------------booking---------------------")
+           console.log(" -----------------booking---------------------",bookingData)
             
             function generateRandomId() {
                 const characters = '0123456789ABCDEF';
@@ -80,7 +80,7 @@ export class BookingRepository implements IbookingRepository {
             {
                 $lookup: {
                     from: 'eventposts',
-                    localField: "eventPostIdObjectId", // Corrected localField to match added field
+                    localField: "eventPostIdObjectId", 
                     foreignField: "_id",
                     as: "postDetails"
                 }
@@ -88,7 +88,7 @@ export class BookingRepository implements IbookingRepository {
             {
                 $project: {
                     eventIdObjectId: 0,
-                    eventPostIdObjectId: 0 // Also remove eventPostIdObjectId from the result
+                    eventPostIdObjectId: 0 
                 }
             }
         ]);
@@ -100,6 +100,42 @@ export class BookingRepository implements IbookingRepository {
              return bookings
         }catch(error){
              throw error
+        }
+    }
+
+    async  getEventBookings(id: string): Promise<any> {
+        try{
+              const bookings = await bookingModel.aggregate([
+                {
+                    $match: { eventId: id }
+                },
+                {
+                    $addFields: {
+                        userIdObjectId: { $toObjectId: "$userId" },
+                       
+                    }
+                },
+                {
+
+                $lookup:{
+                    from:'users',
+                    localField:"userIdObjectId",
+                    foreignField:"_id",
+                    as:"userDetails"
+                }
+              },{
+                $project: {
+                    userIdObjectId: 0,
+                    
+                }
+            }
+            ])
+
+            return bookings
+
+              console.log("---------------------lookup---------------------------",bookings)
+        }catch(error){
+            throw error
         }
     }
 

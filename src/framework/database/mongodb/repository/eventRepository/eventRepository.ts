@@ -164,7 +164,6 @@ export class EventRepository implements IeventRepository {
                     });
                 });
 
-                // After modifications, update the entire array in the document
                 events.markModified('seatArrangement');
 
                 await events.save();
@@ -195,6 +194,20 @@ export class EventRepository implements IeventRepository {
              console.log("------------------------- changes Status----------",changesStatus)
              console.log(" afterr-----------------")
             return changesStatus
+        }catch(error){
+            throw error
+        }
+    }
+
+    async  findAndUpdate(data: IeventFormData, eventId: string): Promise<boolean> {
+        try{
+
+            console.log(" before the creation ",data, " and the id ",eventId)
+
+            const updated = await eventModal.findByIdAndUpdate(eventId,data)
+            console.log(" updated eent ---------------------",updated)
+            return updated ? true : false
+
         }catch(error){
             throw error
         }

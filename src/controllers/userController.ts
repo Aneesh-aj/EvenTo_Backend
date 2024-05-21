@@ -230,7 +230,7 @@ export class UserController {
             console.log("----------------------- the paymetn statussssss---------------------",payment)
             if(payment){
                 const bookingData = req.app.locals.bookingData
-                bookingData.paidAmound = Number(bookingData.amount)
+                bookingData.paidAmound = Number(bookingData.amount * bookingData.seat.length)
                 console.log(" bpplomg detao;ssssss-----------amount",bookingData.paidAmound," and the last full booking data-----------------",bookingData)
                  console.log(" hteejejejejjejej-----------------------------------------------------------------------------",bookingData)
                 const chargeId = req.app.locals.chargeId

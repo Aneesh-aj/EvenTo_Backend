@@ -224,6 +224,25 @@ export class OrganizerController {
     }
   }
 
+
+  async updateEvent(req: Req, res: Res, next: Next) {
+    try {
+      const { data ,eventId} = req.body
+      console.log(" data from body---------------------------------------------------------------", data)
+      const event = await this.organizerUsecase.eventUpdate(data,eventId, next)
+      console.log(" the event commining from the backend is heress-------------", event)
+      if (event) {
+        console.log(" commigngn here", event)
+        res.json({ event })
+      } else {
+        res.json({ success: false, message: "unable to create" })
+      }
+
+    } catch (error: any) {
+      return next(new ErrorHandler(error.status, error.message))
+    }
+  }
+
   async getAllevents(req: Req, res: Res, next: Next) {
     try {
       const { id } = req.params
@@ -259,7 +278,7 @@ export class OrganizerController {
     try {
       console.log(" the body", req.body)
       const { data } = req.body
-      console.log(" the data that passed ", data)
+      console.log(" the data that passed------------- ", data)
       const post = await this.organizerUsecase.eventPost(data as unknown as IeventPost, next)
       console.log(" the post return in the controllere ", post)
       if (post) {
@@ -354,6 +373,19 @@ export class OrganizerController {
        }else{
         res.json({success:false,message:"Issue while updating!! try again later"})
        }
+     }catch(error:any){
+      return next(new ErrorHandler(error.status, error.message))
+
+     }
+  }
+
+  async getAllbooking(req:Req,res:Res,next:Next){
+     try{
+       const {id} = req.params
+       console.log(" coming and the id is",id)
+       const allBookings = await this.organizerUsecase.getAllBookings(id,next)
+        console.log(" all bookings-0---------",allBookings)
+       return res.json({allBookings})
      }catch(error:any){
       return next(new ErrorHandler(error.status, error.message))
 

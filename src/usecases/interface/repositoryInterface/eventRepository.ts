@@ -12,4 +12,5 @@ export interface IeventRepository{
     confirmSeat(id:string,userId:string,selectedSeat:[]):Promise<boolean>
     getUpcomingEvent(id:string):Promise<Ievents [] | undefined>
     changeStatus(eventId:string,status:string):Promise<any>
+    findAndUpdate(data:IeventFormData,eventId:string):Promise<boolean>
 }
