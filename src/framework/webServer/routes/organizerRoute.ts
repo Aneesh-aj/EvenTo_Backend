@@ -26,7 +26,7 @@ export function OrganizerRoute(router: Route) {
       organizerController.logout(req, res, next)
    })
 
-   router.post("/approvel/:id",isOrganizer,isAuthenticate, (req: Req, res: Res, next: Next) => {
+   router.post("/approvel/:id", (req: Req, res: Res, next: Next) => {
       organizerController.isApproved(req, res, next)
    })
 
@@ -49,7 +49,7 @@ export function OrganizerRoute(router: Route) {
       organizerController.uploadProfilePicture(req, res, next)
    })
 
-   router.post("/resendOtp",isOrganizer,isAuthenticate, (req: Req, res: Res, next: Next) => {
+   router.post("/resendOtp", (req: Req, res: Res, next: Next) => {
       organizerController.resendOtp(req, res, next)
    })
 

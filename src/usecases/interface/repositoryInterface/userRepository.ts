@@ -12,4 +12,5 @@ export interface IuserRepository{
     editUserData(id:string,phoneNumber:string,name:string):Promise < Iuser | undefined>
     editAddress(id:string,country:string,state:string,city:string,pinCode:string):Promise<Iaddress | undefined>
     uploadProfilePicture(id:string,image:string):Promise<boolean>
+    changePassword(password:string,email:string):Promise<void>
 }

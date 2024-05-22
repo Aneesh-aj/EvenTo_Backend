@@ -46,11 +46,13 @@ export class OrganizerController {
 
   async verifyOtp(req: Req, res: Res, next: Next) {
     try {
-      console.log("coming her the contorlller")
+      console.log("coming her the contorlller-----------------",req.body)
       const isCorrect = await this.organizerUsecase.verifyOtp(req.body.email, req.body.otp, next)
       console.log("is corresct", isCorrect)
-      if (isCorrect) {
+      if (isCorrect?.success) {
         res.status(200).json({ message: "successfully verified the otp", success: true })
+      }else{
+         res.json({message:" Otp missMatched !!",success:false})
       }
 
     } catch (error: any) {
@@ -71,6 +73,7 @@ export class OrganizerController {
     try {
       const { id } = req.params
       const isApproved = await this.organizerUsecase.isApproved(id, next)
+       console.log(" the approval-----",isApproved)
       res.json({ approval: isApproved })
     } catch (error: any) {
       return next(new ErrorHandler(error.status, error.message))

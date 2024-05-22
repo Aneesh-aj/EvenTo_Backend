@@ -8,6 +8,7 @@ export async function login(email:string,password:string,hashpassword:Ihashpassw
      try {
         console.log(" in  the login use",email)
         const admin = await adminRepository.findAdmin(email)
+      if(!admin)return {message:'Admin not found !!'}
      if(admin){
         const compare = await hashpassword.comparePassword(password,admin?.password)
         console.log(" password compareing ",compare)
@@ -18,7 +19,7 @@ export async function login(email:string,password:string,hashpassword:Ihashpassw
             console.log(" toekn created",token)
             return {admin,token}
         }else{
-          return null
+          return {message:"Invalid password"}
         }
      }else{
         return null

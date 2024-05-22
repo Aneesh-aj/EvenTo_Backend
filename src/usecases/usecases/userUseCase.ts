@@ -25,6 +25,8 @@ import { booking } from "../../entities/booking";
 import { IbookingRepository } from "../interface/repositoryInterface/bookingRepository";
 import { IeventCategory } from "../../entities/eventCategory";
 import { IcategoryRepository } from "../interface/repositoryInterface/categoryRepository";
+import { sentOtp } from "./user/sentOtp";
+import { changePassword } from "./user/changePassword";
 // import { getAllbookings } from "./user/getAllbookings";
 
 
@@ -220,7 +222,22 @@ export class UserUseCase implements IuserUseCase {
              catchError(error,next)
          }
      }
-   
+     async  sentOtp(email: string, user: string, next: NextFunction): Promise<{ success: boolean; message: string;} | undefined> {
+         try{
+             return await sentOtp(email,user,this.otpGenerate,this.otpRepository,this.sentEmail,this.userRepository)
+             
+         }catch(error){
+            catchError(error,next)
+         }
+     }
+
+     async changePassword(password:string,email:string,next:Next):Promise<{success:boolean,message:string} | undefined>{
+          try{
+               return await changePassword(password,email,this.userRepository,this.hashPassword)
+          }catch(error){
+               catchError(error,next)
+          }
+     }
 
 }
 

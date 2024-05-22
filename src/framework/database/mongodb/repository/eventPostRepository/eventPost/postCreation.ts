@@ -16,7 +16,8 @@ export const eventPostCreation = async (data:IeventPost,categoryId:string):Promi
              subTitle:data.subTitle,
              entryFormId:data.entryFormId,
              seatArrangment:data.seatArrangment,
-             categoryId:categoryId
+             categoryId:categoryId,
+             about:data.about
         })
          console.log(" here the eevent sss",event)
         return event ? event : undefined

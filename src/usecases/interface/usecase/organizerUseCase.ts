@@ -11,7 +11,7 @@ export  interface IorganizerUseCase{
          : {name:string, email : string, password: string,country:string,state:string, city: string, pincode:number, ownerId: any,phoneNumber:string, companyLicense:any, companyInsurance:any,bankPassbook: any,building : string,otp:string}, next : Next) : Promise < Iorganizer | void >
 
     signupOrganzier(email:string,name:string,next:Next):Promise <boolean | void>  
-    verifyOtp(email:string,otp:string,next:Next):Promise<boolean | void> 
+    verifyOtp(email:string,otp:string,next:Next):Promise<{success:boolean,message:string} | void> 
     isApproved(id : string,next:Next):Promise<boolean>
     login(email:string,password:string,next:Next):Promise<{organizer:Iorganizer , tokens:IToken} | void>
     uploedImage(id:string,url:string,next:Next):Promise<string | null>

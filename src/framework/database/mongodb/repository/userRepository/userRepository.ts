@@ -53,4 +53,9 @@ export class UserRepository implements IuserRepository{
         const picture = await uploadProfilePicture(id,image)
         return picture
     }
+
+    async  changePassword(password: string, email: string): Promise<void> {
+        const changedPassword = await userModel.findOneAndUpdate({email:email},{password:password})
+        return 
+    }
 }

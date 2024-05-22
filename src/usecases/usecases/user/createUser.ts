@@ -13,7 +13,8 @@ export const createUser= async (token:string,otp:string,otpRepository:IotpReposi
      
     // console.log("inside the creater",newUser)
     try{
-        const decode = (await jwt.verifyJwt(token)) as Iuser
+        const decode = await jwt.verifyJwt(token) as Iuser
+         console.log(" the decoded  jwt",decode)
         if(!decode){
             return next(new ErrorHandler(400,"token has expired,register again"))
         }

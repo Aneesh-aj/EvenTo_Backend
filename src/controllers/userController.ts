@@ -24,7 +24,7 @@ export class UserController {
                 res.cookie("verificationToken",Token,{
                     httpOnly:true,
                     sameSite:"strict",
-                    expires:new Date(Date.now()+ 30 * 60 * 1000),
+                    expires:new Date(Date.now()+ 300 * 60 * 1000),
                 })
                     res.status(200).json({
                      success:true,
@@ -276,6 +276,26 @@ export class UserController {
          }catch(error:any){
             return next(new ErrorHandler(error.status, error.message))
          }
+      }
+
+      async sentOtp(req:Req,res:Res,next:Next){
+         try{
+              const {email,user} = req.body
+             const sentotp = await this.userUseCase.sentOtp(email,user,next)
+             res.json(sentotp)
+         }catch(error:any){
+            return next(new ErrorHandler(error.status, error.message))
+         }
+      }
+
+      async changePassword(req:Req,res:Res,next:Next){
+        try{
+            const {email,password} = req.body
+           const sentotp = await this.userUseCase.changePassword(password,email,next)
+           res.json(sentotp)
+       }catch(error:any){
+          return next(new ErrorHandler(error.status, error.message))
+       }
       }
 
 

@@ -42,7 +42,7 @@ export function UserRoute(router: Route) {
         userController.addProfilePicture(req, res, next)
     })
 
-    router.post("/resendOtp", isUser, isAuthenticate, (req: Req, res: Res, next: Next) => {
+    router.post("/resendOtp", (req: Req, res: Res, next: Next) => {
         userController.resendOtp(req, res, next)
     })
 
@@ -78,6 +78,14 @@ export function UserRoute(router: Route) {
 
     router.get('/allbooking/:id', isUser, isAuthenticate, (req: Req, res: Res, next: Next) => {
         userController.getAllbookings(req, res, next)
+    })
+
+    router.post("/sentotp",(req: Req, res: Res, next: Next) => {
+        userController.sentOtp(req, res, next)
+    })
+
+    router.post("/changepassword",(req: Req, res: Res, next: Next) => {
+        userController.changePassword(req, res, next)
     })
 
 

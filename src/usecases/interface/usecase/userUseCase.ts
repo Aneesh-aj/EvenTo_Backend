@@ -26,4 +26,6 @@ export interface IuserUseCase{
     booking(bookingData:booking,chargeId:string ,next:Next):Promise<any>
     getAllCategory(next:Next):Promise<IeventCategory[] | undefined>
     allBookings(id:string,next:Next):Promise<any>
+    sentOtp(email:string,user:string,next:Next):Promise<{success:boolean,message:string} | undefined>
+    changePassword(password:string,email:string,next:Next):Promise<{success:boolean,message:string} | undefined>
 }

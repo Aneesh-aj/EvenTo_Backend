@@ -42,6 +42,7 @@ export class OrganizerUseCase implements IorganizerUseCase {
 
     async signupOrganzier(email: string,name:string,next:Next): Promise<boolean | void> {
         try {
+         
           const  result = await signup(this.otpGenerate, this.otpRepository, name,email, this.sentEmail,next)
           console.log(" the result",result)
           return result
@@ -81,7 +82,7 @@ export class OrganizerUseCase implements IorganizerUseCase {
     }
 
 
-    async  verifyOtp(email: string, otp: string, next: Next): Promise<boolean | void> {
+    async  verifyOtp(email: string, otp: string, next: Next): Promise<{success:boolean,message:string} | void> {
         try{
              const result = await verifyOtp(
                 this.otpRepository,

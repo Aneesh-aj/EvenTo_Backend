@@ -8,12 +8,12 @@ export const verifyOtp = async(otpRepository:IotpRepository,email:string,otp:str
     try{
         console.log(" email from the usesace",email)
         const isOtp = await otpRepository.findOtp(email)
-        console.log(" isotp",isOtp)
+        console.log(" isotp",isOtp ," and ", otp)
         if(!isOtp) return next(new ErrorHandler(400,"No otp found "))
         if(isOtp.otp !== otp){
-            return next(new ErrorHandler(400,"otp mismatched"))
+            return {success:false,message:"otp missmatched"}
         }else{
-            return true
+            return {success:true,message:"otp validated"}
         }
         
     }catch(error){

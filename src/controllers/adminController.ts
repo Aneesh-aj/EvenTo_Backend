@@ -11,6 +11,10 @@ export class AdminController {
          console.log("at the controller")
          const admin = await this.adminUsecase.login({ email: req.body.email, password: req.body.password }, next)
 
+         console.log("---------admin------",admin)
+           if(admin.message){
+             res.json({success:false,message:admin.message})
+           }
          if (admin) {
             const accessToken = admin?.token?.accessToken;
             const refreshToken = admin?.token?.refreshToken;
@@ -20,12 +24,15 @@ export class AdminController {
               res.cookie("refreshToken", refreshToken, refreshTokenOptions);
               res.cookie("role", "admin");
               console.log("admin", admin);
+              res.status(200).json({ token: admin?.accessToken,admin:admin.admin, role: admin?.admin.role,message:"logined successfully" ,success:true})
             } else {
               console.error("Access token or refresh token is missing");
             }
+          }else{
+            res.status(200).json({ token: admin?.accessToken,admin:admin.admin, role: admin?.admin.role,message:"invalid admin",success:false })
+
           }
           
-         res.status(200).json({ token: admin?.accessToken,admin:admin.admin, role: admin?.admin.role,message:"logined successfully" })
       } catch (error: any) {
          return next(new ErrorHandler(error.status, error.message))
       }

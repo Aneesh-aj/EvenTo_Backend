@@ -15,6 +15,6 @@ const eventPostSchema :Schema <IeventPost> = new  mongoose.Schema({
      categoryId:{type:String}
 })
 
-const eventPostModel : Model<IeventPost> = mongoose.model('eventPost',eventPostSchema)
+const  eventPostModel : Model<IeventPost> = mongoose.model('eventPost',eventPostSchema)
 
 export default eventPostModel
