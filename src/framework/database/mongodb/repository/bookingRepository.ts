@@ -7,10 +7,7 @@ import bookingModel from "../model/booking";
 export class BookingRepository implements IbookingRepository {
 
     async  addBooking(bookingData:booking,chargeId:string): Promise<any> {
-        try{
-
-           console.log(" -----------------booking---------------------",bookingData)
-            
+        try{            
             function generateRandomId() {
                 const characters = '0123456789ABCDEF';
                 let result = '';
