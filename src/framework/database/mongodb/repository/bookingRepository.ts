@@ -53,7 +53,6 @@ export class BookingRepository implements IbookingRepository {
             throw new Error('Invalid user ID');
         }
 
-        console.log("Fetching bookings for user ID:", id);
        
         const bookings = await bookingModel.aggregate([
             {
