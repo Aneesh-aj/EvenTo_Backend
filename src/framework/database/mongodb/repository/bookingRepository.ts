@@ -40,7 +40,6 @@ export class BookingRepository implements IbookingRepository {
                 postId:bookingData.postId
               });
           
-              console.log("Booking done ----------", booking);
               return booking;
 
         }catch(error){
