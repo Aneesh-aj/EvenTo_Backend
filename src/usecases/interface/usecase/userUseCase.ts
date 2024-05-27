@@ -28,4 +28,6 @@ export interface IuserUseCase{
     allBookings(id:string,next:Next):Promise<any>
     sentOtp(email:string,user:string,next:Next):Promise<{success:boolean,message:string} | undefined>
     changePassword(password:string,email:string,next:Next):Promise<{success:boolean,message:string} | undefined>
+    sendMessage(senterId:string,receiverId:string,message:string,imageUrl:string,next:Next):Promise<any>
+    findConversation(senterId:string,receiverId:string,next:Next):Promise<any>
 }

@@ -27,6 +27,9 @@ import { IeventCategory } from "../../entities/eventCategory";
 import { IcategoryRepository } from "../interface/repositoryInterface/categoryRepository";
 import { sentOtp } from "./user/sentOtp";
 import { changePassword } from "./user/changePassword";
+import { sendMessage } from "./message/sendMessage";
+import { ImessageRepository } from "../interface/repositoryInterface/messageRepository";
+import { IconversationRepository } from "../interface/repositoryInterface/conversationRepository";
 // import { getAllbookings } from "./user/getAllbookings";
 
 
@@ -45,7 +48,9 @@ export class UserUseCase implements IuserUseCase {
           private eventRepository: IeventRepository,
           private stripeRepository: Istripe,
           private bookingRepository: IbookingRepository,
-          private categoryRepository :IcategoryRepository
+          private categoryRepository :IcategoryRepository,
+          private messageRepository:ImessageRepository,
+          private conversationRepository:IconversationRepository
      ) { }
      async userSignup(user: Iuser, next: Next): Promise<string | void> {
           try {
@@ -237,6 +242,14 @@ export class UserUseCase implements IuserUseCase {
           }catch(error){
                catchError(error,next)
           }
+     }
+
+     async  sendMessage(senterId: string, receiverId: string, message: string, imageUrl: string,next:Next): Promise<any> {
+         try{
+             const sented = await sendMessage(senterId,receiverId,message,imageUrl,this.messageRepository,this.conversationRepository)
+         }catch(error){
+           catchError(error,next)
+         }
      }
 
 }

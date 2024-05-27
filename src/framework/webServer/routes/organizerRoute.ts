@@ -39,7 +39,7 @@ export function OrganizerRoute(router: Route) {
       organizerController.uploadBackground(req, res, next)
    })
 
-   router.get("/profile/:id",isOrganizer,isAuthenticate, (req: Req, res: Res, next: Next) => {
+   router.get("/profile/:id",isAuthenticate, (req: Req, res: Res, next: Next) => {
       console.log("the organizer route")
       organizerController.findbyId(req, res, next)
    })
@@ -95,7 +95,7 @@ export function OrganizerRoute(router: Route) {
   })
 
   router.get("/alleventPost" ,isAuthenticate,(req:Req,res:Res,next:Next)=>{
-     console.log(" comming here")
+     console.log(" comming here---------------------------------")
       organizerController.getAlleventPost(req,res,next)
   })
 
@@ -110,7 +110,7 @@ export function OrganizerRoute(router: Route) {
   router.post("/cancel",isOrganizer,isAuthenticate,(req:Req,res:Res,next:Next)=>{
    organizerController.cancelEvent(req,res,next)
  })
- router.get("/getOrganizerEventPost/:organizerId",isOrganizer,isAuthenticate,(req:Req,res:Res,next:Next)=>{
+ router.get("/getOrganizerEventPost/:organizerId",isAuthenticate,(req:Req,res:Res,next:Next)=>{
    organizerController.getEventPost(req,res,next)
  })
 

@@ -88,6 +88,14 @@ export function UserRoute(router: Route) {
         userController.changePassword(req, res, next)
     })
 
+    router.post("/sendMessage",isUser,isAuthenticate,(req:Req,res:Res,next:Next)=>{
+         userController.sendMessage(req,res,next)
+    })
+
+    router.post("/getChat",isUser,isAuthenticate,(req: Req, res: Res, next: Next)=>{
+         userController.getChat(req,res,next)
+    })
+
 
 
 

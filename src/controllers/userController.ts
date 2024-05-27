@@ -298,6 +298,27 @@ export class UserController {
        }
       }
 
+      async sendMessage(req:Req,res:Res,next:Next){
+         try{           
+
+            const {senterId,receiverId,message,imageUrl} = req.body
+            console.log(" the body------------",req.body)
+            const sented = await this.userUseCase.sendMessage(senterId,receiverId,message,imageUrl,next)
+
+         }catch(error:any){
+            return next(new ErrorHandler(error.status,error.message))
+         }
+      }
+
+      async getChat(req:Req,res:Res,next:Next){
+         try{
+             const {senterId,receiverId} = req.body
+             const chat = await this.userUseCase.findConversation(senterId,receiverId,next)
+         }catch(error:any){
+            return next(new ErrorHandler(error.status,error.message))
+         }
+      }
+
 
  
 }
