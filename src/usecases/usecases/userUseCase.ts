@@ -30,6 +30,7 @@ import { changePassword } from "./user/changePassword";
 import { sendMessage } from "./message/sendMessage";
 import { ImessageRepository } from "../interface/repositoryInterface/messageRepository";
 import { IconversationRepository } from "../interface/repositoryInterface/conversationRepository";
+import { getChat } from "./message/getChat";
 // import { getAllbookings } from "./user/getAllbookings";
 
 
@@ -247,6 +248,15 @@ export class UserUseCase implements IuserUseCase {
      async  sendMessage(senterId: string, receiverId: string, message: string, imageUrl: string,next:Next): Promise<any> {
          try{
              const sented = await sendMessage(senterId,receiverId,message,imageUrl,this.messageRepository,this.conversationRepository)
+         }catch(error){
+           catchError(error,next)
+         }
+     }
+
+
+     async  findConversation(senterId: string, receiverId: string, next: NextFunction): Promise<any> {
+         try{
+            const chat = await getChat(senterId,receiverId,this.conversationRepository)
          }catch(error){
            catchError(error,next)
          }
