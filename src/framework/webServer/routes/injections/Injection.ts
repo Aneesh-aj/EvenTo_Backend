@@ -49,7 +49,7 @@ const organizerrepository = new OrganizerRepository(organizerModel)
 const userusecase = new UserUseCase(userrepository,jwttoken,otpGenerate,otprepository,sentemail,bycryptsurvice,cloudsession,organizerrepository,eventpostrepo,eventRepository,stripe,bookingrepository,categoryrepository,messagerepository,conversationrepository,requestrepository)
 const  userController = new UserController(userusecase)
 const adminusecase = new AdminUsecase(bycryptsurvice,adminrepository,jwttoken,organizerrepository,userrepository,categoryrepository)
-const organizerusecase = new  OrganizerUseCase(organizerrepository,bycryptsurvice,otpGenerate,otprepository,sentemail,jwttoken,categoryrepository,eventRepository,eventpostrepo,bookingrepository)
+const organizerusecase = new  OrganizerUseCase(organizerrepository,bycryptsurvice,otpGenerate,otprepository,sentemail,jwttoken,categoryrepository,eventRepository,eventpostrepo,bookingrepository,requestrepository)
 const organizerController = new  OrganizerController(organizerusecase)
 const adminController = new AdminController(adminusecase)
 

@@ -394,4 +394,25 @@ export class OrganizerController {
 
      }
   }
+
+  async getAllRequests(req:Req,res:Res,next:Next){
+     try{
+       const {id} = req.params
+       const requests = await this.organizerUsecase.getAllRequests(id,next)
+       return res.json({allRequests:requests})
+     }catch(error:any){
+       return next(new ErrorHandler(error.status , error.message))
+     }
+  }
+
+  async getRequestDetails(req:Req,res:Res,next:Next){
+    try{
+       const {id} = req.params
+       const request = await this.organizerUsecase.getRequestDetails(id,next)
+       return res.json(request)
+    }catch(error:any){
+        return next(new ErrorHandler(error.status,error.message))
+    }
+ }
+
 }  

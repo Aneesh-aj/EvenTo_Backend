@@ -123,6 +123,15 @@ export function OrganizerRoute(router: Route) {
    organizerController.getAllbooking(req,res,next)
 })
 
+router.get("/getRequests/:id",isOrganizer,isAuthenticate,(req:Req,res:Res,next:Next)=>{
+    organizerController.getAllRequests(req,res,next)
+})
+
+router.get("/getRequestDetails/:id",isOrganizer,isAuthenticate,(req:Req,res:Res,next:Next)=>{
+   organizerController.getRequestDetails(req,res,next)
+})
+
+
  
 
 

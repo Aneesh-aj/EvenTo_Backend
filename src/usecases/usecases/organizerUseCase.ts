@@ -22,6 +22,10 @@ import { IeventPostRepository } from "../interface/repositoryInterface/eventPost
 import { cancelEvent } from "./organizer/cancelEvent";
 import { eventPostsById } from "./organizer/eventPostsById";
 import { IbookingRepository } from "../interface/repositoryInterface/bookingRepository";
+import { IrequestRepository } from "../interface/repositoryInterface/requestRepository";
+import { getAllRequests } from "./request/getAllRequests";
+import { Irequest } from "../../entities/request";
+import { getRequestDetails } from "./request/getDetails";
 
 export class OrganizerUseCase implements IorganizerUseCase {
   
@@ -36,7 +40,8 @@ export class OrganizerUseCase implements IorganizerUseCase {
        private categoryRepository: IcategoryRepository,
        private eventRepository :IeventRepository,
        private eventPostRepository : IeventPostRepository,
-       private bookingRepository :IbookingRepository
+       private bookingRepository :IbookingRepository,
+       private requestRepository:IrequestRepository
     ) {
     }
 
@@ -280,5 +285,25 @@ export class OrganizerUseCase implements IorganizerUseCase {
             catchError(error,next)
         }
     }
+
+    async  getAllRequests(id: string, next: Next): Promise<Irequest [] | undefined> {
+        try{
+             const AllRequests = await getAllRequests(id,this.requestRepository)
+             return AllRequests
+        }catch(error){
+             catchError(error,next)
+        }
+    }
+
+    async  getRequestDetails(id: string, next: NextFunction): Promise<Irequest | undefined> {
+        try{
+            const request = await getRequestDetails(id,this.requestRepository)
+            return request
+        }catch(error){
+           catchError(error,next)
+        }
+    }
+
+    
 
 }

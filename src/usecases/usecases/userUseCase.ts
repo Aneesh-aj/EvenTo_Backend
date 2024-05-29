@@ -31,9 +31,10 @@ import { sendMessage } from "./message/sendMessage";
 import { ImessageRepository } from "../interface/repositoryInterface/messageRepository";
 import { IconversationRepository } from "../interface/repositoryInterface/conversationRepository";
 import { getChat } from "./message/getChat";
-import { IrequestFormData } from "../../entities/request";
+import { Irequest, IrequestFormData } from "../../entities/request";
 import { createRequest } from "./request/createRequest";
 import { IrequestRepository } from "../interface/repositoryInterface/requestRepository";
+import { getRequestDetails } from "./request/getDetails";
 // import { getAllbookings } from "./user/getAllbookings";
 
 
@@ -271,11 +272,13 @@ export class UserUseCase implements IuserUseCase {
          try{
             
             const request = await createRequest(data,this.requestRepository)
-
+             return request
          }catch(error){
             catchError(error,next)
          }
      }
+
+   
      
 
 }

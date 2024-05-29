@@ -32,7 +32,7 @@ const requestSchema :Schema <Irequest> = new  mongoose.Schema({
     seatNumber:{type:Number},
     status: {
       type: String,
-      enum: ["approved","rejected"], 
+      enum: ["approved","rejected","pending"], 
       default: "pending" 
     },
     totalAmount:{type:Number},

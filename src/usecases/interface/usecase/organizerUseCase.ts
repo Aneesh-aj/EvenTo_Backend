@@ -2,6 +2,7 @@ import { IeventFormData, Ievents } from "../../../entities/event";
 import { IeventCategory } from "../../../entities/eventCategory";
 import { IeventPost } from "../../../entities/eventPost";
 import { Iorganizer, IorganizerAndAddress } from "../../../entities/organizer";
+import { Irequest } from "../../../entities/request";
 import { Next , Res, Req } from "../../../framework/types/serverPackageTypes";
 import { IToken } from "../service/jwt";
 
@@ -35,4 +36,7 @@ export  interface IorganizerUseCase{
      getEventPost(organizerId:string,next:Next):Promise<IeventPost [] | undefined>
      updatePost(formData:IeventPost,id:string,next:Next):Promise<any>
      getAllBookings(eventId:string,next:Next):Promise<any>
+     getAllRequests(id:string,next:Next):Promise<Irequest []| undefined>
+     getRequestDetails(id:string,next:Next):Promise<Irequest| undefined >
+
 }

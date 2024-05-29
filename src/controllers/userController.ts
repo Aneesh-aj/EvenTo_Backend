@@ -325,12 +325,13 @@ export class UserController {
             const {data} = req.body
             
             const request = await this.userUseCase.createRequest(data,next)
-
+            return res.json(request)
         }catch(error:any){
              return next(new ErrorHandler(error.status,error.message))
         }
       }
 
+      
       
 
 
