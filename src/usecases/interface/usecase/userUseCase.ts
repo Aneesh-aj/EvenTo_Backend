@@ -4,6 +4,7 @@ import { Ievents } from "../../../entities/event";
 import { IeventCategory } from "../../../entities/eventCategory";
 import { IeventPost } from "../../../entities/eventPost";
 import { Iorganizer, IorganizerAndAddress } from "../../../entities/organizer";
+import { IrequestFormData } from "../../../entities/request";
 import { Iuser } from "../../../entities/user";
 
 import { Next,Res,Req } from "../../../framework/types/serverPackageTypes";
@@ -30,4 +31,5 @@ export interface IuserUseCase{
     changePassword(password:string,email:string,next:Next):Promise<{success:boolean,message:string} | undefined>
     sendMessage(senterId:string,receiverId:string,message:string,imageUrl:string,next:Next):Promise<any>
     findConversation(senterId:string,receiverId:string,next:Next):Promise<any>
+    createRequest(data:IrequestFormData,next:Next):Promise<any>
 }

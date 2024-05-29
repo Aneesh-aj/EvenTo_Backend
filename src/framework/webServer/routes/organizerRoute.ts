@@ -71,7 +71,7 @@ export function OrganizerRoute(router: Route) {
 
   })
 
-  router.get("/categorys/:id",isOrganizer, isAuthenticate, (req:Req,res:Res,next)=>{
+  router.get("/categorys/:id", isAuthenticate, (req:Req,res:Res,next)=>{
      organizerController.avalibleCategory(req,res,next)
   })
 

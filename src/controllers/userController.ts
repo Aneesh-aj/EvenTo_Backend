@@ -314,10 +314,24 @@ export class UserController {
          try{
              const {senterId,receiverId} = req.body
              const chat = await this.userUseCase.findConversation(senterId,receiverId,next)
+             return res.json(chat)
          }catch(error:any){
             return next(new ErrorHandler(error.status,error.message))
          }
       }
+
+      async sentRequest(req:Req,res:Res,next:Next){
+        try{
+            const {data} = req.body
+            
+            const request = await this.userUseCase.createRequest(data,next)
+
+        }catch(error:any){
+             return next(new ErrorHandler(error.status,error.message))
+        }
+      }
+
+      
 
 
  

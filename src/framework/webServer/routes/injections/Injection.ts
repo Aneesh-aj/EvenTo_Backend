@@ -24,6 +24,7 @@ import { Stripe } from "../../../database/mongodb/repository/stripeRepository";
 import { BookingRepository } from "../../../database/mongodb/repository/bookingRepository";
 import { MessageRepository } from "../../../database/mongodb/repository/messageRepository";
 import { ConversationRepository } from "../../../database/mongodb/repository/conversationRepository";
+import { RequestRepository } from "../../../database/mongodb/repository/requestRepository";
 
 const bycryptsurvice =new  Encrypt()
 const cloudsession = new CloudSession()
@@ -39,12 +40,13 @@ const userrepository = new UserRepository(userModel)
 const eventpostrepo = new EventPostRepository()
 const messagerepository = new MessageRepository()
 const conversationrepository = new ConversationRepository()
+const requestrepository = new RequestRepository()
 
 
 const adminrepository = new AdminRepository()
 
 const organizerrepository = new OrganizerRepository(organizerModel)
-const userusecase = new UserUseCase(userrepository,jwttoken,otpGenerate,otprepository,sentemail,bycryptsurvice,cloudsession,organizerrepository,eventpostrepo,eventRepository,stripe,bookingrepository,categoryrepository,messagerepository,conversationrepository)
+const userusecase = new UserUseCase(userrepository,jwttoken,otpGenerate,otprepository,sentemail,bycryptsurvice,cloudsession,organizerrepository,eventpostrepo,eventRepository,stripe,bookingrepository,categoryrepository,messagerepository,conversationrepository,requestrepository)
 const  userController = new UserController(userusecase)
 const adminusecase = new AdminUsecase(bycryptsurvice,adminrepository,jwttoken,organizerrepository,userrepository,categoryrepository)
 const organizerusecase = new  OrganizerUseCase(organizerrepository,bycryptsurvice,otpGenerate,otprepository,sentemail,jwttoken,categoryrepository,eventRepository,eventpostrepo,bookingrepository)

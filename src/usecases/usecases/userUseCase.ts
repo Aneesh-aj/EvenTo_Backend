@@ -31,6 +31,9 @@ import { sendMessage } from "./message/sendMessage";
 import { ImessageRepository } from "../interface/repositoryInterface/messageRepository";
 import { IconversationRepository } from "../interface/repositoryInterface/conversationRepository";
 import { getChat } from "./message/getChat";
+import { IrequestFormData } from "../../entities/request";
+import { createRequest } from "./request/createRequest";
+import { IrequestRepository } from "../interface/repositoryInterface/requestRepository";
 // import { getAllbookings } from "./user/getAllbookings";
 
 
@@ -51,7 +54,8 @@ export class UserUseCase implements IuserUseCase {
           private bookingRepository: IbookingRepository,
           private categoryRepository :IcategoryRepository,
           private messageRepository:ImessageRepository,
-          private conversationRepository:IconversationRepository
+          private conversationRepository:IconversationRepository,
+          private requestRepository : IrequestRepository
      ) { }
      async userSignup(user: Iuser, next: Next): Promise<string | void> {
           try {
@@ -257,10 +261,22 @@ export class UserUseCase implements IuserUseCase {
      async  findConversation(senterId: string, receiverId: string, next: NextFunction): Promise<any> {
          try{
             const chat = await getChat(senterId,receiverId,this.conversationRepository)
+            return chat
          }catch(error){
            catchError(error,next)
          }
      }
+    
+     async  createRequest(data: IrequestFormData, next: Next): Promise<any> {
+         try{
+            
+            const request = await createRequest(data,this.requestRepository)
+
+         }catch(error){
+            catchError(error,next)
+         }
+     }
+     
 
 }
 
