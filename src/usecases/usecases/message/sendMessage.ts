@@ -8,7 +8,7 @@ export const sendMessage = async(senterId:string,receiverId:string,message:strin
         if(!messages) return {success:false,message:"message could'nt sent!!"}
         const conversation = await conversationRepository.findConversation(senterId,receiverId)
           console.log("---------------- conversation ----------------",conversation)
-        if(conversation.length > 0){
+        if(conversation){
             const addedMessage = await  conversationRepository.addMessage(senterId,receiverId ,messages) 
              console.log("------------------- added message-------------------",addedMessage)
         }else{

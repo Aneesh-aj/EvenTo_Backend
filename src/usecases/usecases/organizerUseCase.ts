@@ -26,6 +26,12 @@ import { IrequestRepository } from "../interface/repositoryInterface/requestRepo
 import { getAllRequests } from "./request/getAllRequests";
 import { Irequest } from "../../entities/request";
 import { getRequestDetails } from "./request/getDetails";
+import { rejectRequest } from "./request/rejectRequest";
+import { approveRequest } from "./request/approveRequest";
+import { requestEventCreation } from "./request/requestEventCreation";
+import { getUserList } from "./message/getUserList";
+import { IuserRepository } from "../interface/repositoryInterface/userRepository";
+import { IconversationRepository } from "../interface/repositoryInterface/conversationRepository";
 
 export class OrganizerUseCase implements IorganizerUseCase {
   
@@ -41,7 +47,9 @@ export class OrganizerUseCase implements IorganizerUseCase {
        private eventRepository :IeventRepository,
        private eventPostRepository : IeventPostRepository,
        private bookingRepository :IbookingRepository,
-       private requestRepository:IrequestRepository
+       private requestRepository:IrequestRepository,
+       private userRepository : IuserRepository,
+       private conversationRepository:IconversationRepository
     ) {
     }
 
@@ -304,6 +312,44 @@ export class OrganizerUseCase implements IorganizerUseCase {
         }
     }
 
+    async  approveRequest(id: string, next: NextFunction): Promise<{ success: boolean , message: string; } | undefined> {
+        try{
+             const approved = await approveRequest(id,this.requestRepository)
+             return approved
+        }catch(error){
+            catchError(error,next)
+        }
+    }
+
+    async  rejectRequest(id: string, next: NextFunction): Promise<{ success: boolean ,  message: string; } | undefined> {
+        try{
+            const rejected = await rejectRequest(id,this.requestRepository)
+             return rejected
+        }catch(error){
+            catchError(error,next)
+        }
+    }
+   
+
+    async  requestEventCreation(data: Irequest,id:string, next: NextFunction): Promise<{ success: boolean; message: string; } | undefined> {
+        try{ 
+             console.log(" coming----$&&%^%#@&%!&@%#&!%&#%!@#*!*@#*!*@#^#*!@#*&!*#!@#*!")
+            console.log("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- the data------------",data)
+            const result =  await requestEventCreation(data,id,this.eventRepository,this.requestRepository)
+            return  result
+        }catch(error){
+            catchError(error,next)
+        }
+    }
+
+    async  getUserList(id: string, next: NextFunction): Promise<any> {
+        try{
+           const getList = await getUserList(id,this.organizerRepository,this.userRepository,this.conversationRepository)
+           return getList
+        }catch(error){
+            catchError(error,next)
+        }
+    }
     
 
 }

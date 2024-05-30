@@ -46,13 +46,13 @@ export class OrganizerController {
 
   async verifyOtp(req: Req, res: Res, next: Next) {
     try {
-      console.log("coming her the contorlller-----------------",req.body)
+      console.log("coming her the contorlller-----------------", req.body)
       const isCorrect = await this.organizerUsecase.verifyOtp(req.body.email, req.body.otp, next)
       console.log("is corresct", isCorrect)
       if (isCorrect?.success) {
         res.status(200).json({ message: "successfully verified the otp", success: true })
-      }else{
-         res.json({message:" Otp missMatched !!",success:false})
+      } else {
+        res.json({ message: " Otp missMatched !!", success: false })
       }
 
     } catch (error: any) {
@@ -73,7 +73,7 @@ export class OrganizerController {
     try {
       const { id } = req.params
       const isApproved = await this.organizerUsecase.isApproved(id, next)
-       console.log(" the approval-----",isApproved)
+      console.log(" the approval-----", isApproved)
       res.json({ approval: isApproved })
     } catch (error: any) {
       return next(new ErrorHandler(error.status, error.message))
@@ -230,9 +230,9 @@ export class OrganizerController {
 
   async updateEvent(req: Req, res: Res, next: Next) {
     try {
-      const { data ,eventId} = req.body
+      const { data, eventId } = req.body
       console.log(" data from body---------------------------------------------------------------", data)
-      const event = await this.organizerUsecase.eventUpdate(data,eventId, next)
+      const event = await this.organizerUsecase.eventUpdate(data, eventId, next)
       console.log(" the event commining from the backend is heress-------------", event)
       if (event) {
         console.log(" commigngn here", event)
@@ -360,59 +360,111 @@ export class OrganizerController {
       const { organizerId } = req.params
       console.log(" the id ", organizerId)
       const eventPost = await this.organizerUsecase.getEventPost(organizerId, next)
-      res.json({eventPost})
+      res.json({ eventPost })
     } catch (error: any) {
       return next(new ErrorHandler(error.status, error.message))
     }
   }
 
-  async updatePost(req:Req,res:Res,next:Next){
-     try{
-      const {formData,id} = req.body
-      console.log(" the bofyddd",formData)
-      const updatePost = await this.organizerUsecase.updatePost(formData,id,next)
-       if(updatePost){
-          res.json({success:true,message:"updated succeefully"})
-       }else{
-        res.json({success:false,message:"Issue while updating!! try again later"})
-       }
-     }catch(error:any){
+  async updatePost(req: Req, res: Res, next: Next) {
+    try {
+      const { formData, id } = req.body
+      console.log(" the bofyddd", formData)
+      const updatePost = await this.organizerUsecase.updatePost(formData, id, next)
+      if (updatePost) {
+        res.json({ success: true, message: "updated succeefully" })
+      } else {
+        res.json({ success: false, message: "Issue while updating!! try again later" })
+      }
+    } catch (error: any) {
       return next(new ErrorHandler(error.status, error.message))
 
-     }
-  }
-
-  async getAllbooking(req:Req,res:Res,next:Next){
-     try{
-       const {id} = req.params
-       console.log(" coming and the id is",id)
-       const allBookings = await this.organizerUsecase.getAllBookings(id,next)
-        console.log(" all bookings-0---------",allBookings)
-       return res.json({allBookings})
-     }catch(error:any){
-      return next(new ErrorHandler(error.status, error.message))
-
-     }
-  }
-
-  async getAllRequests(req:Req,res:Res,next:Next){
-     try{
-       const {id} = req.params
-       const requests = await this.organizerUsecase.getAllRequests(id,next)
-       return res.json({allRequests:requests})
-     }catch(error:any){
-       return next(new ErrorHandler(error.status , error.message))
-     }
-  }
-
-  async getRequestDetails(req:Req,res:Res,next:Next){
-    try{
-       const {id} = req.params
-       const request = await this.organizerUsecase.getRequestDetails(id,next)
-       return res.json(request)
-    }catch(error:any){
-        return next(new ErrorHandler(error.status,error.message))
     }
- }
+  }
+
+  async getAllbooking(req: Req, res: Res, next: Next) {
+    try {
+      const { id } = req.params
+      console.log(" coming and the id is", id)
+      const allBookings = await this.organizerUsecase.getAllBookings(id, next)
+      console.log(" all bookings-0---------", allBookings)
+      return res.json({ allBookings })
+    } catch (error: any) {
+      return next(new ErrorHandler(error.status, error.message))
+
+    }
+  }
+
+  async getAllRequests(req: Req, res: Res, next: Next) {
+    try {
+      const { id } = req.params
+      const requests = await this.organizerUsecase.getAllRequests(id, next)
+      return res.json({ allRequests: requests })
+    } catch (error: any) {
+      return next(new ErrorHandler(error.status, error.message))
+    }
+  }
+
+  async getRequestDetails(req: Req, res: Res, next: Next) {
+    try {
+      const { id } = req.params
+      const request = await this.organizerUsecase.getRequestDetails(id, next)
+      return res.json(request)
+    } catch (error: any) {
+      return next(new ErrorHandler(error.status, error.message))
+    }
+  }
+
+  async approveRequest(req: Req, res: Res, next: Next) {
+    try {
+      const { id } = req.body
+      const approved = await this.organizerUsecase.approveRequest(id, next)
+      return res.json(approved)
+    } catch (error: any) {
+      return next(new ErrorHandler(error.status, error.message))
+    }
+  }
+
+  async rejectRequest(req: Req, res: Res, next: Next) {
+    try {
+      const { id } = req.body
+      const rejected = await this.organizerUsecase.rejectRequest(id, next)
+      return res.json(rejected)
+    } catch (error: any) {
+      return next(new ErrorHandler(error.status, error.message))
+    }
+  }
+
+  async requestEventCreation(req: Req, res: Res, next: Next) {
+    try {
+      const { data,id } = req.body
+      console.log(" data from body---------------------------------------------------------------", data)
+      const event = await this.organizerUsecase.requestEventCreation(data,id, next)
+      console.log(" the event commining from the backend is heress-------------", event)
+      if (event) {
+        console.log(" commigngn here", event)
+        res.json({ event })
+      } else {
+        res.json({ success: false, message: "unable to create" })
+      }
+
+    } catch (error: any) {
+      return next(new ErrorHandler(error.status, error.message))
+    }
+  }
+
+
+  async getUserList(req:Req,res:Res,next:Next){
+     try{
+          const {id} = req.params
+          const getList = await this.organizerUsecase.getUserList(id,next)
+          return res.json({userList:getList})
+     }catch(error:any){
+      return next(new ErrorHandler(error.status, error.message))
+     }
+  }
+
+
+
 
 }  

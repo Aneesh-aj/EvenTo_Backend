@@ -1,4 +1,5 @@
 import { IeventFormData, Ievents } from "../../../../../entities/event";
+import { Irequest } from "../../../../../entities/request";
 import { IeventRepository } from "../../../../../usecases/interface/repositoryInterface/eventRepository";
 import { io } from "../../../../service/socketIo";
 import eventModal from "../../model/event";
@@ -208,6 +209,15 @@ export class EventRepository implements IeventRepository {
             console.log(" updated eent ---------------------",updated)
             return updated ? true : false
 
+        }catch(error){
+            throw error
+        }
+    }
+
+    async createRequestEvent(data: Irequest): Promise<{ success: boolean; message: string; } | undefined> {
+        try{
+             const event = await eventModal.create(data)
+             return event ? {success:true,message:"created successfully"} : {success:false,message:"error while creating"}
         }catch(error){
             throw error
         }

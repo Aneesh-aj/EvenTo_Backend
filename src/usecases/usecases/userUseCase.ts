@@ -261,7 +261,7 @@ export class UserUseCase implements IuserUseCase {
 
      async  findConversation(senterId: string, receiverId: string, next: NextFunction): Promise<any> {
          try{
-            const chat = await getChat(senterId,receiverId,this.conversationRepository)
+            const chat = await getChat(senterId,receiverId,this.conversationRepository,this.userRepository,this.organizerRepository)
             return chat
          }catch(error){
            catchError(error,next)

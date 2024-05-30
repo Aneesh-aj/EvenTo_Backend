@@ -59,7 +59,8 @@ export interface Ievents{
     status:string,
     totalAmount:number,
     paymentStatus:boolean,
-    eventBooking:string
+    eventBooking:string,
+    userId?:string,
 
      
 }

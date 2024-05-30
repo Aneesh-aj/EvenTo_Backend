@@ -131,6 +131,25 @@ router.get("/getRequestDetails/:id",isOrganizer,isAuthenticate,(req:Req,res:Res,
    organizerController.getRequestDetails(req,res,next)
 })
 
+router.post("/approveRequest",isOrganizer,isAuthenticate,(req:Req,res:Res,next:Next)=>{
+     organizerController.approveRequest(req,res,next)
+})
+router.post("/rejectRequest",isOrganizer,isAuthenticate,(req:Req,res:Res,next:Next)=>{
+   organizerController.rejectRequest(req,res,next)
+})
+
+router.post('/eventCreation',isOrganizer,isAuthenticate, (req:Req,res:Res,next:Next)=>{
+   organizerController.createEvent(req,res,next)  
+})
+
+router.post('/requestEventCreation',isOrganizer,isAuthenticate, (req:Req,res:Res,next:Next)=>{
+   organizerController.requestEventCreation(req,res,next)  
+})
+
+
+router.get('/chatList/:id',isAuthenticate,(req:Req,res:Res,next:Next)=>{
+    organizerController.getUserList(req,res,next)
+})
 
  
 

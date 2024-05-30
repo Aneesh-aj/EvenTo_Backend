@@ -35,4 +35,42 @@ export class RequestRepository implements IrequestRepository{
             throw error
          }
      }
+
+     async  approve(id: string): Promise<{ success: boolean; message: string; } | undefined> {
+         try{
+             const approved = await requestModel.findById(id)
+             if(approved?.status){
+
+                 approved.status = "Approved"
+                 approved?.save() 
+             }
+             return approved?.status ==="Approved" ? {success:true,message:"Approved successfully"} : {success:false,message:"Error while approving"}
+         }catch(error){
+            throw error
+         }
+     }
+
+     async  reject(id: string): Promise<{ success: boolean; message: string; } | undefined> {
+        try{
+            const approved = await requestModel.findById(id)
+            if(approved?.status){
+
+                approved.status = "Rejected"
+                approved?.save() 
+            }
+            return approved?.status ==="Rejected" ? {success:true,message:"Rejected successfully"} : {success:false,message:"Error while Rejecting"}
+        }catch(error){
+           throw error
+        }
+    }
+
+    async  updateStatus(id: string): Promise<Irequest | undefined> {
+        try{
+            const request = await requestModel.findByIdAndUpdate(id,{status:"EventCreated"})
+            return request ? request : undefined
+
+        }catch(error){
+            throw error
+        }
+    }
 }

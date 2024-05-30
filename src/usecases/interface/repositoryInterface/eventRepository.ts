@@ -1,5 +1,6 @@
 import { IeventFormData, Ievents } from "../../../entities/event";
 import { IeventPost } from "../../../entities/eventPost";
+import { Irequest } from "../../../entities/request";
 
 
 export interface IeventRepository{
@@ -13,4 +14,6 @@ export interface IeventRepository{
     getUpcomingEvent(id:string):Promise<Ievents [] | undefined>
     changeStatus(eventId:string,status:string):Promise<any>
     findAndUpdate(data:IeventFormData,eventId:string):Promise<boolean>
+    createRequestEvent(data:Irequest):Promise<{ success:boolean, message:string} | undefined>
+
 }

@@ -1,6 +1,10 @@
 import { Server } from 'socket.io';
 import { app } from "../webServer/config/app";
 import http from 'http';
+import { Next, Req, Res } from "../../framework/types/serverPackageTypes";
+
+import { userController } from '../webServer/routes/injections/Injection';
+
 
 
 
@@ -17,7 +21,12 @@ io.on('connection', (socket) => {
     });
 
    
-
+   socket.on("sendData",(data)=>{
+    console.log(data,"-----------")
+      
+       
+    io.emit("resiveData",data)
+   })
     
     socket.on('disconnect', () => {
         console.log('User disconnected');

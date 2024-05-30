@@ -1,3 +1,4 @@
+import { Iconversation } from "../../../entities/conversation";
 import { IeventFormData, Ievents } from "../../../entities/event";
 import { IeventCategory } from "../../../entities/eventCategory";
 import { IeventPost } from "../../../entities/eventPost";
@@ -38,5 +39,9 @@ export  interface IorganizerUseCase{
      getAllBookings(eventId:string,next:Next):Promise<any>
      getAllRequests(id:string,next:Next):Promise<Irequest []| undefined>
      getRequestDetails(id:string,next:Next):Promise<Irequest| undefined >
+     approveRequest(id:string,next:Next):Promise< {success:boolean,message:string} | undefined>
+     rejectRequest(id:string,next:Next):Promise< {success:boolean,message:string} | undefined>
+     requestEventCreation(data:Irequest,id:string,next:Next):Promise < {success:boolean, message:string} | undefined >
+     getUserList(id:string,next:Next):Promise<any> 
 
 }
