@@ -9,7 +9,6 @@ export const getChat=async(senterId:string,receiverId:string,conversationReposit
          let organizer
 
           const user = await userRepository.getUser(receiverId)
-          console.log(" the user---->",user)
           if(!user){
                organizer = await organizerRepository.findbyId(receiverId)
                if(!conversation){return {success:false,message:"no conversation Avalible" , chat:null,user:organizer}}
