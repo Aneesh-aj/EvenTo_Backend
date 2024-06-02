@@ -7,7 +7,9 @@ export const getChat=async(senterId:string,receiverId:string,conversationReposit
     try{
          const conversation = await conversationRepository.findConversation(senterId,receiverId)
          let organizer
+
           const user = await userRepository.getUser(receiverId)
+          console.log(" the user---->",user)
           if(!user){
                organizer = await organizerRepository.findbyId(receiverId)
                if(!conversation){return {success:false,message:"no conversation Avalible" , chat:null,user:organizer}}
@@ -16,7 +18,6 @@ export const getChat=async(senterId:string,receiverId:string,conversationReposit
                }
           }
           if(!conversation)return {success:false,message:"no conversation Avalible" , chat:null,user:user}
-
 
          return {success:true,message:"conversation avalible", chat:conversation , user:user }
     }catch(error){
