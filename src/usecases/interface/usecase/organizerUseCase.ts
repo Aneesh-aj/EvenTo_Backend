@@ -27,11 +27,11 @@ export  interface IorganizerUseCase{
     createEvent(data:IeventFormData,next:Next):Promise < {success:boolean, message:string} | undefined >
     eventUpdate(data:IeventFormData,eventId:string,next:Next):Promise < {success:boolean, message:string} | undefined >
 
-     getAllevents(id:string,next:Next):Promise < Ievents [] | undefined>
+     getAllevents(id:string,limit:number,offset:number,next:Next):Promise < Ievents [] | undefined>
      getEventDetails(id:string,next:Next):Promise<Ievents | {event:Ievents , organizer:Iorganizer} | undefined>
      eventPost(data:IeventPost,next:Next):Promise<IeventPost | undefined>
      getAlleventPost(next:Next):Promise <IeventPost [] | undefined>
-     getUpcomingEvent(id:string,next:Next):Promise < Ievents [] | undefined>
+     getUpcomingEvent(id:string,limit:number,offset:number,next:Next):Promise < Ievents [] | undefined>
      changeStatus(eventStatus:string,eventId:string,organizerId:string,next:Next):Promise < Ievents [] | undefined>
      cancelEvent(eventId:string,organizerId:string,next:Next):Promise < Ievents [] | undefined>
      getEventPost(organizerId:string,next:Next):Promise<IeventPost [] | undefined>

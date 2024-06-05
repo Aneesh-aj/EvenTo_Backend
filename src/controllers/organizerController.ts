@@ -249,8 +249,12 @@ export class OrganizerController {
   async getAllevents(req: Req, res: Res, next: Next) {
     try {
       const { id } = req.params
-      console.log(" id ")
-      const events = await this.organizerUsecase.getAllevents(id, next)
+      const limit = Number(req.query.limit) || 10
+      const offset = Number(req.query.offset) || 0
+
+
+      console.log(" id------------------------- ",id,"and ",limit,"and ", offset)
+      const events = await this.organizerUsecase.getAllevents(id,limit,offset, next)
       console.log("eventsss-----------------------------------------", events)
       if (events && events.length > 0) {
         res.json({ events, success: true })
@@ -312,7 +316,11 @@ export class OrganizerController {
   async getUpcomingEvent(req: Req, res: Res, next: Next) {
     try {
       const { id } = req.params
-      const events = await this.organizerUsecase.getUpcomingEvent(id, next)
+      const limit = Number(req.query.limit) || 7
+      const offset = Number(req.query.offset) || 0
+
+      console.log(" the limit",req.query,limit, offset)
+      const events = await this.organizerUsecase.getUpcomingEvent(id,limit,offset, next)
       if (events && events.length > 0) {
         res.json({ events, success: true })
       } else {

@@ -59,9 +59,9 @@ export class EventRepository implements IeventRepository {
         }
     }
 
-    async getAllEvents(id: string): Promise<Ievents[]> {
+    async getAllEvents(id: string,limit:number,offset:number): Promise<Ievents[]> {
         try {
-            const events = await eventModal.find({ organizerId: id })
+            const events = await eventModal.find({ organizerId: id }).skip(offset).limit(limit);
             console.log(" all the events", events)
             return events
         } catch (error) {
@@ -177,12 +177,12 @@ export class EventRepository implements IeventRepository {
         }
     }
 
-    async getUpcomingEvent(id: string): Promise<Ievents[] | undefined> {
+    async getUpcomingEvent(id: string,limit:number,offset:number): Promise<Ievents[] | undefined> {
         try {
             const events = await eventModal.find({
                 organizerId: id,
                 $or: [{ status: "upcoming" }, { status: "ongoing" }]
-            });
+            }).skip(offset).limit(limit)
             return events
         } catch (error) {
             throw error

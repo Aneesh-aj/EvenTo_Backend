@@ -199,9 +199,9 @@ export class OrganizerUseCase implements IorganizerUseCase {
     }
 
 
-    async  getAllevents(id: string, next: NextFunction): Promise<Ievents[] | undefined> {
+    async  getAllevents(id: string,limit:number,offset:number, next: NextFunction): Promise<Ievents[] | undefined> {
         try{
-             const reponse =  await getAllEvents(id,this.eventRepository)
+             const reponse =  await getAllEvents(id,limit,offset,this.eventRepository)
              return response ? reponse : undefined
         }catch(error){
             catchError(error,next)
@@ -238,9 +238,9 @@ export class OrganizerUseCase implements IorganizerUseCase {
         }
     }
 
-    async  getUpcomingEvent(id: string, next: Next): Promise<Ievents[] | undefined> {
+    async  getUpcomingEvent(id: string,limit:number,offset:number, next: Next): Promise<Ievents[] | undefined> {
         try{
-            const events = await getUpcomingEvent(id,this.eventRepository)
+            const events = await getUpcomingEvent(id,limit,offset,this.eventRepository)
             return events
         }catch(error){
             catchError(error,next)
