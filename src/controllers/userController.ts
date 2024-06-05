@@ -331,6 +331,15 @@ export class UserController {
         }
       }
 
+      async posts(req:Req,res:Res,next:Next){
+        try{  
+            const posts = await this.userUseCase.posts(next)
+            return res.json({posts})
+        }catch(error:any){
+             return next(new ErrorHandler(error.status,error.message))
+        }
+      }
+
       
       
 

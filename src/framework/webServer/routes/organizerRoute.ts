@@ -151,6 +151,22 @@ router.get('/chatList/:id',isAuthenticate,(req:Req,res:Res,next:Next)=>{
     organizerController.getUserList(req,res,next)
 })
 
+router.post("/postCreate",isOrganizer,isAuthenticate,(req:Req,res:Res,next:Next)=>{
+   organizerController.createPost(req,res,next)
+})
+
+router.post("/postUpdate",isOrganizer,isAuthenticate,(req:Req,res:Res,next:Next)=>{
+   organizerController.postUpdate(req,res,next)
+})
+
+router.post("/deletePost/:id",isOrganizer,isAuthenticate,(req:Req,res:Res,next:Next)=>{
+   organizerController.deletePost(req,res,next)
+})
+
+router.get("/getPosts/:organizerId",isAuthenticate,(req:Req,res:Res,next:Next)=>{
+   organizerController.getPosts(req,res,next)
+})
+
  
 
 

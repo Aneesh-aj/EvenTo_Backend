@@ -3,6 +3,7 @@ import { IeventFormData, Ievents } from "../../../entities/event";
 import { IeventCategory } from "../../../entities/eventCategory";
 import { IeventPost } from "../../../entities/eventPost";
 import { Iorganizer, IorganizerAndAddress } from "../../../entities/organizer";
+import { Ipost } from "../../../entities/posts";
 import { Irequest } from "../../../entities/request";
 import { Next , Res, Req } from "../../../framework/types/serverPackageTypes";
 import { IToken } from "../service/jwt";
@@ -43,5 +44,8 @@ export  interface IorganizerUseCase{
      rejectRequest(id:string,next:Next):Promise< {success:boolean,message:string} | undefined>
      requestEventCreation(data:Irequest,id:string,next:Next):Promise < {success:boolean, message:string} | undefined >
      getUserList(id:string,next:Next):Promise<any> 
-
+     postCreation(data:Ipost,next:Next):Promise<{success:boolean,message:string} | undefined>
+     postUpdation(postId:string,data:Ipost,next:Next):Promise<{success:boolean,message:string} | undefined>
+     deletePost(postId:string,next:Next):Promise<{success:boolean,message:string} | undefined>
+     getAllposts(organizerId:string,next:Next):Promise<any>
 }

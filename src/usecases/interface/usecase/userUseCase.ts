@@ -32,4 +32,5 @@ export interface IuserUseCase{
     sendMessage(senterId:string,receiverId:string,message:string,imageUrl:string,next:Next):Promise<any>
     findConversation(senterId:string,receiverId:string,next:Next):Promise<any>
     createRequest(data:IrequestFormData,next:Next):Promise<any>
+    posts(next:Next):Promise<any>
 }

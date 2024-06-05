@@ -1,7 +1,7 @@
 import { Req, Res, Next } from "../../framework/types/serverPackageTypes";
 import { IuserUseCase } from "../interface/usecase/userUseCase";
 import { Iuser } from "../../entities/user";
-import { userSignup, login, createUser, getUser, editProfile, uploadProfile, getOrganizers, eventPostDetails, getSeats, seatBooking, paymentStatus, bookingCreation, getAllCategory, getAllbookings } from "./user/index"
+import { userSignup, login, createUser, getUser, editProfile, uploadProfile, getOrganizers, eventPostDetails, getSeats, seatBooking, paymentStatus, bookingCreation, getAllCategory, getAllbookings, getPosts } from "./user/index"
 import { IuserRepository } from "../interface/repositoryInterface/userRepository";
 import { Ijwt } from "../interface/service/jwt";
 import { NextFunction } from "express";
@@ -35,6 +35,7 @@ import { Irequest, IrequestFormData } from "../../entities/request";
 import { createRequest } from "./request/createRequest";
 import { IrequestRepository } from "../interface/repositoryInterface/requestRepository";
 import { getRequestDetails } from "./request/getDetails";
+import { IpostRepository } from "../interface/repositoryInterface/postRepository";
 // import { getAllbookings } from "./user/getAllbookings";
 
 
@@ -56,7 +57,8 @@ export class UserUseCase implements IuserUseCase {
           private categoryRepository :IcategoryRepository,
           private messageRepository:ImessageRepository,
           private conversationRepository:IconversationRepository,
-          private requestRepository : IrequestRepository
+          private requestRepository : IrequestRepository,
+          private postRepository:IpostRepository
      ) { }
      async userSignup(user: Iuser, next: Next): Promise<string | void> {
           try {
@@ -273,6 +275,15 @@ export class UserUseCase implements IuserUseCase {
             
             const request = await createRequest(data,this.requestRepository)
              return request
+         }catch(error){
+            catchError(error,next)
+         }
+     }
+
+     async  posts(next: NextFunction): Promise<any> {
+         try{
+             const posts = await getPosts(this.postRepository)
+             return posts
          }catch(error){
             catchError(error,next)
          }

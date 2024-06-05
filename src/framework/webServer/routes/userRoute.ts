@@ -99,7 +99,10 @@ export function UserRoute(router: Route) {
     router.post("/sendRequest",isUser,isAuthenticate,(req:Req,res:Res,next:Next)=>{
          userController.sentRequest(req,res,next)
     })
-
+  
+    router.get("/posts",isAuthenticate,(req:Req,res:Res,next:Next)=>{
+        userController.posts(req,res,next)
+   })
 
  
 

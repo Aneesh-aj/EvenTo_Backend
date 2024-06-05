@@ -17,6 +17,10 @@ import { changeStatus } from "./changeStatus"
 import { updateEventPost } from "./updateEventPost"
 import { getAllbookings } from "./getAllbookings"
 import { updateEvent } from "./updateEvent"
+import { postCreation } from "./postCreation"
+import { updatePosts } from "./updatePosts"
+import { deletePost } from "./deletePost"
+import { postFetching } from "./getPosts"
 export{createOrganizers,
        login,
        signup,
@@ -35,5 +39,9 @@ export{createOrganizers,
        changeStatus,
        updateEventPost,
        getAllbookings,
-       updateEvent
+       updateEvent,
+       postCreation,
+       updatePosts,
+       deletePost,
+       postFetching
     }

@@ -1,7 +1,7 @@
 import { IorganizerRepository } from "../interface/repositoryInterface/organizerRepository";
 import { IorganizerUseCase } from "../interface/usecase/organizerUseCase";
 import { Ihashpassword } from "../interface/service/hashPassword";
-import { allDetailsById, approvalChecking, changeStatus, createEvents, createOrganizers, eventPostCreation, getAllCategory, getAllbookings, getAlleventPost, getCategory, getEventDetails, getUpcomingEvent, login, profileEdit, signup, updateEvent, updateEventPost, uploadBackground, uploadProfile } from './organizer/index'
+import { allDetailsById, approvalChecking, changeStatus, createEvents, createOrganizers, deletePost, eventPostCreation, getAllCategory, getAllbookings, getAlleventPost, getCategory, getEventDetails, getUpcomingEvent, login, postCreation, postFetching, profileEdit, signup, updateEvent, updateEventPost, updatePosts, uploadBackground, uploadProfile } from './organizer/index'
 import { IotpGenerate } from "../interface/service/otpGenerate";
 import { IsentEmail } from "../interface/service/sentEmail";
 import { IotpRepository } from "../interface/repositoryInterface/otpRepository";
@@ -32,6 +32,8 @@ import { requestEventCreation } from "./request/requestEventCreation";
 import { getUserList } from "./message/getUserList";
 import { IuserRepository } from "../interface/repositoryInterface/userRepository";
 import { IconversationRepository } from "../interface/repositoryInterface/conversationRepository";
+import { Ipost } from "../../entities/posts";
+import { IpostRepository } from "../interface/repositoryInterface/postRepository";
 
 export class OrganizerUseCase implements IorganizerUseCase {
   
@@ -49,7 +51,8 @@ export class OrganizerUseCase implements IorganizerUseCase {
        private bookingRepository :IbookingRepository,
        private requestRepository:IrequestRepository,
        private userRepository : IuserRepository,
-       private conversationRepository:IconversationRepository
+       private conversationRepository:IconversationRepository,
+       private postRepository:IpostRepository
     ) {
     }
 
@@ -350,6 +353,44 @@ export class OrganizerUseCase implements IorganizerUseCase {
             catchError(error,next)
         }
     }
+    
+    async  postCreation(data: Ipost, next: NextFunction): Promise<{ success: boolean; message: string; } | undefined> {
+        try{
+           const createPost = await postCreation(data,this.postRepository)
+           return createPost
+        }catch(error){
+            catchError(error,next)
+        }
+    }
+
+    async  postUpdation(postId:string,data: Ipost, next: NextFunction): Promise<{ success: boolean; message: string; } | undefined> {
+        try{
+           const updation = await updatePosts(postId,data,this.postRepository)
+           return updation
+        }catch(error){
+            catchError(error,next)
+        }
+    }
+
+    async  deletePost(postId: string, next: NextFunction): Promise<{ success: boolean; message: string; } | undefined> {
+        try{
+            const deleted = await deletePost(postId,this.postRepository )
+            return deleted
+        }catch(error){
+            catchError(error,next)
+        }
+    }
+
+    async  getAllposts(organizerId: string, next: NextFunction): Promise<any> {
+        try{
+            const getAllposts = await postFetching(organizerId,this.postRepository)
+             console.log(" in the usecase ",getAllposts)
+            return getAllposts
+        }catch(error){
+            catchError(error,next)
+        }
+    }
+  
     
 
 }

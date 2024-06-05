@@ -25,6 +25,7 @@ import { BookingRepository } from "../../../database/mongodb/repository/bookingR
 import { MessageRepository } from "../../../database/mongodb/repository/messageRepository";
 import { ConversationRepository } from "../../../database/mongodb/repository/conversationRepository/conversationRepository";
 import { RequestRepository } from "../../../database/mongodb/repository/requestRepository";
+import { PostRepository } from "../../../database/mongodb/repository/postRepository";
 
 const bycryptsurvice =new  Encrypt()
 const cloudsession = new CloudSession()
@@ -41,15 +42,15 @@ const eventpostrepo = new EventPostRepository()
 const messagerepository = new MessageRepository()
 const conversationrepository = new ConversationRepository()
 const requestrepository = new RequestRepository()
-
+const postrepository = new PostRepository()
 
 const adminrepository = new AdminRepository()
 
 const organizerrepository = new OrganizerRepository(organizerModel)
-const userusecase = new UserUseCase(userrepository,jwttoken,otpGenerate,otprepository,sentemail,bycryptsurvice,cloudsession,organizerrepository,eventpostrepo,eventRepository,stripe,bookingrepository,categoryrepository,messagerepository,conversationrepository,requestrepository)
+const userusecase = new UserUseCase(userrepository,jwttoken,otpGenerate,otprepository,sentemail,bycryptsurvice,cloudsession,organizerrepository,eventpostrepo,eventRepository,stripe,bookingrepository,categoryrepository,messagerepository,conversationrepository,requestrepository,postrepository)
 const  userController = new UserController(userusecase)
 const adminusecase = new AdminUsecase(bycryptsurvice,adminrepository,jwttoken,organizerrepository,userrepository,categoryrepository)
-const organizerusecase = new  OrganizerUseCase(organizerrepository,bycryptsurvice,otpGenerate,otprepository,sentemail,jwttoken,categoryrepository,eventRepository,eventpostrepo,bookingrepository,requestrepository,userrepository,conversationrepository)
+const organizerusecase = new  OrganizerUseCase(organizerrepository,bycryptsurvice,otpGenerate,otprepository,sentemail,jwttoken,categoryrepository,eventRepository,eventpostrepo,bookingrepository,requestrepository,userrepository,conversationrepository,postrepository)
 const organizerController = new  OrganizerController(organizerusecase)
 const adminController = new AdminController(adminusecase)
 

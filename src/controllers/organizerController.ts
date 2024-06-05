@@ -253,8 +253,8 @@ export class OrganizerController {
       const offset = Number(req.query.offset) || 0
 
 
-      console.log(" id------------------------- ",id,"and ",limit,"and ", offset)
-      const events = await this.organizerUsecase.getAllevents(id,limit,offset, next)
+      console.log(" id------------------------- ", id, "and ", limit, "and ", offset)
+      const events = await this.organizerUsecase.getAllevents(id, limit, offset, next)
       console.log("eventsss-----------------------------------------", events)
       if (events && events.length > 0) {
         res.json({ events, success: true })
@@ -319,8 +319,8 @@ export class OrganizerController {
       const limit = Number(req.query.limit) || 7
       const offset = Number(req.query.offset) || 0
 
-      console.log(" the limit",req.query,limit, offset)
-      const events = await this.organizerUsecase.getUpcomingEvent(id,limit,offset, next)
+      console.log(" the limit", req.query, limit, offset)
+      const events = await this.organizerUsecase.getUpcomingEvent(id, limit, offset, next)
       if (events && events.length > 0) {
         res.json({ events, success: true })
       } else {
@@ -445,9 +445,9 @@ export class OrganizerController {
 
   async requestEventCreation(req: Req, res: Res, next: Next) {
     try {
-      const { data,id } = req.body
+      const { data, id } = req.body
       console.log(" data from body---------------------------------------------------------------", data)
-      const event = await this.organizerUsecase.requestEventCreation(data,id, next)
+      const event = await this.organizerUsecase.requestEventCreation(data, id, next)
       console.log(" the event commining from the backend is heress-------------", event)
       if (event) {
         console.log(" commigngn here", event)
@@ -462,14 +462,56 @@ export class OrganizerController {
   }
 
 
-  async getUserList(req:Req,res:Res,next:Next){
-     try{
-          const {id} = req.params
-          const getList = await this.organizerUsecase.getUserList(id,next)
-          return res.json({userList:getList})
-     }catch(error:any){
+  async getUserList(req: Req, res: Res, next: Next) {
+    try {
+      const { id } = req.params
+      const getList = await this.organizerUsecase.getUserList(id, next)
+      return res.json({ userList: getList })
+    } catch (error: any) {
       return next(new ErrorHandler(error.status, error.message))
-     }
+    }
+  }
+
+  async createPost(req: Req, res: Res, next: Next) {
+    try {
+      const { data } = req.body
+      const post = await this.organizerUsecase.postCreation(data, next)
+      return res.json(post)
+    } catch (error: any) {
+      return next(new ErrorHandler(error.status, error.message))
+    }
+  }
+  async postUpdate(req: Req, res: Res, next: Next) {
+    try {
+      const {postId, data } = req.body
+       console.log("  in controllere s",postId,data)
+      const post = await this.organizerUsecase.postUpdation(postId,data, next)
+      return res.json(post)
+    } catch (error: any) {
+      return next(new ErrorHandler(error.status, error.message))
+    }
+  }
+
+  async deletePost(req: Req, res: Res, next: Next) {
+    try {
+      const { postId } = req.params
+      const post = await this.organizerUsecase.deletePost(postId, next)
+      return res.json(post)
+    } catch (error: any) {
+      return next(new ErrorHandler(error.status, error.message))
+    }
+  }
+
+  async getPosts(req:Req,res:Res,next:Next){
+    try{
+       console.log(" the req. ",req.params)
+       const {organizerId} = req.params
+        console.log(" orgnaizer id",organizerId)
+       const posts = await this.organizerUsecase.getAllposts(organizerId,next)
+       return res.json({posts:posts})
+    }catch(error:any){
+       return next(new ErrorHandler(error.status,error.message))
+    }
   }
 
 

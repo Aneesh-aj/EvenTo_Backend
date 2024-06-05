@@ -12,6 +12,7 @@ import { paymentStatus } from "./paymentStatus";
 import { bookingCreation } from "./bookingCreation";
 import { getAllCategory } from "./getAllCategory";
 import { getAllbookings } from "./getAllbookings";
+import { getPosts } from "./getPosts";
 export{
     userSignup,
     login,
@@ -26,6 +27,7 @@ export{
     paymentStatus,
     bookingCreation,
     getAllCategory,
-    getAllbookings
+    getAllbookings,
+    getPosts
     
 }
