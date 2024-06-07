@@ -159,7 +159,8 @@ router.post("/postUpdate",isOrganizer,isAuthenticate,(req:Req,res:Res,next:Next)
    organizerController.postUpdate(req,res,next)
 })
 
-router.post("/deletePost/:id",isOrganizer,isAuthenticate,(req:Req,res:Res,next:Next)=>{
+router.post("/deletePost/:postId",isOrganizer,isAuthenticate,(req:Req,res:Res,next:Next)=>{
+    console.log(" the delete psot ")
    organizerController.deletePost(req,res,next)
 })
 

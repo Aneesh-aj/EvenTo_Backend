@@ -495,6 +495,8 @@ export class OrganizerController {
   async deletePost(req: Req, res: Res, next: Next) {
     try {
       const { postId } = req.params
+      console.log(" thje ",postId);
+      
       const post = await this.organizerUsecase.deletePost(postId, next)
       return res.json(post)
     } catch (error: any) {

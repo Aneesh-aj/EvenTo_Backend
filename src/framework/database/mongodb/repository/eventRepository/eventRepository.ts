@@ -59,11 +59,14 @@ export class EventRepository implements IeventRepository {
         }
     }
 
-    async getAllEvents(id: string,limit:number,offset:number): Promise<Ievents[]> {
+    async getAllEvents(id: string, limit: number, offset: number): Promise<Ievents[]> {
         try {
-            const events = await eventModal.find({ organizerId: id }).skip(offset).limit(limit);
-            console.log(" all the events", events)
-            return events
+            let allEvents = await eventModal.find({ organizerId: id });
+            allEvents = allEvents.reverse();
+            const events = allEvents.slice(offset, offset + limit);
+            console.log("All the events", events);
+
+            return events;
         } catch (error) {
             throw error
         }
@@ -177,48 +180,53 @@ export class EventRepository implements IeventRepository {
         }
     }
 
-    async getUpcomingEvent(id: string,limit:number,offset:number): Promise<Ievents[] | undefined> {
+    async getUpcomingEvent(id: string, limit: number, offset: number): Promise<Ievents[] | undefined> {
         try {
-            const events = await eventModal.find({
+            let allEvents = await eventModal.find({
                 organizerId: id,
                 $or: [{ status: "upcoming" }, { status: "ongoing" }]
-            }).skip(offset).limit(limit)
-            return events
+            });
+            allEvents = allEvents.reverse();
+            const events = allEvents.slice(offset, offset + limit);
+
+            console.log("All the events", events);
+
+            return events;
         } catch (error) {
             throw error
         }
     }
 
-    async  changeStatus(eventId: string, status: string): Promise<any> {
-        try{
-            const changesStatus = await eventModal.findByIdAndUpdate(eventId,{status:status},{upsert:true})
-             console.log("------------------------- changes Status----------",changesStatus)
-             console.log(" afterr-----------------")
+    async changeStatus(eventId: string, status: string): Promise<any> {
+        try {
+            const changesStatus = await eventModal.findByIdAndUpdate(eventId, { status: status }, { upsert: true })
+            console.log("------------------------- changes Status----------", changesStatus)
+            console.log(" afterr-----------------")
             return changesStatus
-        }catch(error){
+        } catch (error) {
             throw error
         }
     }
 
-    async  findAndUpdate(data: IeventFormData, eventId: string): Promise<boolean> {
-        try{
+    async findAndUpdate(data: IeventFormData, eventId: string): Promise<boolean> {
+        try {
 
-            console.log(" before the creation ",data, " and the id ",eventId)
+            console.log(" before the creation ", data, " and the id ", eventId)
 
-            const updated = await eventModal.findByIdAndUpdate(eventId,data)
-            console.log(" updated eent ---------------------",updated)
+            const updated = await eventModal.findByIdAndUpdate(eventId, data)
+            console.log(" updated eent ---------------------", updated)
             return updated ? true : false
 
-        }catch(error){
+        } catch (error) {
             throw error
         }
     }
 
     async createRequestEvent(data: Irequest): Promise<{ success: boolean; message: string; } | undefined> {
-        try{
-             const event = await eventModal.create(data)
-             return event ? {success:true,message:"created successfully"} : {success:false,message:"error while creating"}
-        }catch(error){
+        try {
+            const event = await eventModal.create(data)
+            return event ? { success: true, message: "created successfully" } : { success: false, message: "error while creating" }
+        } catch (error) {
             throw error
         }
     }
