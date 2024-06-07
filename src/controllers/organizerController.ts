@@ -61,9 +61,10 @@ export class OrganizerController {
   }
   async logout(req: Req, res: Res, next: Next) {
     try {
+      console.log(" the cookie ",req.cookies)
       res.clearCookie('accessToken', accessTokenOptions)
       res.clearCookie('refreshToken', refreshTokenOptions)
-      res.status(200).json({ success: true, message: "logout successful" })
+      res.status(200).json({success: true, message: "logout successful" })
     } catch (error: any) {
       return next(new ErrorHandler(error.status, error.message))
     }

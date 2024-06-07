@@ -20,7 +20,7 @@ export const isUser = async(req:Req,res:Res,next:Next)=>{
 
 export const isOrganizer = async(req:Req,res:Res,next:Next)=>{
     try{
-       
+         console.log(" req cookies ffffff",req.cookies)
         if(req.cookies.role ==='organizer'){
              console.log("----------------------------------------------------------cominggg")
             next()
