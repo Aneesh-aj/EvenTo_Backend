@@ -517,6 +517,36 @@ export class OrganizerController {
     }
   }
 
+  async getDashboardData(req:Req,res:Res,next:Next){
+    try{
+       console.log(" enteringgggg")
+  
+       const {organizerId} = req.params
+       
+       const data = await this.organizerUsecase.getDashboardData(organizerId,next)
+       return res.json(data)
+   
+    }catch(error:any){
+       return next(new ErrorHandler(error.status,error.message))
+    }
+  }
+
+
+  async getRevenue(req:Req,res:Res,next:Next){
+    try{
+       console.log(" enteringgggg")
+  
+       const {organizerId} = req.params
+       
+       const data = await this.organizerUsecase.getRevenue(organizerId,next)
+       return res.json(data)
+   
+    }catch(error:any){
+       return next(new ErrorHandler(error.status,error.message))
+    }
+  }
+
+
 
 
 

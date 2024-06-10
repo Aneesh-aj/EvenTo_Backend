@@ -4,7 +4,7 @@ import { IeventPost } from "../../../../entities/eventPost";
 
 
 const eventPostSchema :Schema <IeventPost> = new  mongoose.Schema({
-     eventId:{type:String},
+     eventId:{type:String,ref:'event'},
      image:{type:String},
      organizerId:{type:String},
      about:{type:String},

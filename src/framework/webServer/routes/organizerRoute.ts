@@ -168,6 +168,19 @@ router.get("/getPosts/:organizerId",isAuthenticate,(req:Req,res:Res,next:Next)=>
    organizerController.getPosts(req,res,next)
 })
 
+
+router.get('/getDashboardData/:organizerId',isOrganizer,isAuthenticate,(req:Req,res:Res,next:Next)=>{
+   organizerController.getDashboardData(req,res,next)
+})
+
+router.get('/getRevenue/:organizerId',isOrganizer,isAuthenticate,(req:Req,res:Res,next:Next)=>{
+   organizerController.getRevenue(req,res,next)
+})
+
+
+
+
+
  
 
 

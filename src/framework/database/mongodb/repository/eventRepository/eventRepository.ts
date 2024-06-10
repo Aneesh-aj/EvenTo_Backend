@@ -199,6 +199,7 @@ export class EventRepository implements IeventRepository {
 
     async changeStatus(eventId: string, status: string): Promise<any> {
         try {
+            console.log(" status changeing",eventId,status)
             const changesStatus = await eventModal.findByIdAndUpdate(eventId, { status: status }, { upsert: true })
             console.log("------------------------- changes Status----------", changesStatus)
             console.log(" afterr-----------------")
@@ -227,6 +228,16 @@ export class EventRepository implements IeventRepository {
             const event = await eventModal.create(data)
             return event ? { success: true, message: "created successfully" } : { success: false, message: "error while creating" }
         } catch (error) {
+            throw error
+        }
+    }
+
+
+    async getByOrganizer(organizerId:string):Promise<Ievents [] |undefined>{
+        try{
+           const events =  await eventModal.find({organizerId:organizerId})
+           return events 
+        }catch(error){
             throw error
         }
     }

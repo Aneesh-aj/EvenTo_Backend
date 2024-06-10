@@ -21,6 +21,8 @@ import { postCreation } from "./postCreation"
 import { updatePosts } from "./updatePosts"
 import { deletePost } from "./deletePost"
 import { postFetching } from "./getPosts"
+import { getData } from "./getData"
+import { revenue } from "./revenue"
 export{createOrganizers,
        login,
        signup,
@@ -43,5 +45,7 @@ export{createOrganizers,
        postCreation,
        updatePosts,
        deletePost,
-       postFetching
+       postFetching,
+       getData,
+       revenue
     }

@@ -15,5 +15,6 @@ export interface IeventRepository{
     changeStatus(eventId:string,status:string):Promise<any>
     findAndUpdate(data:IeventFormData,eventId:string):Promise<boolean>
     createRequestEvent(data:Irequest):Promise<{ success:boolean, message:string} | undefined>
+    getByOrganizer(organizerId:string):Promise<Ievents [] | undefined>
 
 }

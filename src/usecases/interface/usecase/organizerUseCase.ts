@@ -48,4 +48,6 @@ export  interface IorganizerUseCase{
      postUpdation(postId:string,data:Ipost,next:Next):Promise<{success:boolean,message:string} | undefined>
      deletePost(postId:string,next:Next):Promise<{success:boolean,message:string} | undefined>
      getAllposts(organizerId:string,next:Next):Promise<any>
+     getDashboardData(organizerId:string,next:Next):Promise<any>
+     getRevenue(organizerId:string,next:Next):Promise<{year:string,month:string,revenue:number} []| undefined>
 }
