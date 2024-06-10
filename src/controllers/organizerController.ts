@@ -539,10 +539,21 @@ export class OrganizerController {
        const {organizerId} = req.params
        
        const data = await this.organizerUsecase.getRevenue(organizerId,next)
+        console.log(" comming",data)
        return res.json(data)
    
     }catch(error:any){
        return next(new ErrorHandler(error.status,error.message))
+    }
+  }
+
+  async eventGraph(req:Req,res:Res,next:Next){
+    try{
+      const {organizerId} = req.params
+      const data = await this.organizerUsecase.getEventGraph(organizerId,next)
+      return res.json(data)
+    }catch(error:any){
+      return next(new ErrorHandler(error.status, error.message))
     }
   }
 

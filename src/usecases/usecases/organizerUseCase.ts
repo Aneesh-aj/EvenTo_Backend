@@ -1,7 +1,7 @@
 import { IorganizerRepository } from "../interface/repositoryInterface/organizerRepository";
 import { IorganizerUseCase } from "../interface/usecase/organizerUseCase";
 import { Ihashpassword } from "../interface/service/hashPassword";
-import { allDetailsById, approvalChecking, changeStatus, createEvents, createOrganizers, deletePost, eventPostCreation, getAllCategory, getAllbookings, getAlleventPost, getCategory, getData, getEventDetails, getUpcomingEvent, login, postCreation, postFetching, profileEdit, revenue, signup, updateEvent, updateEventPost, updatePosts, uploadBackground, uploadProfile } from './organizer/index'
+import { allDetailsById, approvalChecking, changeStatus, createEvents, createOrganizers, deletePost, eventGraph, eventPostCreation, getAllCategory, getAllbookings, getAlleventPost, getCategory, getData, getEventDetails, getUpcomingEvent, login, postCreation, postFetching, profileEdit, revenue, signup, updateEvent, updateEventPost, updatePosts, uploadBackground, uploadProfile } from './organizer/index'
 import { IotpGenerate } from "../interface/service/otpGenerate";
 import { IsentEmail } from "../interface/service/sentEmail";
 import { IotpRepository } from "../interface/repositoryInterface/otpRepository";
@@ -404,9 +404,19 @@ export class OrganizerUseCase implements IorganizerUseCase {
     async  getRevenue(organizerId: string,next:Next): Promise<{ year: string; month: string; revenue: number; }[] | undefined> {
         try{
             const data = await revenue(organizerId,this.eventRepository)
+             console.log(" usecasee",data)
             return data
         }catch(error){
              catchError(error,next)
+        }
+    }
+
+     async getEventGraph(organizerId: string, next: NextFunction): Promise<{ year: string; month: string; event: number; }[] | undefined> {
+        try{
+            const data = await  eventGraph(organizerId,this.eventRepository)
+            return data
+        }catch(error){
+           catchError(error,next)
         }
     }
   

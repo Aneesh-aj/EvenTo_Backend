@@ -23,6 +23,7 @@ import { deletePost } from "./deletePost"
 import { postFetching } from "./getPosts"
 import { getData } from "./getData"
 import { revenue } from "./revenue"
+import { eventGraph } from "./eventGraph"
 export{createOrganizers,
        login,
        signup,
@@ -47,5 +48,6 @@ export{createOrganizers,
        deletePost,
        postFetching,
        getData,
-       revenue
+       revenue,
+       eventGraph
     }

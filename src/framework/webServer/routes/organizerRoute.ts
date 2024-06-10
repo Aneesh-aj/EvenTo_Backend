@@ -177,7 +177,9 @@ router.get('/getRevenue/:organizerId',isOrganizer,isAuthenticate,(req:Req,res:Re
    organizerController.getRevenue(req,res,next)
 })
 
-
+router.get("/getEventGraph/:organizerId",isOrganizer,isAuthenticate,(req:Req,res:Res,next:Next)=>{
+   organizerController.eventGraph(req,res,next)
+})
 
 
 

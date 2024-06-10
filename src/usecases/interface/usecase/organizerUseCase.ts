@@ -50,4 +50,5 @@ export  interface IorganizerUseCase{
      getAllposts(organizerId:string,next:Next):Promise<any>
      getDashboardData(organizerId:string,next:Next):Promise<any>
      getRevenue(organizerId:string,next:Next):Promise<{year:string,month:string,revenue:number} []| undefined>
+     getEventGraph(organizerId:string,next:Next):Promise<{year:string,month:string,event:number} []| undefined>
 }
