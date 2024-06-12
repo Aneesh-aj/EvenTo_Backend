@@ -1,8 +1,9 @@
-import mongoose from "mongoose";
+import { Document, ObjectId } from 'mongoose';
 
-export interface Ipost{
-    organizerId:mongoose.Types.ObjectId | string,
-    postImage:string,
-    description:string,
-    likes:object[],
+export interface Ipost extends Document {
+  organizerId: ObjectId;
+  description: string;
+  postImage: string;
+  likes: Object[];
+  comments: ObjectId[];
 }
