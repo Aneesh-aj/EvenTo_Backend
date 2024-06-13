@@ -18,5 +18,6 @@ export interface IadminUsecase{
      getAllCategory(next:Next):Promise<IeventCategory[] | undefined>
      activeCategory(id:string,next:Next):Promise<IeventCategory[] | undefined>
      editCategory(id:string,category:string,next:Next):Promise<IeventCategory[] | {success:boolean,message:string } | undefined>
-     
+     fetchGraphData(next:Next):Promise<any>
+     dashBoardData(next:Next):Promise<any>
 }

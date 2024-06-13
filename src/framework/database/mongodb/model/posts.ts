@@ -6,7 +6,9 @@ const postSchema: Schema<Ipost> = new mongoose.Schema({
   description: { type: String },
   postImage: { type: String },
   likes: { type: [Object] },
-  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }]
+  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
+  createdAt: { type: Date, default: Date.now }
+
 });
 
 const postModel: Model<Ipost> = mongoose.model('Post', postSchema);

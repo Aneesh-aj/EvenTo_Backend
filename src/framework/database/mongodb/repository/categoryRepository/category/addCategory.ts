@@ -1,20 +1,21 @@
 import { IeventCategory } from "../../../../../../entities/eventCategory";
 import categoryModel from "../../../model/eventCategory";
 
+export const addCategory = async (category: string): Promise<IeventCategory | undefined> => {
+    try {
+        const normalizedCategory = category.toLowerCase();
 
-export const addCategory = async (category:string):Promise<IeventCategory  | undefined>=>{
-    try{
-        
-        const exist = await categoryModel.findOne({category:category})
-        if(exist){
-            return undefined
+        const exist = await categoryModel.findOne({ category: { $regex: new RegExp(`^${normalizedCategory}$`, 'i') } });
+
+        if (exist) {
+            return undefined;
         }
-        const addedCategory = await categoryModel.create({category:category})
 
+        // If no such category exists, add the new category
+        const addedCategory = await categoryModel.create({ category: category });
 
-        return addedCategory
-
-    }catch(error){
-        throw error
+        return addedCategory;
+    } catch (error) {
+        throw error;
     }
-}
+};

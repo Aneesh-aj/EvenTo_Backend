@@ -5,7 +5,8 @@ export interface IorganizerRepository{
     createOrganizer(newUser:Iorganizer): Promise < Iorganizer | void>
     createAddress(newaddres:Iaddress):Promise <any>
     findbyEmail(email:string):Promise < Iorganizer | null>
-    getAll():Promise<Iorganizer | void  >
+    getAll():Promise<Iorganizer[] | void  >
+    
     getDetails(id:string) : Promise<any | void>
     approve(id:string):Promise <any | void>
     reject(id:string):Promise <any | void>

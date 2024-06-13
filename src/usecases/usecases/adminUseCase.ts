@@ -5,7 +5,7 @@ import { login } from "./admin/login";
 import { IadminRepository } from "../interface/repositoryInterface/adminRepository";
 import { Ijwt } from "../interface/service/jwt";
 import { Next } from "../../framework/types/serverPackageTypes";
-import { getRequests } from "./admin/getRequests";
+
 import { IorganizerRepository } from "../interface/repositoryInterface/organizerRepository";
 import { getDetails } from "./admin/getDetails";
 import { approve } from "./admin/approvelAccept";
@@ -23,6 +23,11 @@ import { getAllCategory } from "./admin/getAllcategory";
 import { deleteCategory } from "./admin/deleteCategory";
 import { activeCategory } from "./admin/activeCategory";
 import { editCategory } from "./admin/editCategory";
+import { getRequests } from "./admin/getRequests";
+import { IrequestRepository } from "../interface/repositoryInterface/requestRepository";
+import { fetchGraphData } from "./admin/fetchGraphData";
+import { IeventRepository } from "../interface/repositoryInterface/eventRepository";
+import { dashboard } from "./admin/dashboard";
 
 export class AdminUsecase implements IadminUsecase {
 
@@ -32,7 +37,9 @@ export class AdminUsecase implements IadminUsecase {
         private jwt: Ijwt,
         private organizerRepository: IorganizerRepository,
         private userRepository: IuserRepository,
-        private categoryReopository:IcategoryRepository
+        private categoryReopository:IcategoryRepository,
+        private requestRepository:IrequestRepository,
+        private eventRepository:IeventRepository
     ) { }
 
     async login({ email, password }: { email: string; password: string; }, next: Next): Promise<any | null> {
@@ -44,7 +51,7 @@ export class AdminUsecase implements IadminUsecase {
         }
     }
 
-    async getRequests(next: Next): Promise<any | void> {
+    async getRequests(next: Next,): Promise<any | void> {
         try {
             const result = await getRequests(this.organizerRepository)
             return result
@@ -154,4 +161,23 @@ export class AdminUsecase implements IadminUsecase {
     }
 
 
+    async  fetchGraphData(next:Next): Promise<any> {
+        try{
+
+            const data = await fetchGraphData(this.eventRepository)
+            return data
+
+        }catch(error){
+            catchError(error,next)
+        }
+    }
+
+     async  dashBoardData(next: NextFunction): Promise<any> {
+         try{
+            const data = await dashboard(this.userRepository,this.organizerRepository,this.eventRepository)
+             return data
+         }catch(error){
+            catchError(error,next)
+         }
+     }
 }

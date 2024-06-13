@@ -9,9 +9,14 @@ export function AdminRoute(router: Route) {
         adminController.login(req, res, next)
     })
 
-    router.get('/Requests',isAdmin,isAuthenticate, (req: Req, res: Res, next: Next) => {
+    router.post('/requestPending',isAdmin,isAuthenticate, (req: Req, res: Res, next: Next) => {
         adminController.getRequests(req, res, next)
     })
+
+    //  router.post('/requestPending',isAdmin,isAuthenticate,(req: Req, res: Res, next: Next)=>{
+    //      adminController.getRequestPending(req,res,next)
+    //  })
+
     router.get('/requestDetails/:id',isAdmin,isAuthenticate, (req: Req, res: Res, next: Next) => {
         adminController.getDetails(req, res, next)
     })
@@ -40,7 +45,7 @@ export function AdminRoute(router: Route) {
         adminController.addCategory(req, res, next)
     })
 
-    router.post("/deleteCategory",isAdmin,isAuthenticate,  (req: Req, res: Res, next: Next) => {
+    router.post("/deleteCategory/:id",isAdmin,isAuthenticate,  (req: Req, res: Res, next: Next) => {
         adminController.deleteCategory(req, res, next)
     })
 
@@ -55,7 +60,18 @@ export function AdminRoute(router: Route) {
     router.post("/editCategory", isAdmin,isAuthenticate, (req:Req,res:Res,next:Next)=>{
          adminController.editCategory(req,res,next)
     })
+
+    router.get("/fetchGraphData",isAdmin,isAuthenticate,(req:Req,res:Res,next:Next)=>{
+         console.log(" entreing0000000000")
+        adminController.fetchGraphData(req,res,next)
+    })
    
+
+    router.get("/dashboard",isAdmin,isAuthenticate,(req:Req,res:Res,next:Next)=>{
+        console.log(" entreing0000000000")
+       adminController.dashboardData(req,res,next)
+   })
+  
 
 
 

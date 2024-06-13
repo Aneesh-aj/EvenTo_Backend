@@ -6,4 +6,6 @@ export interface Ipost extends Document {
   postImage: string;
   likes: Object[];
   comments: ObjectId[];
+  createdAt: Date;
+
 }

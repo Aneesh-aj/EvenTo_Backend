@@ -242,4 +242,14 @@ export class EventRepository implements IeventRepository {
         }
     }
 
+    async  getAll(): Promise<Ievents[] | undefined> {
+        try{
+
+            const response = await eventModal.find()
+            return response
+        }catch(error){
+            throw error
+        }
+    }
+
 }
