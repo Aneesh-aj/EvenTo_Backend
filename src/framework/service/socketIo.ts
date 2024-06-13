@@ -3,11 +3,6 @@ import { app } from "../webServer/config/app";
 import http from 'http';
 import { Next, Req, Res } from "../../framework/types/serverPackageTypes";
 
-import { userController } from '../webServer/routes/injections/Injection';
-
-
-
-
 export const server = http.createServer(app);
 export const io = new Server(server, { cors: { origin: "*" } });
 
@@ -15,14 +10,13 @@ export const io = new Server(server, { cors: { origin: "*" } });
 io.on('connection', (socket) => {
     console.log('A user connected');
 
-    socket.on('selectSeat', (data: any) => {
-        console.log("caLLL===--------")
+    socket.on('selectSeat', () => {
         io.emit("seatSelected", { status: true })
     });
 
 
 
-    socket.on('joinRoom', ({ senderId, receiverId }) => {
+    socket.on('joinRoom', ({ senderId, receiverId }:{senderId:string,receiverId:string}) => {
         const roomName = [senderId, receiverId].sort().join('-');
         socket.join(roomName);
         console.log(`User joined room: ${roomName}`);
