@@ -8,12 +8,14 @@ import { errorMiddleware } from '../../../usecases/middleares/errorMiddleware'
 import commentModel from '../../database/mongodb/model/comments'
 import mongoose from 'mongoose'
 import postModel from '../../database/mongodb/model/posts'
-
+import dotenv from "dotenv"
 
 export const app = express()
 
+
+
 app.use(cors({
-  origin: "http://10.4.5.131:5173",
+  origin: [process.env.ENDPOINT as string , ],
   credentials: true,
   methods: ['GET', "PATCH", "PUT", "POST"],
   optionsSuccessStatus: 204,
