@@ -1,5 +1,7 @@
 import Stripe from "stripe";
+require('dotenv').config()
 
-const stripe = new Stripe("sk_test_51PFyqWSEhUTiu13xtYpDj7iMp5aJ4HF5j6werkzmPZvwLz0yUNolTnnbgeR57tRRzEXJc4Ldpon2BwNGulJ2iIMW00WtuINna2")
+
+const stripe = new Stripe(process.env.STRIPE || "")
 
 export default stripe
