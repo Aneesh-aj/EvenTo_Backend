@@ -8,7 +8,6 @@ import { Next } from "../../../framework/types/serverPackageTypes";
 import ErrorHandler from "../../middleares/errorHandler";
 import { Ihashpassword } from "../../interface/service/hashPassword";
 import { catchError } from "../../middleares/catchError";
-import { SentinelIterator } from "ioredis";
 
 export const userSignup = async (jwt:Ijwt ,otpRepository:IotpRepository,userRepoistory:IuserRepository, otpGenerate:IotpGenerate,hashPassword:Ihashpassword, user:Iuser,sentEmail:IsentEmail,next :Next): Promise <string | void> =>{
      

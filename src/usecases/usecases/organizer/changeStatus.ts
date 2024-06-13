@@ -4,7 +4,7 @@ import { IeventRepository } from "../../interface/repositoryInterface/eventRepos
 export const changeStatus = async(status:string,eventId:string,organizerId:string,eventRepository:IeventRepository):Promise<Ievents []|undefined>=>{
     try{
         const changedStatus = await eventRepository.changeStatus(eventId,status)
-        const events = await eventRepository.getUpcomingEvent(organizerId)
+        const events = await eventRepository.getUpcomingEvent(organizerId,7,0)
         return events
     }catch(error){
         throw error
