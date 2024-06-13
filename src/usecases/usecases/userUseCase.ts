@@ -9,7 +9,6 @@ import { IotpGenerate } from "../interface/service/otpGenerate";
 import { Ihashpassword } from "../interface/service/hashPassword";
 import { IotpRepository } from "../interface/repositoryInterface/otpRepository";
 import { IsentEmail } from "../interface/service/sentEmail";
-import { IcloudSession } from "../interface/service/cloudSession";
 import { catchError } from "../middleares/catchError";
 import { Iaddress } from "../../entities/address";
 import { resentOpt } from "./otp/otp";
