@@ -9,6 +9,8 @@ import commentModel from '../../database/mongodb/model/comments'
 import mongoose from 'mongoose'
 import postModel from '../../database/mongodb/model/posts'
 import dotenv from "dotenv"
+dotenv.config()
+
 
 export const app = express()
 

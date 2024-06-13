@@ -1,6 +1,5 @@
  import { Next } from "../../../framework/types/serverPackageTypes";
 import { IuserRepository } from "../../interface/repositoryInterface/userRepository";
-import { IcloudSession } from "../../interface/service/cloudSession";
 import { Ihashpassword } from "../../interface/service/hashPassword";
 import ErrorHandler from "../../middleares/errorHandler";
 import { IToken, Ijwt } from "../../interface/service/jwt";
