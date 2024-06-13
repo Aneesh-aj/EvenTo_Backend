@@ -1,4 +1,4 @@
-import { Server } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 import { app } from "../webServer/config/app";
 import http from 'http';
 import { Next, Req, Res } from "../../framework/types/serverPackageTypes";
@@ -6,31 +6,26 @@ import { Next, Req, Res } from "../../framework/types/serverPackageTypes";
 export const server = http.createServer(app);
 export const io = new Server(server, { cors: { origin: "*" } });
 
-
-io.on('connection', (socket) => {
+io.on('connection', (socket: Socket) => {  // Explicitly typing socket as Socket
     console.log('A user connected');
 
     socket.on('selectSeat', () => {
-        io.emit("seatSelected", { status: true })
+        io.emit("seatSelected", { status: true });
     });
 
-
-
-    socket.on('joinRoom', ({ senderId, receiverId }:{senderId:string,receiverId:string}) => {
+    socket.on('joinRoom', ({ senderId, receiverId }: { senderId: string, receiverId: string }) => {
         const roomName = [senderId, receiverId].sort().join('-');
         socket.join(roomName);
         console.log(`User joined room: ${roomName}`);
     });
 
-    socket.on("sendData", (data) => {
+    socket.on("sendData", (data: { senderId: string, receiverId: string, message: string }) => {  // Explicitly typing data
         const { senderId, receiverId, message } = data;
         const roomName = [senderId, receiverId].sort().join('-');
         io.to(roomName).emit("resiveData", data);
     });
 
-
     socket.on('disconnect', () => {
         console.log('User disconnected');
     });
 });
-
