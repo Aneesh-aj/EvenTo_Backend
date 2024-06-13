@@ -48,7 +48,6 @@ export class UserUseCase implements IuserUseCase {
           private otpRepository: IotpRepository,
           private sentEmail: IsentEmail,
           private hashPassword: Ihashpassword,
-          private cloudSession: IcloudSession,
           private organizerRepository: IorganizerRepository,
           private eventPostRepository: IeventPostRepository,
           private eventRepository: IeventRepository,
@@ -84,7 +83,6 @@ export class UserUseCase implements IuserUseCase {
                console.log(" in the use case", password)
                return await login(this.userRepository,
                     this.jwt,
-                    this.cloudSession,
                     this.hashPassword,
                     email,
                     password,

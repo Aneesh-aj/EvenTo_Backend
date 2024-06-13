@@ -1,16 +1,16 @@
 
-import { Redis } from "ioredis";
-require("dotenv").config();
+// import { Redis } from "ioredis";
+// require("dotenv").config();
 
-export function redisDb(){
-const redisClient = () => {
-  if (process.env.REDIS_URL) {
-    console.log("redis has been connected");
-    return process.env.REDIS_URL;
-  }
-  throw new Error("Redis connection failed");
-};
+// export function redisDb(){
+// const redisClient = () => {
+//   if (process.env.REDIS_URL) {
+//     console.log("redis has been connected");
+//     return process.env.REDIS_URL;
+//   }
+//   throw new Error("Redis connection failed");
+// };
 
- const redis = new Redis(redisClient());
- return redis
-}
+//  const redis = new Redis(redisClient());
+//  return redis
+// }

@@ -7,7 +7,6 @@ import { Encrypt } from "../../../service/hashPassword";
 import { OtpGenerate } from "../../../service/otpGenerator";
 import { OtpRepository } from "../../../database/mongodb/repository/otpRepository"
 import { SentEmail } from "../../../service/sentEmail";
-import { CloudSession } from "../../../service/cloudSession";
 import organizerModel from "../../../database/mongodb/model/organizer";
 import addressModel from "../../../database/mongodb/model/address";
 import { OrganizerRepository } from "../../../database/mongodb/repository/organizerRepository/organizerRepository";
@@ -28,7 +27,6 @@ import { RequestRepository } from "../../../database/mongodb/repository/requestR
 import { PostRepository } from "../../../database/mongodb/repository/postRepository";
 
 const bycryptsurvice =new  Encrypt()
-const cloudsession = new CloudSession()
 const jwttoken = new JWTtoken()
 const otpGenerate = new OtpGenerate()
 const otprepository = new OtpRepository()
@@ -47,7 +45,7 @@ const postrepository = new PostRepository()
 const adminrepository = new AdminRepository()
 
 const organizerrepository = new OrganizerRepository(organizerModel)
-const userusecase = new UserUseCase(userrepository,jwttoken,otpGenerate,otprepository,sentemail,bycryptsurvice,cloudsession,organizerrepository,eventpostrepo,eventRepository,stripe,bookingrepository,categoryrepository,messagerepository,conversationrepository,requestrepository,postrepository)
+const userusecase = new UserUseCase(userrepository,jwttoken,otpGenerate,otprepository,sentemail,bycryptsurvice,organizerrepository,eventpostrepo,eventRepository,stripe,bookingrepository,categoryrepository,messagerepository,conversationrepository,requestrepository,postrepository)
 const  userController = new UserController(userusecase)
 const adminusecase = new AdminUsecase(bycryptsurvice,adminrepository,jwttoken,organizerrepository,userrepository,categoryrepository,requestrepository,eventRepository)
 const organizerusecase = new  OrganizerUseCase(organizerrepository,bycryptsurvice,otpGenerate,otprepository,sentemail,jwttoken,categoryrepository,eventRepository,eventpostrepo,bookingrepository,requestrepository,userrepository,conversationrepository,postrepository)
