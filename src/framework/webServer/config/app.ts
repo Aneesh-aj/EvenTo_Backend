@@ -24,7 +24,7 @@ app.use(cors({
   optionsSuccessStatus: 204,
 }))
 
-
+console.log(" after the corss")
 
 app.use(cookieParser())
 app.use(express.json())
