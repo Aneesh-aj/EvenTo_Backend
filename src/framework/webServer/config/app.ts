@@ -14,7 +14,7 @@ dotenv.config()
 
 export const app = express()
 
-
+console.log(" entering thereeee")
 
 app.use(cors({
   origin: ["*"],
