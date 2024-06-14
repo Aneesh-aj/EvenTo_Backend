@@ -79,7 +79,7 @@ export class UserUseCase implements IuserUseCase {
      }
      async login(email: string, password: string, next: NextFunction): Promise<any | void> {
           try {
-               console.log(" in the use case", password)
+               console.log(" in the use case------------", password)
                return await login(this.userRepository,
                     this.jwt,
                     this.hashPassword,
