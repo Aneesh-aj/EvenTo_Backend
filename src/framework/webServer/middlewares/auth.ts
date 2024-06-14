@@ -7,7 +7,7 @@ export const isAuthenticate = async (req: Request, res: Response, next: NextFunc
     try {
         const accessToken = req.cookies.accessToken as string;
         const refreshToken = req.cookies.refreshToken as string;
-          console.log(" coming here-----------------req.cookiee----auth",req.cookies)
+          console.log(" coming here-----------------req.cookiee----auth",req.cookies[0])
           console.log("accessToken--",accessToken)
           console.log("refreshToken---",refreshToken)
           console.log(" user :---",req.cookies.role)
