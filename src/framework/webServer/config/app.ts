@@ -15,11 +15,11 @@ dotenv.config()
 export const app = express()
 
 console.log(" call coming ---")
-// app.use((req, res, next) => {
-//   res.header("Access-Control-Allow-Origin", "https://evento-ten-weld.vercel.app");
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   next();
-// });
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://evento-ten-weld.vercel.app");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 
 app.use(cors({
