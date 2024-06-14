@@ -14,10 +14,11 @@ dotenv.config()
 
 export const app = express()
 
-console.log(" entering thereeee")
+console.log(" call coming ---")
+
 
 app.use(cors({
-  origin: ["*"],
+  origin: [process.env.ENDPOINT as string ],
   credentials: true,
   methods: ['GET', "PATCH", "PUT", "POST"],
   optionsSuccessStatus: 204,
