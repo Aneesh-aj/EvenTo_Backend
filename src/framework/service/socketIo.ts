@@ -1,7 +1,6 @@
 import { Server, Socket } from 'socket.io';
 import { allowedOrigins, app } from "../webServer/config/app";
 import http from 'http';
-import { Next, Req, Res } from "../../framework/types/serverPackageTypes";
 
 export const server = http.createServer(app);
 export const io = new Server(server, {
