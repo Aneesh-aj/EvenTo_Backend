@@ -15,20 +15,23 @@ dotenv.config()
 export const app = express()
 
 console.log(" call coming ---")
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://evento-ten-weld.vercel.app");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+export const allowedOrigins = ["https://evento-ten-weld.vercel.app","http://localhost:5173"];
 
-
-app.use(cors({
-  origin: ["http://localhost:5173","https://evento-ten-weld.vercel.app"],
+const corsOptions = {
+  origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
-  methods: ['GET', "PATCH", "PUT", "POST"],
+  methods: ['GET', 'PATCH', 'PUT', 'POST'],
+  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
   optionsSuccessStatus: 204,
-}))
+};
 
+app.use(cors(corsOptions));
 console.log(" after the corss")
 
 app.use(cookieParser())
