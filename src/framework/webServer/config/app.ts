@@ -23,7 +23,7 @@ app.use((req, res, next) => {
 
 
 app.use(cors({
-  origin: ["http://localhost:5173","https://timelaps.online"],
+  origin: ["http://localhost:5173","https://evento-ten-weld.vercel.app"],
   credentials: true,
   methods: ['GET', "PATCH", "PUT", "POST"],
   optionsSuccessStatus: 204,
