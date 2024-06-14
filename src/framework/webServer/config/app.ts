@@ -17,7 +17,7 @@ export const app = express()
 
 
 app.use(cors({
-  origin: [process.env.ENDPOINT as string ],
+  origin: ["*"],
   credentials: true,
   methods: ['GET', "PATCH", "PUT", "POST"],
   optionsSuccessStatus: 204,
