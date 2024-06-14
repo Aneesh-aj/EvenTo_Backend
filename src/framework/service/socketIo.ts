@@ -4,7 +4,7 @@ import http from 'http';
 import { Next, Req, Res } from "../../framework/types/serverPackageTypes";
 
 export const server = http.createServer(app);
-const io = new Server(server, {
+export const io = new Server(server, {
     cors: {
       origin: allowedOrigins,
       methods: ["GET", "POST"],
