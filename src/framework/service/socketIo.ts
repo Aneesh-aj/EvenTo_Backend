@@ -1,5 +1,5 @@
 import { Server, Socket } from 'socket.io';
-import { app } from "../webServer/config/app";
+import { allowedOrigins, app } from "../webServer/config/app";
 import http from 'http';
 import { Next, Req, Res } from "../../framework/types/serverPackageTypes";
 
