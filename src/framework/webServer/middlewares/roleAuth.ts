@@ -4,6 +4,7 @@ import { Next, Req, Res } from "../../types/serverPackageTypes";
 export const isUser = async(req:Req,res:Res,next:Next)=>{
      try{
             const role = req.headers['x-user-role'] as string;
+            console.log(" the role that getting +++++",role)
          if(role ==='user'){
               console.log("----------------------------------------------------------cominggg")
              next()
@@ -21,7 +22,7 @@ export const isUser = async(req:Req,res:Res,next:Next)=>{
 export const isOrganizer = async(req:Req,res:Res,next:Next)=>{
     try{
         const role = req.headers['x-user-role'] as string;
-        if(role ==='user'){
+        if(role ==='organizer'){
              console.log("----------------------------------------------------------cominggg")
             next()
         }else{
@@ -37,7 +38,7 @@ export const isAdmin = async (req:Req,res:Res,next:Next)=>{
      try{
 
         const role = req.headers['x-user-role'] as string;
-        if(role ==='user'){
+        if(role ==='admin'){
               next()
         }else{
              res.status(401).json({message:"inValid access",success:false})
