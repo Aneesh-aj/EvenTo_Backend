@@ -15,7 +15,7 @@ dotenv.config()
 export const app = express()
 
 console.log(" call coming ---")
-export const allowedOrigins = ["https://evento-ten-weld.vercel.app","http://localhost:5173"];
+export const allowedOrigins = ["https://evento-neon.vercel.app","http://localhost:5173"];
 
 const corsOptions = {
   origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
