@@ -23,7 +23,7 @@ export class UserController {
             if(Token){
                 res.cookie("verificationToken",Token,{
                     httpOnly:true,
-                    sameSite:"strict",
+                    sameSite:"none",
                     expires:new Date(Date.now()+ 300 * 60 * 1000),
                 })
                     res.status(200).json({
