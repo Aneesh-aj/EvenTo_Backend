@@ -1,7 +1,7 @@
 import { Req, Res, Next } from "../framework/types/serverPackageTypes"
 import { IuserUseCase } from "../usecases/interface/usecase/userUseCase"
 import ErrorHandler from "../usecases/middleares/errorHandler"
-import { accessTokenOptions, refreshTokenOptions } from "../framework/webServer/middlewares/Tokens"
+import { accessTokenOptions, refreshTokenOptions, roleOptions } from "../framework/webServer/middlewares/Tokens"
 import { response } from "express"
 
 
@@ -55,29 +55,33 @@ export class UserController {
     }
 
     async userLogin(req: Req, res: Res, next: Next) {
-       try{
-        console.log("org login controller",req.body)
-        console.log(" passwod",req.body.password)
-        const result = await this.userUseCase.login(req.body.email, req.body.password, next)
-        console.log(" at the end")
-        console.log(
-            "hte user", result
-        )
-        console.log("the access toekn",result?.tokens?.accessToken)
-        console.log("the refresh token",result?.tokens?.refreshToken)
-
-
-
-        if(result){
-            res.cookie("accessToken",result?.tokens?.accessToken,accessTokenOptions)
-            res.cookie('refreshToken',result?.tokens?.refreshToken,refreshTokenOptions)
-            res.cookie('role','user')
-            res.status(200).json({user:result?.user,message:"user logged In successfully",role:'user',accessToken:result.tokens.accessToken,refreshToken:result.tokens.refreshToken})
+        try {
+            console.log("Org login controller", req.body);
+            console.log("Password", req.body.password);
+    
+            const result = await this.userUseCase.login(req.body.email, req.body.password, next);
+    
+            console.log("At the end");
+            console.log("The user", result);
+            console.log("The access token", result?.tokens?.accessToken);
+            console.log("The refresh token", result?.tokens?.refreshToken);
+    
+            if (result) {
+                res.cookie("accessToken", result.tokens.accessToken, accessTokenOptions);
+                res.cookie("refreshToken", result.tokens.refreshToken, refreshTokenOptions);
+                res.cookie("role", "user", roleOptions); // Added roleOptions
+                res.status(200).json({
+                    user: result.user,
+                    message: "User logged in successfully",
+                    role: 'user',
+                    accessToken: result.tokens.accessToken,
+                    refreshToken: result.tokens.refreshToken,
+                });
+            }
+        } catch (error: any) {
+            console.error("Error in userLogin:", error);
+            return next(new ErrorHandler(error, next));
         }
-       }catch(error:any){
-        console.log(" comminng to the eroror")
-         return next(new ErrorHandler(error,next))
-       }
     }
 
     async logout(req:Req, res: Res,next : Next){
