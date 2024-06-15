@@ -3,8 +3,8 @@ import { Next, Req, Res } from "../../types/serverPackageTypes";
 
 export const isUser = async(req:Req,res:Res,next:Next)=>{
      try{
-              console.log(" the req cookie",req.cookies)
-         if(req.cookies.role ==='user'){
+            const role = req.headers['x-user-role'] as string;
+         if(role ==='user'){
               console.log("----------------------------------------------------------cominggg")
              next()
          }else{
@@ -20,8 +20,8 @@ export const isUser = async(req:Req,res:Res,next:Next)=>{
 
 export const isOrganizer = async(req:Req,res:Res,next:Next)=>{
     try{
-         console.log(" req cookies ffffff",req.cookies)
-        if(req.cookies.role ==='organizer'){
+        const role = req.headers['x-user-role'] as string;
+        if(role ==='user'){
              console.log("----------------------------------------------------------cominggg")
             next()
         }else{
@@ -36,7 +36,8 @@ export const isOrganizer = async(req:Req,res:Res,next:Next)=>{
 export const isAdmin = async (req:Req,res:Res,next:Next)=>{
      try{
 
-        if(req.cookies.role ==="admin"){
+        const role = req.headers['x-user-role'] as string;
+        if(role ==='user'){
               next()
         }else{
              res.status(401).json({message:"inValid access",success:false})
