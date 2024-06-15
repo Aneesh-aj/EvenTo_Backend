@@ -15,7 +15,7 @@ dotenv.config()
 export const app = express()
 
 console.log(" call coming ---")
-export const allowedOrigins = ["https://evento-neon.vercel.app","http://localhost:5173"];
+export const allowedOrigins = ["https://evento-neon.vercel.app", "http://localhost:5173"];
 
 const corsOptions = {
   origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
@@ -27,7 +27,7 @@ const corsOptions = {
   },
   credentials: true,
   methods: ['GET', 'PATCH', 'PUT', 'POST'],
-  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
+  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization', 'x-refresh-token', 'x-user-role'],
   optionsSuccessStatus: 204,
 };
 
