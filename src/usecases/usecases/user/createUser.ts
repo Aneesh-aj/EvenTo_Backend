@@ -25,7 +25,7 @@ export const createUser= async (token:string,otp:string,otpRepository:IotpReposi
             return next(new ErrorHandler(400,"otp expired"))
         }
         if(result.otp !== otp){
-           return next(new ErrorHandler(400,"invalid otpf"))
+           return next(new ErrorHandler(400,"invalid otp"))
         }
          
         const newUser = await userRepository.createUser(decode)
