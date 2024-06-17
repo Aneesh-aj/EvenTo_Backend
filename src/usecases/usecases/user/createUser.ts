@@ -11,7 +11,6 @@ import ErrorHandler from "../../middleares/errorHandler"
 
 export const createUser= async (token:string,otp:string,otpRepository:IotpRepository,userRepository:IuserRepository,hashPassword:Ihashpassword,jwt:Ijwt,next : Next):Promise <Iuser | void>=>{  
      
-    // console.log("inside the creater",newUser)
     try{
         const decode = await jwt.verifyJwt(token) as Iuser
          console.log(" the decoded  jwt",decode)
