@@ -24,7 +24,7 @@ export class AdminController {
                res.cookie("refreshToken", refreshToken, refreshTokenOptions);
                res.cookie("role", "admin");
                console.log("admin", admin);
-               res.status(200).json({ token: admin?.accessToken, admin: admin.admin, role: admin?.admin.role, message: "logined successfully", success: true })
+               res.status(200).json({ accessToken: admin?.accessToken,refreshToken:admin.refreshToken, admin: admin.admin, role: admin?.admin.role, message: "logined successfully", success: true })
             } else {
                console.error("Access token or refresh token is missing");
             }
