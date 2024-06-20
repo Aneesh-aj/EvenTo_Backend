@@ -26,7 +26,8 @@ export class UserController {
                 })
                     res.status(200).json({
                      success:true,
-                     message:"verification otp has been sent to the mail"
+                     message:"verification otp has been sent to the mail",
+                     verifyToken:Token
                 })
             }
         } catch (error: any) {
@@ -37,9 +38,8 @@ export class UserController {
     async createUser(req: Req, res: Res, next: Next) {
         try{
             console.log("int the createuser controller")
-            const token = req.cookies.verificationToken
-            console.log("verificaiton token",token)
-            const user = await this.userUseCase.createUser(token,req.body.otp, next)
+            const token = req.headers['x-verify-token']
+            const user = await this.userUseCase.createUser(token as string,req.body.otp, next)
             console.log("at the end of the uer", user)
             if(user){
                 res.clearCookie("verificationToken").send(user)

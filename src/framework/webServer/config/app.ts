@@ -16,7 +16,7 @@ dotenv.config()
 export const app = express()
 
 
-export const allowedOrigins = ["https://evento-olive-delta.vercel.app", "http://localhost:5173"];
+export const allowedOrigins = ["https://evento-navy.vercel.app", "http://localhost:5173"];
 
 const corsOptions = {
   origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
@@ -28,7 +28,7 @@ const corsOptions = {
   },
   credentials: true,
   methods: ['GET', 'PATCH', 'PUT', 'POST','DELETE'],
-  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization', 'x-refresh-token', 'x-user-role'],
+  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization', 'x-refresh-token', 'x-user-role','x-verify-token'],
   optionsSuccessStatus: 204,
 };
 
@@ -39,31 +39,6 @@ app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-
-
-// app.delete('/comments/delete/:id', async (req, res) => {
-//   try {
-//     await commentModel.findByIdAndDelete(req.params.id);
-//     res.status(200).json({ message: 'Comment deleted' });
-//   } catch (error: any) {
-//     res.status(500).json({ error: error.message });
-//   }
-// });
-
-// app.post('/comments/commet/:id/reply', async (req, res) => {
-//   try {
-//     const reply = new commentModel(req.body);
-//     await reply.save();
-//     const parentComment = await commentModel.findById(req.params.id);
-//     if (parentComment) {
-//       parentComment.replies.push(reply as any);
-//       await parentComment.save();
-//     }
-//     res.status(201).json(reply);
-//   } catch (error: any) {
-//     res.status(500).json({ error: error.message });
-//   }
-// });
 app.use("/user", UserRoute(express.Router()))
 app.use("/organizer", OrganizerRoute(express.Router()))
 app.use("/admin", AdminRoute(express.Router()))
