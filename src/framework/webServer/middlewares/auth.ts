@@ -16,6 +16,11 @@ export const isAuthenticate = async (req: CustomRequest, res: Response, next: Ne
         const authHeader = req.headers['authorization'];
         const refreshToken = req.headers['x-refresh-token'] as string;
         const role = req.headers['x-user-role'] as string;
+        console.log(" auth",authHeader)
+        console.log(" ref",refreshToken)
+        console.log(" role",role)
+
+
 
         if (!authHeader || !refreshToken || !role) {
             return res.status(401).json({ message: 'Access Forbidden!!! Please login again.', success: false });
