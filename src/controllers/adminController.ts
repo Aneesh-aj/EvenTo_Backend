@@ -46,7 +46,6 @@ export class AdminController {
       try {
       
              const requests = await this.adminUsecase.getRequests(next)
-         console.log(" all the requests", requests)
          res.status(200).json({ result: requests })
       } catch (error: any) {
          return next(new ErrorHandler(error.status, error.message))
@@ -55,9 +54,7 @@ export class AdminController {
 
    async getDetails(req: Req, res: Res, next: Next) {
       const id: string = req.params.id
-      console.log(id)
       let details = await this.adminUsecase.getDetails(id, next)
-      console.log(" all the requests", details)
       res.status(200).json({ result: details })
    }
 
