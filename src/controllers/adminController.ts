@@ -63,7 +63,6 @@ export class AdminController {
          const id: string = req.params.id
          console.log(id)
          const details = await this.adminUsecase.approve(id, next)
-         console.log(" all the requests", details)
          if (details) {
 
             res.status(200).json({ result: details, message: " request approved" })
